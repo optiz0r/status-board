@@ -1,0 +1,5 @@
+hostname = localhost
+username = status-board
+password = changeme
+dbname   = status-board
+
