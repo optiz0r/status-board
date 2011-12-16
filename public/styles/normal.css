@@ -1,0 +1,92 @@
+/**
+ * StatusBoard normal stylesheet
+ *
+ */
+
+@CHARSET "UTF-8";
+
+body {
+    margin: 0em;
+    padding: 0em;
+    font-family: verdana, helvetica, sans-serif;
+}
+
+a {
+    color: gray;
+}
+
+label {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+#container {
+    width: 75%;
+    min-width: 75em;
+    margin: auto;
+}
+
+#banner {
+    margin: 0em;
+    padding: 0em;
+}
+
+#banner h1 {
+    padding: 0.5em;
+}
+
+#navigation {
+    margin-top: 0em;
+    margin-bottom: 1em;
+    padding: 0.2em;
+}
+
+#navigation ul {
+   margin: 0em;
+   padding: 0em 5em;;
+   list-style: none;
+}
+
+#navigation li {
+    margin: 1em;
+    padding: 0em;
+    display: inline;
+}
+
+#page-container {
+    margin: 0em;
+    padding: 0em;
+}
+
+#sidebar {
+    float: left;
+    width: 20em;
+    margin-bottom: 1em;
+}
+
+#page {
+    margin-left: 21em;
+    margin-bottom: 1em;
+    padding: 0.5em;
+}
+
+#footer {
+    clear: both;
+    padding: 2em;
+    font-size: smaller;
+    font-style: italic;
+
+    color: #333333;
+}
+
+#errors {
+    background: peachpuff;
+    color: darkred;
+    margin: 1em;
+}
+
+#messages {
+    background: lightcyan;
+    color: darkblue;
+    margin: 1em;
+}
