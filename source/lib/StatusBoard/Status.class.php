@@ -8,6 +8,14 @@ class StatusBoard_Status {
     const STATUS_Significant = 3;
     const STATUS_Major       = 4;
     
+    protected static $names = array(
+        self::STATUS_Resolved    => 'Resolved',
+        self::STATUS_Maintenance => 'Planned Maintenance',
+        self::STATUS_Minor       => 'Minor Incident',
+        self::STATUS_Significant => 'Significant Incident',
+        self::STATUS_Major       => 'Major Incident',
+    );
+    
     protected static $descriptions = array(
         self::STATUS_Resolved    => 'The service is operating normally.',
         self::STATUS_Maintenance => 'The service is undergoing scheduled maintenance.',
@@ -16,8 +24,16 @@ class StatusBoard_Status {
         self::STATUS_Major       => 'The service is exeriencing a major outage affecting all customers.',
     );
 
+    public static function name($status) {
+        if ( ! StatusBoard_Main::isClassConstantValue(get_called_class(), 'STATUS_', $status)) {
+            throw new StatusBoard_Exception_InvalidParameters($status);
+        }
+        
+        return self::$names[$status];
+    }
+    
     public static function description($status) {
-        if ( ! StatusBoard_Main::isClassConstantValue(self, 'STATUS_', $status)) {
+        if ( ! StatusBoard_Main::isClassConstantValue(get_called_class(), 'STATUS_', $status)) {
             throw new StatusBoard_Exception_InvalidParameters($status);
         }
         
