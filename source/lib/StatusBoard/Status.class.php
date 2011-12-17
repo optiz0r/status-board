@@ -40,6 +40,10 @@ class StatusBoard_Status {
         return self::$descriptions[$status];
     }
     
+    public static function isMoreSevere($base, $test) {
+        return ($test > $base);
+    }
+    
 }
 
 ?>
