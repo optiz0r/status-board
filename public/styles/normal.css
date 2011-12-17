@@ -90,3 +90,19 @@ label {
     color: darkblue;
     margin: 1em;
 }
+
+/**
+ * Page specific content
+ */
+
+div.service {
+    border-top: 1px solid grey;
+}
+
+div.site {
+    margin-left: 5em;
+}
+
+div.incident {
+    margin-left: 2em;
+}
