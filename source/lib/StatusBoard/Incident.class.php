@@ -75,6 +75,16 @@ class StatusBoard_Incident {
         return $incidents;        
     }
     
+    public function status() {
+        $database = StatusBoard_Main::instance()->database();
+        $row = $database->selectOne('SELECT `status` FROM `incidentstatus_current` WHERE `incident`=:incident', array(
+                array('name' => 'incident', 'value' => $this->id(), 'type' => PDO::PARAM_INT),
+            )
+        );
+        
+        return $row['status'];
+    }
+    
     protected function create() {
         $database = StatusBoard_Main::instance()->database();
         $database->insert(
