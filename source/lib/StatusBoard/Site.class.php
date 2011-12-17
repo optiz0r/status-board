@@ -7,6 +7,9 @@ class StatusBoard_Site {
     protected $name;
     protected $description;
     
+    protected $incidents;
+    protected $incidents_open;
+    
     protected function __construct($id, $service, $name, $description) {
         $this->id = $id;
         $this->service = $service;
@@ -94,8 +97,16 @@ class StatusBoard_Site {
         $this->id = null;
     }
     
-    public function incidents_open() {
-        return StatusBoard_Incident::open_for_site($this);
+    public function openIncidents() {
+        if ($this->incidents_open === null || $ignore_cache) {
+            $this->incidents_open = StatusBoard_Incident::open_for_site($this);
+        }
+        
+        return $this->incidents_open;
+    }
+    
+    public function status() {
+        return StatusBoard_Incident::highestSeverityStatus($this->openIncidents());
     }
         
     public function id() {
