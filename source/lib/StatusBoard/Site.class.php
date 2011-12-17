@@ -53,7 +53,7 @@ class StatusBoard_Site {
         return $sites;
     }
     
-    public function all_for_service(StatusBoard_Service $service) {
+    public static function all_for_service(StatusBoard_Service $service) {
         $sites = array();
         
         $database = StatusBoard_Main::instance()->database();
