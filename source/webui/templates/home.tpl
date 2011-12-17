@@ -3,12 +3,12 @@
         <div class="service">
             {$service->name()}
             {foreach from=$service->sites() item=site}
-                {assign var=incidents value=$site->incidents_open()}
+                {assign var=incidents value=$site->openIncidents()}
                 <div class="site">
-                    {$site->name()} ({$incidents|count})
+                    {$site->name()} ({StatusBoard_Status::name($site->status())})
                     {foreach from=$incidents item=incident}
                         <div class="incident">
-                            {StatusBoard_Status::name($incident->status())}: {$incident->description()}
+                            {StatusBoard_Status::name($incident->currentStatus())}: {$incident->description()}
                         </div>
                     {/foreach}
                 </div>            
