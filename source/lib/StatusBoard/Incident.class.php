@@ -9,6 +9,8 @@ class StatusBoard_Incident {
     protected $start_time;
     protected $estimated_end_time;
     protected $actual_end_time;
+    
+    protected $current_status;
 
     protected function __construct($id, $site, $reference, $description, $start_time, $estimated_end_time, $actual_end_time) {
         $this->id = $id;
@@ -75,14 +77,40 @@ class StatusBoard_Incident {
         return $incidents;        
     }
     
-    public function status() {
-        $database = StatusBoard_Main::instance()->database();
-        $row = $database->selectOne('SELECT `status` FROM `incidentstatus_current` WHERE `incident`=:incident', array(
-                array('name' => 'incident', 'value' => $this->id(), 'type' => PDO::PARAM_INT),
-            )
-        );
+    public function currentStatus($ignore_cache = false) {
+        if ($this->current_status === null || $ignore_cache) {
+            $database = StatusBoard_Main::instance()->database();
+            $row = $database->selectOne('SELECT `status` FROM `incidentstatus_current` WHERE `incident`=:incident', array(
+                    array('name' => 'incident', 'value' => $this->id(), 'type' => PDO::PARAM_INT),
+                )
+            );
         
-        return $row['status'];
+            $this->current_status = $row['status'];
+        }
+        
+        return $this->current_status;
+    }
+    
+    /**
+     * Returns the status of the most severe incident in the given set
+     * 
+     * @param array(StatusBoard_Incident) $incidents
+     */
+    public static function highestSeverityStatus(array $incidents) {
+        if ( ! $incidents) {
+            return StatusBoard_Status::STATUS_Resolved;
+        }
+        
+        // Check for the highest severity incident.
+        $status = StatusBoard_Status::STATUS_Maintenance;
+        foreach ($incidents as $incident) {
+            $incident_status = $incident->currentStatus();
+            if (StatusBoard_Status::isMoreSevere($status, $incident_status)) {
+                $status = $incident_status;
+            }
+        }
+        
+        return $status;
     }
     
     protected function create() {
