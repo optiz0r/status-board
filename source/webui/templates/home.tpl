@@ -8,7 +8,7 @@
                     {$site->name()} ({$incidents|count})
                     {foreach from=$incidents item=incident}
                         <div class="incident">
-                            {$incident->description()}
+                            {StatusBoard_Status::name($incident->status())}: {$incident->description()}
                         </div>
                     {/foreach}
                 </div>            
