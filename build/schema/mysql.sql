@@ -18,10 +18,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Table structure for table `settings`
 --
--- Creation: Sep 24, 2010 at 07:22 PM
--- Last update: Dec 04, 2011 at 01:19 PM
--- Last check: Aug 20, 2011 at 10:32 PM
---
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE IF NOT EXISTS `settings` (
@@ -53,8 +49,6 @@ INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 --
 -- Table structure for table `log`
 --
--- Creation: Aug 20, 2011 at 10:32 PM
---
 
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE IF NOT EXISTS `log` (
@@ -71,3 +65,109 @@ CREATE TABLE IF NOT EXISTS `log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
+--
+-- Table structure for table `service`
+--
+
+DROP TABLE IF EXISTS `service`;
+CREATE TABLE IF NOT EXISTS `service` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for table `service`
+--
+
+DROP TABLE IF EXISTS `site`;
+CREATE TABLE IF NOT EXISTS `site` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `service` int(10) unsigned NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+
+--
+-- Table structure for table `incident`
+--
+
+DROP TABLE IF EXISTS `incident`;
+CREATE TABLE IF NOT EXISTS `incident` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `site` int(10) unsigned NOT NULL,
+  `reference` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  `start_time` int(10) NOT NULL,
+  `estimated_end_time` int(10) NULL,
+  `actual_end_time` int(10) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for table `incidentstatus`
+--
+
+DROP TABLE IF EXISTS `incidentstatus`;
+CREATE TABLE IF NOT EXISTS `incidentstatus` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `incident` int(10) unsigned NOT NULL,
+  `status` int(10) unsigned NOT NULL,
+  `ctime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for view `incidentstatus_current_int`
+--
+
+DROP VIEW IF EXISTS `incidentstatus_current_int`;
+CREATE VIEW `incidentstatus_current_int` AS (
+  SELECT
+    `incidentstatus`.`incident` AS `incident`,
+    MAX(`incidentstatus`.`id`) AS `latest`
+  FROM 
+    `incidentstatus`
+  GROUP BY 
+    `incidentstatus`.`incident`
+);
+
+--
+-- Table structure for view `incidentstatus_current`
+--
+
+DROP VIEW IF EXISTS `incidentstatus_current`;
+CREATE VIEW `incidentstatus_current` AS (
+  SELECT 
+    `is`.`id` AS `id`,
+    `is`.`incident` AS `incident`,
+    `is`.`status` AS `status`,
+    `is`.`ctime` AS `ctime`
+  FROM (
+    `incidentstatus` AS `is`
+    JOIN `incidentstatus_current_int` AS `isci`
+  )
+  WHERE (
+    (`isci`.`incident` = `is`.`incident`)
+    AND (`is`.`id` = `isci`.`latest`)
+  )
+);
+
+--
+-- Table structure for view `incidentstatus_open`
+--
+
+DROP VIEW IF EXISTS `incident_open`;
+CREATE VIEW `incident_open` AS (
+  SELECT 
+    `i`.* 
+  FROM
+    `incident` AS `i`
+    JOIN `incidentstatus_current` AS `isc`
+    ON `i`.`id` = `isc`.`incident`
+  WHERE
+    `isc`.`status` IN (1,2,3,4)
+);
