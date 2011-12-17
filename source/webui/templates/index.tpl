@@ -18,8 +18,8 @@
 		<script type="text/javascript" src="{$base_uri}scripts/main.js"></script>
 		
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-        <link rel="stylesheet/less" href="less/bootstrap.less" media="all" />
-        <script src="js/less-1.1.4.min.js"></script>
+        <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
+        <script src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
     </head>
     <body>
 
