@@ -16,6 +16,10 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="{$base_uri}scripts/main.js"></script>
+		
+		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+        <link rel="stylesheet/less" href="less/bootstrap.less" media="all" />
+        <script src="js/less-1.1.4.min.js"></script>
     </head>
     <body>
 
