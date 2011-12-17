@@ -6,6 +6,8 @@ class StatusBoard_Service {
     protected $name;
     protected $description;
     
+    protected $sites;
+    
     protected function __construct($id, $name, $description) {
         $this->id = $id;
         $this->name = $name;
@@ -77,8 +79,12 @@ class StatusBoard_Service {
         $this->id = null;
     }
     
-    public function sites() {
-        return StatusBoard_Site::all_for_service($this);
+    public function sites($ignore_cache = false) {
+        if ($this->sites === null || $ignore_cache) {
+            $this->sites = StatusBoard_Site::all_for_service($this);
+        }
+        
+        return $this->sites;
     }
     
     public function id() {
