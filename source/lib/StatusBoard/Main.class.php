@@ -5,6 +5,7 @@ require 'smarty/Smarty.class.php';
 class StatusBoard_Main extends SihnonFramework_Main {
     
     const TEMPLATE_DIR = '../source/webui/templates/';
+    const CODE_DIR     = '../source/webui/pages/';
 
     protected static $instance;
 
@@ -20,7 +21,7 @@ class StatusBoard_Main extends SihnonFramework_Main {
         
         $request_string = isset($_GET['l']) ? $_GET['l'] : '';
         
-        $this->request  = new StatusBoard_RequestParser($request_string, self::TEMPLATE_DIR);
+        $this->request  = new StatusBoard_RequestParser($request_string, self::TEMPLATE_DIR, self::CODE_DIR);
         
         switch (StatusBoard_File) {
             case 'ajax':
