@@ -4,12 +4,10 @@
             <tr>
                 <th>Service</th>
                 <th class="status">Current</th>
-                <th class="status">{$day1}</th>
-                <th class="status">{$day2}</th>
-                <th class="status">{$day3}</th>
-                <th class="status">{$day4}</th>
-                <th class="status">{$day5}</th>
-                <th class="status">{$day6}</th>
+                {foreach from=$days key="ind" item="day"}
+  				<th class="status">{$day}</th>
+				{/foreach}
+              
             </tr>
         </thead>
         <tbody>
