@@ -7,5 +7,6 @@ for ($i = 1; $i <= 6; ++$i){
 }
 $this->smarty->assign('days', $tbl_header_date);
 $this->smarty->assign('services', $services);
+$this->smarty->assign('requested_page', $this->page);
 
 ?>

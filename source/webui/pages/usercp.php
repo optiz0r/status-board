@@ -43,5 +43,6 @@ if ($request->exists('do')) {
 $this->smarty->assign('activity', $activity);
 $this->smarty->assign('successes', $successes);
 $this->smarty->assign('errors', $errors);
+$this->smarty->assign('requested_page', $this->page);
 
 ?>
