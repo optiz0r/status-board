@@ -1,18 +1,16 @@
 <?php
 
-$display_login = true;
-$display_admin = false;
+$authenticated = false;
+$user = null;
 
 $auth = StatusBoard_Main::instance()->auth();
 if ($auth->isAuthenticated()) {
-    $display_login = false;
+    $authenticated = true;
+    $user = $auth->authenticatedUser();
 }
 
-if ($auth->isAdministrator()) {
-    $display_admin = true;
-}
-
-$this->smarty->assign('display_login', $display_login);
-$this->smarty->assign('display_admin', $display_admin);
+$this->smarty->assign('authenticated', $authenticated);
+$this->smarty->assign('auth', $auth);
+$this->smarty->assign('user', $user);
 
 ?>
