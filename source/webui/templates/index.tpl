@@ -19,27 +19,27 @@
 		
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
         <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
+         <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
         <script src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
     </head>
     <body>
 
-        <div id="container">
+ 		<div class="topbar">
+       		<div class="topbar-inner">
+        		<div class="container-fluid">
+        			{$page->include_template('navigation')}
+          		</div>
+      		</div>
+    	  </div>
+        
 
-            <div id="banner">
-                <h1>StatusBoard</h1>
-            </div>
-
-            <div id="navigation">
-                {$page->include_template('navigation')}
-            </div>
-
-            <div id="page-container">
-            
-                <div id="sidebar">
-                    {$page->include_template('sidebar')}
-                </div>
-
-                <div id="page">
+           <div class="container">
+                
+                <div class="content">
 
                     {if $messages}
                         <div id="messages">
