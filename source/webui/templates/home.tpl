@@ -1,35 +1,55 @@
 <div id="statusboard">
-    <table class="bordered-table zebra-striped">
+    <table class="bordered-table">
         <thead>
             <tr>
                 <th>Service</th>
-                <th>Sites</th>
                 <th class="status">Current</th>
                 {foreach from=$days key="ind" item="day"}
-  				<th class="status">{$day}</th>
+  				    <th class="status">{$day}</th>
 				{/foreach}
-              
             </tr>
         </thead>
         <tbody>
             {foreach from=$services item=service}
-                <tr colspan="8" class="service">
-                    <th >
+                <tr>
+                    <th colspan="8" class="service">
                         {$service->name}
                     </th>
+                </tr>
                 {foreach from=$service->sites() item=site}
-                    {assign var=incidents value=$site->openIncidents()}
+                {assign var=incidents value=$site->openIncidents()}
+                    <tr class="site">
                         <td>
                             {$site->name}
                         </td>
                         <td>
                             {StatusBoard_Status::name($site->status())}
                         </td>                                        
-                {foreachelse}
-                </tr>
-                
-                {/foreach}    
+                        <td>
+                            TODO
+                        </td>
+                        <td>
+                            TODO
+                        </td>
+                        <td>
+                            TODO
+                        </td>
+                        <td>
+                            TODO
+                        </td>
+                        <td>
+                            TODO
+                        </td>
+                        <td>
+                            TODO
+                        </td>
+                    </tr>
+                {/foreach}
             {/foreach}
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $('tr.site').filter(':odd > td').addClass('odd_row');
+</script>

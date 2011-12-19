@@ -112,3 +112,12 @@ div.incident {
 table th, table td {
     text-align: center;
 }
+
+th.service {
+    text-align: left;
+    background-color: #dddddd;
+}
+
+.odd_row {
+    background-color: #eeeeee;
+}
