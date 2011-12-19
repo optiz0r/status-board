@@ -2,13 +2,13 @@
  * StatusBoard normal stylesheet
  *
  */
-
+@import url('http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css'); 
 @CHARSET "UTF-8";
 
 body {
     margin: 0em;
     margin-top: 60px;
-    
+    padding-top: 40px;
     padding: 0em;
     font-family: verdana, helvetica, sans-serif;
 }
