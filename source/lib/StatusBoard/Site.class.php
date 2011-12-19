@@ -1,101 +1,20 @@
 <?php
 
-class StatusBoard_Site {
+class StatusBoard_Site extends StatusBoard_DatabaseObject {
     
-    protected $id;
-    protected $service;
-    protected $name;
-    protected $description;
+    protected static $table = 'site';
     
-    protected $incidents;
-    protected $incidents_open;
+    protected $_db_id;
+    protected $_db_service;
+    protected $_db_name;
+    protected $_db_description;
     
-    protected function __construct($id, $service, $name, $description) {
-        $this->id = $id;
-        $this->service = $service;
-        $this->name = $name;
-        $this->description = $description;
-    }
-    
-    public static function fromDatabaseRow($row) {
-        return new self(
-            $row['id'],
-            $row['service'],
-            $row['name'],
-            $row['description']
-        );
-    }
-    
-    /**
-     * Load a Site object given its ID
-     *
-     * @param int $id
-     * @return StatusBoard_Site
-     */
-    public static function fromId($id) {
-        $database = StatusBoard_Main::instance()->database();
-    
-        $site = self::fromDatabaseRow(
-            $database->selectOne('SELECT * FROM `site` WHERE id=:id', array(
-                    array('name' => 'id', 'value' => $id, 'type' => PDO::PARAM_INT)
-                )
-            )
-        );
-    
-        return $site;
-    }
-    
-    public static function all() {
-        $sites = array();
-    
-        $database = StatusBoard_Main::instance()->database();
-        foreach ($database->selectList('SELECT * FROM `site` WHERE `id` > 0 ORDER BY `id` DESC') as $row) {
-            $sites[] = self::fromDatabaseRow($row);
-        }
-    
-        return $sites;
-    }
+    protected $incidents = null;
+    protected $incidents_open = null;
     
     public static function all_for_service(StatusBoard_Service $service) {
-        $sites = array();
-        
-        $database = StatusBoard_Main::instance()->database();
-        foreach ($database->selectList('SELECT * FROM `site` WHERE `service`=:service ORDER BY `id` DESC', array(
-                array('name' => 'service', 'value' => $service->id(), 'type' => PDO::PARAM_INT),
-            )) as $row) {
-            $sites[] = self::fromDatabaseRow($row);    
-        }
-        
-        return $sites;
-    }
-    
-    protected function create() {
-        $database = StatusBoard_Main::instance()->database();
-        $database->insert(
-        	'INSERT INTO `service` 
-        	(`id`, `service`, `name`, `description`)
-        	VALUES(NULL, :service, :name, :description)',
-            array(
-                array('name' => 'service',     'value' => $this->service,     'type' => PDO::PARAM_INT),
-                array('name' => 'name',        'value' => $this->name,        'type' => PDO::PARAM_STR),
-                array('name' => 'description', 'value' => $this->description, 'type' => PDO::PARAM_STR),
-            )
-        );
-    
-        $this->id = $database->lastInsertId();
-    }
-    
-    public function delete() {
-        $database = StatusBoard_Main::instance()->database();
-        $database->update(
-            'DELETE FROM `site` WHERE `id`=:id LIMIT 1',
-            array(
-                array('name' => 'id', 'value' => $this->id, 'type' => PDO::PARAM_INT),
-            )
-        );
-    
-        $this->id = null;
-    }
+        return static::all_for('service', $service->id);
+    } 
     
     public function openIncidents() {
         if ($this->incidents_open === null || $ignore_cache) {
@@ -108,23 +27,6 @@ class StatusBoard_Site {
     public function status() {
         return StatusBoard_Incident::highestSeverityStatus($this->openIncidents());
     }
-        
-    public function id() {
-        return $this->id;
-    }
-    
-    public function service() {
-        return $this->service;
-    }
-    
-    public function name() {
-        return $this->name;
-    }
-    
-    public function description() {
-        return $this->description;
-    }
-    
     
 }
 

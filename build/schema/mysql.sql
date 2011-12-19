@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 ('debug.display_exceptions', '1', 'bool'),
 ('cache.base_dir', '/dev/shm/status-board/', 'string'),
+('auth', 'Database', 'string'),
 ('logging.plugins', 'Database\nFlatFile', 'array(string)'),
 ('logging.Database', 'webui', 'array(string)'),
 ('logging.Database.webui.table', 'log', 'string'),
@@ -170,4 +171,151 @@ CREATE VIEW `incident_open` AS (
     ON `i`.`id` = `isc`.`incident`
   WHERE
     `isc`.`status` IN (1,2,3,4)
+);
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` char(40) NOT NULL,
+  `fullname` varchar(255) NULL,
+  `email` varchar(255) NULL,
+  `last_login` int(10) NULL,
+  `last_password_change` int(10) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `fullname`, `email`, `last_login`, `last_password_change`) VALUES
+(1, 'admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Administrator', NULL, NULL, 1324211456);
+
+--
+-- Table structure for table `group`
+--
+
+DROP TABLE IF EXISTS `group`;
+CREATE TABLE IF NOT EXISTS `group` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Dumping data for table `group`
+--
+
+INSERT INTO `group` (`id`, `name`, `description`) VALUES
+(1, 'admins', 'Administrative users will full control over the status boards.');
+
+--
+-- Table structure for table `usergroup`
+--
+
+DROP TABLE IF EXISTS `usergroup`;
+CREATE TABLE IF NOT EXISTS `usergroup` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user` int(10) unsigned NOT NULL,
+  `group` int(10) unsigned NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Dumping data for table `usergroup`
+--
+
+INSERT INTO `usergroup` (`id`, `user`, `group`, `added`) VALUES
+(1, 1, 1, 1324211572);
+
+--
+-- Table structure for view `groups_by_user`
+--
+
+DROP VIEW IF EXISTS `groups_by_user`;
+CREATE VIEW `groups_by_user` AS (
+  SELECT 
+    `u`.`id` AS `user`,
+    `g`.*
+  FROM
+    `usergroup` as `ug`
+    LEFT JOIN `user` AS `u` ON `ug`.`user`=`u`.`id`
+    LEFT JOIN `group` AS `g` ON `ug`.`group`=`g`.`id`
+);
+
+--
+-- Table structure for table `permission`
+--
+
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE IF NOT EXISTS `permission` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`id`, `name`, `description`) VALUES
+(1, 'Administrator', 'Full administrative rights.');
+
+
+--
+-- Table structure for table `grouppermissions`
+--
+
+DROP TABLE IF EXISTS `grouppermission`;
+CREATE TABLE IF NOT EXISTS `grouppermission` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `group` int(10) unsigned NOT NULL,
+  `permission` int(10) unsigned NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Dumping data for table `grouppermissions`
+--
+
+INSERT INTO `grouppermissions` (`id`, `group`, `permission`, `added`) VALUES
+(1, 1, 1, 1324211935);
+
+--
+-- Table structure for view `permissions_by_group`
+--
+
+DROP VIEW IF EXISTS `permissions_by_group`;
+CREATE VIEW `permissions_by_group` AS (
+  SELECT 
+    `g`.`id` AS `group`,
+    `p`.*
+  FROM
+    `grouppermission` as `gp`
+    LEFT JOIN `group` AS `g` ON `gp`.`group`=`g`.`id`
+    LEFT JOIN `permission` AS `p` on `gp`.`permission`=`p`.`id`
+);
+
+--
+-- Table structure for view `permissions_by_user`
+--
+
+DROP VIEW IF EXISTS `permissions_by_user`;
+CREATE VIEW `permissions_by_user` AS (
+  SELECT 
+    `u`.`id` AS `user`,
+    `p`.*
+  FROM
+    `usergroup` as `ug`
+    LEFT JOIN `user` AS `u` ON `ug`.`user`=`u`.`id`
+    LEFT JOIN `permissions_by_group` AS `p` on `ug`.`group`=`p`.`group`
 );
