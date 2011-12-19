@@ -19,12 +19,8 @@
 		
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
         <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
-         <style type="text/css">
-      body {
-        padding-top: 60px;
-      }
-    </style>
-        <script src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-alerts.js"></script>
     </head>
     <body>
 
