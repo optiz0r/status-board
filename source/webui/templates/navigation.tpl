@@ -15,6 +15,6 @@
 
 {if $authenticated}
     <p class="pull-right">
-        Logged in as <a href="#">{$user->username}</a>
+        Logged in as <a href="{$base_uri}usercp/">{$user->username}</a>
     </p>
 {/if}
