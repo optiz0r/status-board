@@ -23,10 +23,10 @@
                             {$site->name}
                         </td>
                         <td>
-                            {StatusBoard_Status::name($site->status())}
+                        <a href="#" class="" rel="popover" data-content="{StatusBoard_Status::name($site->status())}" data-original-title="No Issues"><img src={$base_uri}images/Status_Icons/tick-circle.png></img></a>
                         </td>                                        
                         <td>
-                            TODO
+                        <a href="#" class="" rel="popover" data-content="Brief disruption to service due to supplier fault" data-original-title="Incident:123456"><img src={$base_uri}images/Status_Icons/exclamation.png></img></a>
                         </td>
                         <td>
                             TODO

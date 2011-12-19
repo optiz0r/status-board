@@ -19,6 +19,8 @@
         <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-alerts.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-twipsy.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-popover.js"></script>
     </head>
     <body>
 
@@ -26,9 +28,9 @@
        		<div class="topbar-inner">
         		<div class="container-fluid">
         			{$page->include_template('navigation')}
-          		</div>
-      		</div>
-    	  </div>
+          		</div><!-- /tobar-inner -->
+      		</div><!-- /container-fliud -->
+    	  </div><!-- /topbar -->
         
 
            <div class="container">
@@ -40,19 +42,17 @@
                             {foreach from=$messages item=message}
                                 {$message}
                             {/foreach}
-                        </div>
+                        </div><!-- /messages -->
                     {/if}
 
                     {$page_content}
 
-                </div>
+                </div><!-- /content -->
 
-            </div>
+        <footer>
+          <p> Powered by StatusBoard {$version}. Written by Ben Roberts and Nathan Booth.</p>          
+        </footer>
 
-            <div id="footer">
-                Powered by StatusBoard {$version}. Written by Ben Roberts and Nathan Booth.
-            </div>
-
-        </div>
+        </div><!-- /container -->
     </body>
 </html>
