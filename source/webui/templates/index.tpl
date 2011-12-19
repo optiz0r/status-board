@@ -30,13 +30,13 @@
             </div>
 
             <div id="navigation">
-                {include file="navigation.tpl"}
+                {$page->include_template('navigation')}
             </div>
 
             <div id="page-container">
             
                 <div id="sidebar">
-                    {include file="sidebar.tpl"}
+                    {$page->include_template('sidebar')}
                 </div>
 
                 <div id="page">
