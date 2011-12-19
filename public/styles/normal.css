@@ -108,3 +108,7 @@ div.site {
 div.incident {
     margin-left: 2em;
 }
+
+table th, table td {
+    text-align: center;
+}

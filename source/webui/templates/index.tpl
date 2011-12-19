@@ -22,7 +22,7 @@
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-alerts.js"></script>
     </head>
-    <body>
+    <body>I can
 
  		<div class="topbar">
        		<div class="topbar-inner">
