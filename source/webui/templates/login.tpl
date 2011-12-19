@@ -1,6 +1,6 @@
 {if $authentication_failed}
 
-<div class="data-alert">
+<div class="alert-message error">
     Incorrect username/password combination entered.
 </div>
 
