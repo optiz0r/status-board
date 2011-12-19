@@ -9,7 +9,7 @@ $authentication_failed = false;
 
 if ($request->exists('do')) {
     $username = StatusBoard_Main::issetelse($_POST['username'], Sihnon_Exception_InvalidParameters);
-    $password = StatusBoard_Main::issetelse($_POST['username'], Sihnon_Exception_InvalidParameters);
+    $password = StatusBoard_Main::issetelse($_POST['password'], Sihnon_Exception_InvalidParameters);
     
     try {
         $auth->authenticate($username, $password);
