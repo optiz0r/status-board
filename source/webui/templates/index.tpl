@@ -23,6 +23,9 @@
       body {
         padding-top: 60px;
       }
+      table th, table td {
+      text-align: center;
+      }
     </style>
         <script src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
     </head>

@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>Service</th>
+                <th>Sites</th>
                 <th class="status">Current</th>
                 {foreach from=$days key="ind" item="day"}
   				<th class="status">{$day}</th>
@@ -13,28 +14,19 @@
         <tbody>
             {foreach from=$services item=service}
                 <tr colspan="8" class="service">
-                    <th>
+                    <th >
                         {$service->name}
                     </th>
-                </tr>
                 {foreach from=$service->sites() item=site}
                     {assign var=incidents value=$site->openIncidents()}
-                    <tr>
                         <td>
                             {$site->name}
                         </td>
                         <td>
                             {StatusBoard_Status::name($site->status())}
-                        </td>
-                        <td>good</td>
-                        <td>good</td>
-                        <td>good</td>
-                        <td>good</td>
-                        <td>good</td>
-                        <td>good</td>                            
-                    </tr>            
+                        </td>                                        
                 {foreachelse}
-                
+                </tr>
                 
                 {/foreach}    
             {/foreach}
