@@ -72,6 +72,7 @@
     <thead>
         <th>Date/Time</th>
         <th>Status</th>
+        <th>Description</th>
     </thead>
     <tbody>
         {foreach from=$statuses item=status}
@@ -81,6 +82,7 @@
                     <em>{$status->ctime|date_format:'y-m-d h:i:s'}</em>
                 </td>
                 <td>{StatusBoard_Status::name($status->status)}</td>
+                <td>{$status->description|escape:html}</td>
             </tr>
         {/foreach}
     </tbody>

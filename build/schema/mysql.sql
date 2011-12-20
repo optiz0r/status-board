@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `incidentstatus` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `incident` int(10) unsigned NOT NULL,
   `status` int(10) unsigned NOT NULL,
+  `description` text NOT NULL,
   `ctime` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
