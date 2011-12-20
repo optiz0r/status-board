@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>Service</th>
-                <th class="status">Current</th>
+                <th class="status">Now</th>
                 {foreach from=$days key="ind" item="day"}
   				    <th class="status">{$day}</th>
 				{/foreach}
@@ -17,34 +17,24 @@
                     </th>
                 </tr>
                 {foreach from=$service->sites() item=site}
-                {assign var=incidents value=$site->openIncidents()}
+                {$incidents=$site->openIncidents()}
                     <tr class="site">
                         <td>
                             {$site->name}
                         </td>
                         <td>
-                        <a href="#" class="" rel="popover" data-content="{StatusBoard_Status::description($site->status())}" data-original-title="{StatusBoard_Status::name($site->status())}"><img src={$base_uri}images/Status_Icons/tick-circle.png></img></a>
-                        </td>                                        
-                        <td>
-                        <!-- example, remove when dynamically generated -->
-                        <a href="#" class="" rel="popover" data-content="Brief disruption to service due to supplier fault" data-original-title="Incident:123456"><img src={$base_uri}images/Status_Icons/exclamation.png></img></a>
-                        <!-- /example, remove when dynamically generated -->
+                            {$status=$site->status()}
+                            {include nocache file="fragments/site-status.tpl" start=null end=null}
                         </td>
-                        <td>
-                            TODO
-                        </td>
-                        <td>
-                            TODO
-                        </td>
-                        <td>
-                            TODO
-                        </td>
-                        <td>
-                            TODO
-                        </td>
-                        <td>
-                            TODO
-                        </td>
+                        {foreach from=array(1,2,3,4,5,6) item=day}
+                            {$start=mktime(0,0,0,date("n"),date("j")-$day-1)}
+                            {$end=mktime(0,0,0,date("n"),date("j")-$day)}
+                            {$incidents=$site->openIncidentsDuring($start, $end)}
+                            {$status=StatusBoard_Incident::highestSeverityStatus($incidents)}
+                            <td>
+                                {include nocache file="fragments/site-status.tpl" start=$start end=$end status=$status incidents=$incidents}
+                            </td>
+                        {/foreach}
                     </tr>
                 {/foreach}
             {/foreach}
