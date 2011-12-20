@@ -4,35 +4,27 @@
  * 
  */
 
+ 
 var sb = {
-    
+     
     init: function() {
         $('.alert-data').alert();
-    	$('.tabs').tabs()
-    	$("a[rel=popover]")
-                .popover({
-                  offset: 10
-                })
-                .click(function(e) {
-                  e.preventDefault()
-                })
-
-  })
+        $('.tabs').tabs();
     },
-    
+     
     usercp: {
-
+ 
         init: function() {
             $('#usercp_newpassword,#usercp_confirmpassword').bind('keyup', sb.usercp.checkPassword);
-            
+             
         },
-        
+         
         checkPassword: function() {
             password = $('#usercp_newpassword');
             confirm = $('#usercp_confirmpassword');
-            
+             
             confirm_container = confirm.parent().parent();
-            
+             
             if (password.val() == confirm.val()) {
                 console.log("passwords match");
                 confirm_container.removeClass('error').addClass('success');
@@ -43,7 +35,19 @@ var sb = {
                 $('#usercp_confirmpassword_help').show();
             }
         }
-        
+         
     }
-        
+         
 };
+ 
+$('document').ready(sb.init);
+ 
+            $(function () {
+              $("a[rel=popover]")
+                .popover({
+                  offset: 10
+                })
+                .click(function(e) {
+                  e.preventDefault()
+                })
+            })
