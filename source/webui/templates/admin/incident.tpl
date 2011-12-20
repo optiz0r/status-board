@@ -1,3 +1,10 @@
+<ul class="breadcrumb">
+  <li><a href="{$base_uri}admin/">Admin</a> <span class="divider">|</span></li>
+  <li><a href="{$base_uri}admin/service/id/{$service->id}/">Service {$service->name|escape:html}</a></li> <span class="divider">|</span></li>
+  <li><a href="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/">Site {$site->name|escape:html}</a></li> <span class="divider">|</span></li>
+  <li class="active"><a href="#">Incident {$incident->reference|escape:html}</a></li>
+</ul>
+
 <h1>Incident {$incident->reference|escape:html}</h1>
 
 <div class="container">

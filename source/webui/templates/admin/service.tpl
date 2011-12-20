@@ -1,3 +1,8 @@
+<ul class="breadcrumb">
+  <li><a href="{$base_uri}admin/">Admin</a> <span class="divider">|</span></li>
+  <li class="active"><a href="#">Service {$service->name|escape:html}</a></li>
+</ul>
+
 <h1>Service {$service->name|escape:html}</h1>
 
 <div class="container">

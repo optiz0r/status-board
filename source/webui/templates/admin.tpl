@@ -1,3 +1,7 @@
+<ul class="breadcrumb">
+  <li class="active"><a href="#">Admin</a>
+</ul>
+
 <h1>Services</h1>
 
 <p>
