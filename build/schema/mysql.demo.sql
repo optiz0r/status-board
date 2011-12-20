@@ -27,6 +27,19 @@ INSERT INTO `service` (`id`, `name`, `description`) VALUES
 (5, 'LDAP', 'Hosted directory services');
 
 --
+-- Dumping data for table `site`
+--
+
+INSERT INTO `site` (`id`, `service`, `name`, `description`) VALUES
+(1, 1, 'Local', 'Local Internet access'),
+(2, 2, 'Offsite', 'Offsite web services'),
+(3, 3, 'Offsite', 'Offsite email services'),
+(4, 4, 'Local', 'Primary DNS services'),
+(5, 4, 'Offsite', 'Backup DNS services'),
+(6, 5, 'Local', 'Local LDAP services'),
+(7, 5, 'Offsite', 'Offsite LDAP services');
+
+--
 -- Dumping data for table `user`
 --
 
