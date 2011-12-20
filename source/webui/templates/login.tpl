@@ -15,7 +15,7 @@
                     <div class="clearfix">
                         <label for="xlInput">Username</label>
                         <div class="input">
-                            <input class=page_username"xlarge" id="page_username" name="username" size="30" type="text"/>
+                            <input class="xlarge span5" id="page_username" name="username" size="30" type="text"/>
                         </div>
                     </div><!-- /clearfix -->
         			<div class="clearfix">
