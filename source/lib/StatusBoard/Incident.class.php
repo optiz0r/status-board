@@ -13,6 +13,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     protected $_db_actual_end_time;
     
     protected $current_status = null;
+    protected $statuses = null;
 
     public static function open_for_site(StatusBoard_Site $site) {
         return static::all_for('site', $site->id, 'incident_open');
@@ -52,6 +53,14 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         }
         
         return $status;
+    }
+    
+    public function statusChanges($ignore_cache = false) {
+        if ($this->statuses === null || $ignore_cache) {
+            $this->statuses = StatusBoard_IncidentStatus::all_for('incident', $this->id);
+        }
+        
+        return $this->statuses;
     }
     
 }

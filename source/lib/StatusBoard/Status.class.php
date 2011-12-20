@@ -23,6 +23,16 @@ class StatusBoard_Status {
         self::STATUS_Significant => 'The service is exeriencing significant issues affecting many customers.',
         self::STATUS_Major       => 'The service is exeriencing a major outage affecting all customers.',
     );
+    
+    public function available() {
+        return array(
+            self::STATUS_Resolved,
+            self::STATUS_Maintenance,
+            self::STATUS_Minor,
+            self::STATUS_Significant,
+            self::STATUS_Major,
+        );
+    }
 
     public static function name($status) {
         if ( ! StatusBoard_Main::isClassConstantValue(get_called_class(), 'STATUS_', $status)) {
