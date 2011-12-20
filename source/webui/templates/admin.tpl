@@ -1,36 +1,42 @@
 <div class="page-header">
 <h1>Admin Control Panel</h1>
-<ul class="tabs">
-  <li class="active"><a href="#">Admin</a></li>
-  <li><a href="#">Services</a></li>
-  <li><a href="#">User Management</a></li>
-  <li><a href="#">Settings</a></li>
+<ul class="tabs" data-tabs="tabs">
+  <li class="active"><a href="#Admin">Admin</a></li>
+  <li><a href="#Services">Services</a></li>
+  <li><a href="#UserManagement">User Management</a></li>
+  <li><a href="#Settings">Settings</a></li>
 </ul>
 
 </div>
-<h1>Services</h1>
 
-<p>
-    Click on a Service to edit its properties, or access any of the sites defined under it.
-</p>
+<div id="my-tab-content" class="tab-content">
+            <div class="tab-pane active" id="Admin">
+              <p>TODO</p>
+            </div>
+            
+            <div class="tab-pane" id="Services">
+              <h1>Services</h1>
+				<p>Click on a Service to edit its properties, or access any of the sites defined under it.</p>
 
-{if $services}
-    <dl>
-        {foreach from=$services item=service}
-            <dt><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></dt>
-            <dd>{$service->description|escape:html}</dd>
-        {/foreach}
-    </dl>
-{else}
-    You haven't created any services yet. Create some with the button below.
-{/if}
+				{if $services}
+    				<dl>
+       				 {foreach from=$services item=service}
+            			<dt><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></dt>
+           			 <dd>{$service->description|escape:html}</dd>
+       				 {/foreach}
+    				</dl>
+					{else}
+   					 You haven't created any services yet. Create some with the button below.
+					{/if}
 
-<form id="admin_addservice" method="post" action="{$base_uri}admin/add-service/">
-    <input type="button" class="btn success" name="addservice" value="Add Service" />
-</form>
+				<form id="admin_addservice" method="post" action="{$base_uri}admin/add-service/">
+    		<input type="button" class="btn success" name="addservice" value="Add Service" />
+			</form>
 
 
-<h1>Users and Permissions</h1>
+            </div>
+            <div class="tab-pane" id="UserManagement">
+              <h1>Users and Permissions</h1>
 
 <p>
     Click on a User to edit its properties.
@@ -46,16 +52,17 @@
     <input type="button" class="btn success" name="adduser" value="Add User" />
 </form>
 
-<h1>Settings<h1>
+            </div>
+            <div class="tab-pane" id="Settings">
+              <h1>Settings<h1>
 
 <p>
     Quick access to important settings. Please use the <a href="{$base_uri}admin/settings/" title="Full settings">full settings</a>
     page to configure more advanced settings.
 </p>
 
-<div class="container">
-    <div class="row">
-        <div class="span16">
+
+
             <form id="admin_quicksettings" method="post" action="{$base_uri}admin/settings/do/">
                 <fieldset>
                     <legend>Quick Settings</legend>
@@ -88,6 +95,10 @@
                     </div>
                 </fieldset>
             </form>
-        </div><!-- /span16 -->   
-    </div><!-- /row -->
-</div><!-- /container -->
+            </div>
+           </div>
+          
+          
+        
+
+

@@ -22,6 +22,7 @@
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-twipsy.js"></script>
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-popover.js"></script>
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-dropdown.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-tabs.js"></script>
     </head>
     <body>
 
