@@ -1,7 +1,13 @@
-<ul class="breadcrumb">
-  <li class="active"><a href="#">Admin</a>
+<div class="page-header">
+<h1>Admin Control Panel</h1>
+<ul class="tabs">
+  <li class="active"><a href="#">Admin</a></li>
+  <li><a href="#">Services</a></li>
+  <li><a href="#">User Management</a></li>
+  <li><a href="#">Settings</a></li>
 </ul>
 
+</div>
 <h1>Services</h1>
 
 <p>
