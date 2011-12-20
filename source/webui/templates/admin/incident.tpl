@@ -55,7 +55,14 @@
                         </div>
                     </div><!-- /clearfix -->
                     
-                                        <div class="input">
+                    <div class="clearfix">
+                        <label for="admin_incident_changestatus_description">Description</label>
+                        <div class="text">
+                            <textarea class="span12" id="admin_incident_changestatus_description" name="description"></textarea>
+                        </div>
+                    </div><!-- /clearfix -->
+
+                    <div class="input">
                         <div class="clearfix">
                             <input type="submit" class="btn primary" value="Edit Incident">&nbsp;<button type="reset" class="btn">Cancel</button>
                         </div>
