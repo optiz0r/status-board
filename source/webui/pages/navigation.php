@@ -12,5 +12,4 @@ if ($auth->isAuthenticated()) {
 $this->smarty->assign('authenticated', $authenticated);
 $this->smarty->assign('auth', $auth);
 $this->smarty->assign('user', $user);
-
 ?>

@@ -1,11 +1,21 @@
 <a class="brand" href="{$base_uri}home/">StatusBoard</a>
 
 <ul class="nav">
-    <li class="active"><a href="{$base_uri}home/" title="Home">Home</a></li>
+{if $requested_page == home}
+<li class="active">
+{else}
+<li>
+{/if}
+<a href="{$base_uri}home/" title="Home">Home</a></li>
     
     {if $authenticated}
         {if $auth->isAdministrator()}
-            <li><a href="{$base_uri}admin/" title="Admin">Admin</a></li>
+        {if $requested_page == admin}
+			<li class="active">
+			{else}
+			<li>
+			{/if}
+            <a href="{$base_uri}admin/" title="Admin">Admin</a></li>
         {/if}
         <li><a href="{$base_uri}logout/" title="Logout">Logout</a></li>
     {else}
