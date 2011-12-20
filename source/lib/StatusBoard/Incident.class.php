@@ -19,6 +19,15 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return static::all_for('site', $site->id, 'incident_open');
     }
     
+    public static function open_for_site_during(StatusBoard_Site $site, $start, $end) {
+        $params = array(
+            array('name' => 'start', 'value' => $start, 'type' => PDO::PARAM_INT),
+            array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
+        );
+        
+        return static::all_for('site', $site->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
+    }
+    
     public function currentStatus($ignore_cache = false) {
         if ($this->current_status === null || $ignore_cache) {
             $database = StatusBoard_Main::instance()->database();

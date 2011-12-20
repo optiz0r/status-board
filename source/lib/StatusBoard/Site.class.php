@@ -24,6 +24,10 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         return $this->incidents_open;
     }
     
+    public function openIncidentsDuring($start, $end) {
+        return StatusBoard_Incident::open_for_site_during($this, $start, $end);
+    }
+    
     public function status() {
         return StatusBoard_Incident::highestSeverityStatus($this->openIncidents());
     }
