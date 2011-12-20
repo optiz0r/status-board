@@ -42,6 +42,4 @@
     </table>
 </div>
 
-<script type="text/javascript">
-    $('tr.site').filter(':odd > td').addClass('odd_row');
-</script>
+
