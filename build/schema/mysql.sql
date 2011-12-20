@@ -302,7 +302,7 @@ INSERT INTO `permission` (`id`, `name`, `description`) VALUES
 
 
 --
--- Table structure for table `grouppermissions`
+-- Table structure for table `grouppermission`
 --
 
 DROP TABLE IF EXISTS `grouppermission`;
@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `grouppermission` (
 -- Dumping data for table `grouppermissions`
 --
 
-INSERT INTO `grouppermissions` (`id`, `group`, `permission`, `added`) VALUES
+INSERT INTO `grouppermission` (`id`, `group`, `permission`, `added`) VALUES
 (1, 1, 1, 1324211935);
 
 --

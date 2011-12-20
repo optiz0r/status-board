@@ -77,7 +77,6 @@ INSERT INTO `group` (`id`, `name`, `description`) VALUES
 --
 
 INSERT INTO `usergroup` (`id`, `user`, `group`, `added`) VALUES
-(1, 1, 1, 1324211572),
 (2, 2, 2, 1324211572);
 
 --
@@ -85,15 +84,15 @@ INSERT INTO `usergroup` (`id`, `user`, `group`, `added`) VALUES
 --
 
 INSERT INTO `permission` (`id`, `name`, `description`) VALUES
-(2, 'Update Status Boards', 'Permission to add/edit/delete any service or site.');
+(2, 'Update Status Boards', 'Permission to add/edit/delete any service or site.'),
 (3, 'Update Incidents', 'Permission to create and update the status of any incident.'),
-(4, 'View Status Boards', 'Permission to view the status of all services and sites, and details of any incident.'),
+(4, 'View Status Boards', 'Permission to view the status of all services and sites, and details of any incident.');
 
 --
--- Dumping data for table `grouppermissions`
+-- Dumping data for table `grouppermission`
 --
 
-INSERT INTO `grouppermissions` (`id`, `group`, `permission`, `added`) VALUES
+INSERT INTO `grouppermission` (`id`, `group`, `permission`, `added`) VALUES
 (2, 1, 2, 1324211935),
 (3, 1, 3, 1324211935),
 (4, 1, 4, 1324211935),
