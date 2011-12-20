@@ -1,0 +1,55 @@
+<h1>Site {$site->name|escape:html}</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="span16">
+            <form id="admin_site_edit" method="post" action="{$base_uri}admin/site/id/{$site->id}/do/edit/">
+                <fieldset>
+                    <legend>Edit Site</legend>
+                    
+                    <div class="clearfix">
+                        <label for="admin_site_edit_name">Name</label>
+                        <div class="text">
+                            <input class="xlarge span5" id="admin_site_edit_name" name="name" type="text" value="{$site->name|escape:html}" />
+                        </div>
+                    </div><!-- /clearfix -->
+                    
+                    <div class="clearfix">
+                        <label for="admin_site_edit_description">Description</label>
+                        <div class="text">
+                            <textarea class="span12" id="admin_site_edit_description" name="description">{$site->description|escape:html}</textarea>
+                        </div>
+                    </div><!-- /clearfix -->
+
+                    <div class="input">
+                        <div class="clearfix">
+                            <input type="submit" class="btn primary" value="Edit Site">&nbsp;<button type="reset" class="btn">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div><!-- /span16 -->   
+    </div><!-- /row -->
+</div><!-- /container -->
+
+<h1>Open Incidents</h1>
+
+{if $open_incidents}
+    <dl>
+        {foreach from=$open_incidents item=incident}
+            <dt>
+                <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}" title="Edit Incident {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
+                ({StatusBoard_Status::name($incident->currentStatus())})
+            </dt>
+            <dd>
+               {$incident->description|truncate|escape:html}
+            </dd> 
+        {/foreach}
+    </dl>
+{else}
+    There are no open incidents for this site . If you need to open one, use the button below.
+{/if}
+
+<form id="admin_addincident" method="post" action="{$base_uri}admin/add-incident/site/{$site->id}/">
+    <input type="button" class="btn success" name="addsite" value="Add Incident" />
+</form>
