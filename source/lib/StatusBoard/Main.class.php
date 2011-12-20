@@ -38,6 +38,7 @@ class StatusBoard_Main extends SihnonFramework_Main {
                 $this->smarty->registerPlugin('modifier', 'formatFilesize', array('StatusBoard_Main', 'formatFilesize'));
         
                 $this->smarty->assign('version', '0.1.0');
+                $this->smarty->assign('version_codename', 'Acai');
                 $this->smarty->assign('messages', array());
                  
                 $this->smarty->assign('base_uri', $this->base_uri);

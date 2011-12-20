@@ -52,7 +52,7 @@
                 </div><!-- /content -->
 
         <footer>
-          <p> Powered by StatusBoard {$version}. Written by Ben Roberts and Nathan Booth.</p>          
+          <p> Powered by StatusBoard {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
         </footer>
 
         </div><!-- /container -->
