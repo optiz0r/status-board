@@ -12,7 +12,7 @@
         <div class="row" name="edit service">
 		<div class="span4 column"><!--New description-->
         <h3>Edit Service</h3>
-        <p>Use this form to define a new service</p>
+        <p>Use this form to update the existing Service</p>
         </div><!--/New Service description-->
 		<div class="span12 column"><!--Add New Service -->
         <form id="admin_service_edit" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/edit/">
@@ -44,7 +44,7 @@
         <div class="row" name="Sites_existing">
         	<div class="span4 column">
         		<h3>Existing Sites</h3>
-        		<p>Description</p>
+        		<p>Currently the following sites that are defined for the service {$service->name|escape:html}, Edit the site or delete it from the service here, to add a new one use the form below</p>
         	</div>
         <div class="span12 column">
 			<table class="bordered-table" name="sites_list_table"><!--Services table -->
@@ -79,7 +79,7 @@
         <div class="row" name="edit service">
 		<div class="span4 column"><!--New description-->
         <h3>Add Site</h3>
-        <p>Use this form to define a new site</p>
+        <p>Use this form to define a new site to the service {$service->name|escape:html}</p>
         </div><!--/New Service description-->
 		<div class="span12 column"><!--Add New Service -->
         <form id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-site/">
