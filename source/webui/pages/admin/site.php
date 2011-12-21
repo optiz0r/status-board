@@ -21,10 +21,45 @@ try {
     throw new StatusBoard_Exception_FileNotFound();
 }
 
+if ($request->exists('do')) {
+    $activity = $request->get('do');
+    switch ($activity) {
+
+        case 'edit': {
+            $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
+            $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+
+            if ($name) {
+                $site->name = $name;
+            }
+            if ($description) {
+                $site->description = $description;
+            }
+            if ($name || $description) {
+                $site->save();
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The site was updated succesfully.',
+                );
+            } else {
+                $messages[] = 'No changes were necessary.';
+            }
+
+        } break;
+
+        default: {
+
+        }
+    }
+}
+
+
+
 $open_incidents = $site->openIncidents();
 
 $this->smarty->assign('service', $service);
 $this->smarty->assign('site', $site);
 $this->smarty->assign('open_incidents', $open_incidents);
+$this->smarty->assign('messages', $messages);
 
 ?>

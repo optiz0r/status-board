@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="span16">
-            <form id="admin_site_edit" method="post" action="{$base_uri}admin/site/id/{$site->id}/do/edit/">
+            <form id="admin_site_edit" method="post" action="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/do/edit/">
                 <fieldset>
                     <legend>Edit Site</legend>
                     
@@ -44,7 +44,7 @@
     <dl>
         {foreach from=$open_incidents item=incident}
             <dt>
-                <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}" title="Edit Incident {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
+                <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
                 ({StatusBoard_Status::name($incident->currentStatus())})
             </dt>
             <dd>

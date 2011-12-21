@@ -42,7 +42,16 @@
                     {if $messages}
                         <div id="messages">
                             {foreach from=$messages item=message}
-                                {$message}
+                                {if is_array($message)}
+                                    {$severity=$message['severity']}
+                                    <div class="alert-message {$severity}">
+                                        {$message['content']}
+                                    </div>
+                                {else}
+                                    <div class="alert-message info">
+                                        {$message}
+                                    </div>
+                                {/if}
                             {/foreach}
                         </div><!-- /messages -->
                     {/if}

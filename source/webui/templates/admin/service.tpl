@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="span16">
-            <form id="admin_service_edit" method="post" action="{$base_uri}admin/services/id/{$service->id}/do/edit/">
+            <form id="admin_service_edit" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/edit/">
                 <fieldset>
                     <legend>Edit Service</legend>
                     
