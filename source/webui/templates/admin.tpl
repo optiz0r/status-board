@@ -1,10 +1,10 @@
 <div class="page-header">
     <h1>Admin Control Panel</h1>
     <ul class="tabs" data-tabs="tabs">
-        <li {if $tab == 'admin'}class="active"{/if}><a href="#admin">Admin</a></li>
-        <li {if $tab == 'services'}class="active"{/if}><a href="#services">Services</a></li>
-        <li {if $tab == 'users'}class="active"{/if}><a href="#users">User Management</a></li>
-        <li {if $tab == 'settings'}class="active"{/if}><a href="#settings">Settings</a></li>
+        <li {if $tab == 'admin'}class="active"{/if}><a href="{$base_uri}admin">Admin</a></li>
+        <li {if $tab == 'services'}class="active"{/if}><a href="{$base_uri}admin/tab/services">Services</a></li>
+        <li {if $tab == 'users'}class="active"{/if}><a href="{$base_uri}admin/tab/users">User Management</a></li>
+        <li {if $tab == 'settings'}class="active"{/if}><a href="{$base_uri}admin/tab/settings">Settings</a></li>
     </ul>
 </div>
 
