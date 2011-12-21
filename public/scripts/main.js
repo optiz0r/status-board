@@ -35,7 +35,7 @@ var sb = {
         
         deleteItem: function(url) {
             $('#confirm_delete_do').click(function() {
-                location.href = url;
+                sb.request.post(url);
             });
             
             $('#confirm_delete').modal('show');
@@ -67,6 +67,20 @@ var sb = {
             }
         }
          
+    },
+    
+    request: {
+        
+        post: function(url, data) {
+            console.log('Posting');
+            var form = $('<form />').attr('method', 'post').attr('action', url);
+            for (var key in data) {
+                form.appendChild($('<input type="hidden">').attr('name', key).val(data[key]));
+            }
+            
+            form.submit();
+        }
+        
     }
     
 };
