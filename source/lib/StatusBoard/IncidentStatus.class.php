@@ -10,8 +10,20 @@ class StatusBoard_IncidentStatus extends StatusBoard_DatabaseObject {
     protected $_db_description;
     protected $_db_ctime;
         
-    protected function all_for_incident(StatusBoard_Incident $incident) {
+    public function all_for_incident(StatusBoard_Incident $incident) {
         return static::all_for('incident', $incident->id);
+    }
+    
+    public function newForIncident(StatusBoard_Incident $incident, $status, $description) {
+        $new_status = new self();
+        $new_status->incident = $incident->id;
+        $new_status->status = $status;
+        $new_status->description = $description;
+        $new_status->ctime = time();
+        
+        $new_status->create();
+        
+        return $new_status;
     }
 }
 

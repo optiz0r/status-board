@@ -42,12 +42,23 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $this->current_status;
     }
     
+    public function statusAtTime($time) {
+        $database = StatusBoard_Main::instance()->database();
+        $row = $database->selectOne('SELECT `status` FROM `incidentstatus` WHERE `incident`=:incident AND ctime < :time ORDER BY ctime DESC LIMIT 1', array(
+                array('name' => 'incident', 'value' => $this->id, 'type' => PDO::PARAM_INT),
+                array('name' => 'time',     'value' => $time,     'type' => PDO::PARAM_INT),
+            )
+        );
+        
+        return $row['status'];
+    }
+    
     /**
      * Returns the status of the most severe incident in the given set
      * 
      * @param array(StatusBoard_Incident) $incidents
      */
-    public static function highestSeverityStatus(array $incidents) {
+    public static function highestSeverityStatus(array $incidents, $time = null) {
         if ( ! $incidents) {
             return StatusBoard_Status::STATUS_Resolved;
         }
@@ -55,7 +66,13 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         // Check for the highest severity incident.
         $status = StatusBoard_Status::STATUS_Maintenance;
         foreach ($incidents as $incident) {
-            $incident_status = $incident->currentStatus();
+            $incident_status = null;
+            if ($time) {
+                $incident_status = $incident->statusAtTime($time);    
+            } else {
+                $incident_status = $incident->currentStatus();
+            }
+            
             if (StatusBoard_Status::isMoreSevere($status, $incident_status)) {
                 $status = $incident_status;
             }
@@ -70,6 +87,17 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         }
         
         return $this->statuses;
+    }
+    
+    public function changeStatus($status, $description) {
+        if ($this->statuses === null) {
+            $this->statuses = StatusBoard_IncidentStatus::all_for('incident', $this->id);
+        }
+        
+        $new_status = StatusBoard_IncidentStatus::newForIncident($this, $status, $description);
+        $this->statuses[] = $new_status;
+        
+        return $new_status;
     }
     
 }

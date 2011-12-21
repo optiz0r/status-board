@@ -24,11 +24,55 @@ try {
     throw new StatusBoard_Exception_FileNotFound();
 }
 
+if ($request->exists('do')) {
+    $activity = $request->get('do');
+    switch ($activity) {
+
+        case 'edit': {
+            $reference = StatusBoard_Main::issetelse($_POST['reference'], 'Sihnon_Exception_InvalidParameters');
+            $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+
+            if ($reference) {
+                $incident->reference = $reference;
+            }
+            if ($description) {
+                $incident->description = $description;
+            }
+            if ($reference || $description) {
+                $incident->save();
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The incident was updated succesfully.',
+                );
+            } else {
+                $messages[] = 'No changes were necessary.';
+            }
+
+        } break;
+        
+        case 'change-status': {
+            $status = StatusBoard_Main::issetelse($_POST['status'], 'Sihnon_Exception_InvalidParameters');
+            $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+            
+            $incident->changeStatus($status, $description);
+            $messages[] = array(
+                'severity' => 'success',
+                'content'  => 'The incident status was changed successfully.',
+            );
+        } break;
+
+        default: {
+
+        }
+    }
+}
+
 $statuses = $incident->statusChanges();
 
 $this->smarty->assign('service', $service);
 $this->smarty->assign('site', $site);
 $this->smarty->assign('incident', $incident);
 $this->smarty->assign('statuses', $statuses);
+$this->smarty->assign('messages', $messages);
 
 ?>

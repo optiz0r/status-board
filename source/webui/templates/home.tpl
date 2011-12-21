@@ -24,15 +24,15 @@
                         </td>
                         <td>
                             {$status=$site->status()}
-                            {include nocache file="fragments/site-status.tpl" start=null end=null}
+                            {include file="fragments/site-status.tpl" nocache start=null end=null}
                         </td>
                         {foreach from=array(1,2,3,4,5,6) item=day}
                             {$start=mktime(0,0,0,date("n"),date("j")-$day-1)}
                             {$end=mktime(0,0,0,date("n"),date("j")-$day)}
-                            {$incidents=$site->openIncidentsDuring($start, $end)}
-                            {$status=StatusBoard_Incident::highestSeverityStatus($incidents)}
+                            {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
+                            {$statusDuring=StatusBoard_Incident::highestSeverityStatus($incidentsDuring, $end)}
                             <td>
-                                {include nocache file="fragments/site-status.tpl" start=$start end=$end status=$status incidents=$incidents}
+                                {include file="fragments/site-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
                             </td>
                         {/foreach}
                     </tr>

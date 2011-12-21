@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="span16">
-            <form id="admin_incident_edit" method="post" action="{$base_uri}admin/incident/id/{$incident->id}/do/edit/">
+            <form id="admin_incident_edit" method="post" action="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/do/edit/">
                 <fieldset>
                     <legend>Edit Incident</legend>
                     
@@ -40,7 +40,7 @@
     
     <div class="row">
         <div class="span16">
-            <form id="admin_incident_changestatus" method="post" action="{$base_uri}admin/incident/id/{$incident->id}/do/change-status/">
+            <form id="admin_incident_changestatus" method="post" action="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/do/change-status/">
                 <fieldset>
                     <legend>Change Status</legend>
                     
@@ -64,7 +64,7 @@
 
                     <div class="input">
                         <div class="clearfix">
-                            <input type="submit" class="btn primary" value="Edit Incident">&nbsp;<button type="reset" class="btn">Cancel</button>
+                            <input type="submit" class="btn primary" value="Change Status">&nbsp;<button type="reset" class="btn">Cancel</button>
                         </div>
                     </div>
                 </fieldset>
