@@ -27,43 +27,42 @@
     </head>
     <body>
 
- 		<div class="topbar">
-       		<div class="topbar-inner">
-        		<div class="container-fluid">
-        			{$page->include_template('navigation')}
-          		</div><!-- /tobar-inner -->
-      		</div><!-- /container-fliud -->
-    	  </div><!-- /topbar -->
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    {$page->include_template('navigation')}
+                </div><!-- /tobar-inner -->
+            </div><!-- /container-fliud -->
+        </div><!-- /topbar -->
         
 
-           <div class="container">
-                
-                <div class="content">
+        <div class="container">
+            <div class="content">
 
-                    {if $messages}
-                        <div id="messages">
-                            {foreach from=$messages item=message}
-                                {if is_array($message)}
-                                    {$severity=$message['severity']}
-                                    <div class="alert-message {$severity}">
-                                        {$message['content']|escape:html}
-                                    </div>
-                                {else}
-                                    <div class="alert-message info">
-                                        {$message|escape:html}
-                                    </div>
-                                {/if}
-                            {/foreach}
-                        </div><!-- /messages -->
-                    {/if}
+                {if $messages}
+                    <div id="messages">
+                        {foreach from=$messages item=message}
+                            {if is_array($message)}
+                                {$severity=$message['severity']}
+                                <div class="alert-message {$severity}">
+                                    {$message['content']|escape:html}
+                                </div>
+                            {else}
+                                <div class="alert-message info">
+                                    {$message|escape:html}
+                                </div>
+                            {/if}
+                        {/foreach}
+                    </div><!-- /messages -->
+                {/if}
 
-                    {$page_content}
+                {$page_content}
 
-                </div><!-- /content -->
+            </div><!-- /content -->
 
-        <footer>
-          <p> Powered by <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
-        </footer>
+            <footer>
+              <p> Powered by <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
+            </footer>
 
         </div><!-- /container -->
     </body>
