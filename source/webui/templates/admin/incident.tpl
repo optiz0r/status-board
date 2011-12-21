@@ -28,6 +28,13 @@
                         </div>
                     </div><!-- /clearfix -->
 
+                    <div class="clearfix">
+                        <label for="admin_incident_edit_estimatedendtime">Estimated End Time</label>
+                        <div class="text">
+                            <input class="xlarge span5" id="admin_incident_edit_estimatedendtime" name="estimatedendtime" type="text" value="{$incident->estimated_end_time|date_format:"r"}" />
+                        </div>
+                    </div><!-- /clearfix -->
+                    
                     <div class="input">
                         <div class="clearfix">
                             <input type="submit" class="btn primary" value="Edit Incident">&nbsp;<button type="reset" class="btn">Cancel</button>
