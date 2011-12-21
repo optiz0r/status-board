@@ -4,15 +4,19 @@
             <tr>
                 <th>Service</th>
                 <th class="status">Now</th>
-                {foreach from=$days key="ind" item="day"}
-  				    <th class="status">{$day}</th>
+                {foreach from=array(0,1,2,3,4,5,6) item=day}
+                    {if $day == 0}
+                        <th class="status">Today</th>
+  				    {else}
+                        <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
+  				    {/if}
 				{/foreach}
             </tr>
         </thead>
         <tbody>
             {foreach from=$services item=service}
                 <tr>
-                    <th colspan="8" class="service">
+                    <th colspan="9" class="service">
                         {$service->name}
                     </th>
                 </tr>
@@ -26,9 +30,9 @@
                             {$status=$site->status()}
                             {include file="fragments/site-status.tpl" nocache start=null end=null}
                         </td>
-                        {foreach from=array(1,2,3,4,5,6) item=day}
-                            {$start=mktime(0,0,0,date("n"),date("j")-$day-1)}
-                            {$end=mktime(0,0,0,date("n"),date("j")-$day)}
+                        {foreach from=array(0,1,2,3,4,5,6) item=day}
+                            {$start=mktime(0,0,0,date("n"),date("j")-$day)}
+                            {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
                             {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
                             {$statusDuring=StatusBoard_Incident::highestSeverityStatus($incidentsDuring, $end)}
                             <td>
