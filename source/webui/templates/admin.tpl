@@ -16,14 +16,26 @@
     <div class="tab-pane {if $tab == 'services'}active{/if}" id="tab_services">
         <h1>Services</h1>
         <p>Click on a Service to edit its properties, or access any of the sites defined under it.</p>
-
+		<div class="row">
+  		<div class="span11">
+		<table class="bordered-table">
+		<thead>
+		<th>Service</th>
+		<th>Description</th>
+		<th>Action</th>
+		</thead>
+		<tbody>
         {if $services}
-            <dl>
+            
+            
                 {foreach from=$services item=service}
-                    <dt><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></dt>
-                    <dd>{$service->description|escape:html}</dd>
+                    <tr><td><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></td>
+                    <td>{$service->description|escape:html}</td>
+                    <td><button class='btn info'>Edit</button><button style="margin-left:10px" class='btn danger'>Delete</button></td>
                 {/foreach}
-            </dl>
+            </tr>
+        </tbody>
+        </table>
         {else}
             You haven't created any services yet. Create some with the button below.
         {/if}
@@ -53,7 +65,9 @@
                 </div>
             </fieldset>
         </form>
-    </div>
+        </div> <!-- /span11 -->
+  		</div><!-- /row -->
+    </div><!-- /services -->
             
     <div class="tab-pane {if $tab == 'users'}active{/if}" id="tab_users">
         <h1>Users and Permissions</h1>
