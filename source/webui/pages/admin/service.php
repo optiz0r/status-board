@@ -58,6 +58,26 @@ if ($request->exists('do')) {
        
         } break;
 
+        case 'delete-site': {
+            $site_id = $request->get('site', 'Sihnon_Exception_InvalidParameters');
+            
+            try {
+                $site = StatusBoard_Site::fromId($site_id);
+                $site->delete();
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The Site was deleted successfully.',
+                );
+            } catch (Sihnon_Exception_ResultCountMismatch $e) {
+                $messages[] = array(
+                    'severity' => 'error',
+                    'content'  => 'The Site was not deleted as the object requested could not be found.',
+                );
+            }
+            
+        } break;
+
         default: {
             $messages[] = array(
                 'severity' => 'warning',
