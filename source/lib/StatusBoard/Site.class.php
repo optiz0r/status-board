@@ -27,6 +27,10 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         return $new_service;
     }
     
+    public function newIncident($reference, $description, $status, $start_time, $estimated_end_time) {
+        return StatusBoard_Incident::newForSite($this, $reference, $description, $status, $start_time, $estimated_end_time);
+    }
+    
     public function openIncidents($ignore_cache = false) {
         if ($this->incidents_open === null || $ignore_cache) {
             $this->incidents_open = StatusBoard_Incident::openForSite($this);

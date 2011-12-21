@@ -14,6 +14,21 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     
     protected $current_status = null;
     protected $statuses = null;
+    
+    public static function newForSite(StatusBoard_Site $site, $reference, $description, $status, $start_time, $estimated_end_time) {
+        $new_incident = new self();
+        $new_incident->site = $site->id;
+        $new_incident->reference = $reference;
+        $new_incident->description = $description;
+        $new_incident->start_time = $start_time;
+        $new_incident->estimated_end_time = $estimated_end_time;
+        $new_incident->actual_end_time = null;
+        
+        $new_incident->create();
+        $new_incident->changeStatus($status, 'Initial Classification');
+        
+        return $new-incident;
+    }
 
     public static function openForSite(StatusBoard_Site $site) {
         return static::allFor('site', $site->id, 'incident_open');

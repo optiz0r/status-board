@@ -53,9 +53,58 @@
         {/foreach}
     </dl>
 {else}
-    There are no open incidents for this site . If you need to open one, use the button below.
+    There are no open incidents for this site . If you need to open one, use the form below.
 {/if}
 
-<form id="admin_addincident" method="post" action="{$base_uri}admin/add-incident/site/{$site->id}/">
-    <input type="button" class="btn success" name="addsite" value="Add Incident" />
+<form id="admin_addsite" method="post" action="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/do/add-incident/">
+    <fieldset>
+        <legend>Add Incident</legend>
+            
+        <div class="clearfix">
+            <label for="admin_incident_add_reference">Reference</label>
+            <div class="text">
+                <input class="xlarge span5" id="admin_incident_add_reference" name="reference" type="text" value="" />
+            </div>
+        </div><!-- /clearfix -->
+        
+        <div class="clearfix">
+            <label for="admin_incident_add_description">Description</label>
+            <div class="text">
+                <textarea class="span12" id="admin_incident_add_description" name="description"></textarea>
+            </div>
+        </div><!-- /clearfix -->
+        
+        <div class="clearfix">
+            <label for="admin_incident_add_status">Initial Classification</label>
+            <div class="select">
+                <select class="xlarge span5" id="admin_incident_add_status" name="status">
+                    {foreach from=StatusBoard_Status::available() item=status}
+                        {if $status != StatusBoard_Status::STATUS_Resolved}
+                            <option value="{$status}">{StatusBoard_Status::name($status)}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            </div>
+        </div><!-- /clearfix -->
+        
+        <div class="clearfix">
+            <label for="admin_incident_add_starttime">Start Time</label>
+            <div class="text">
+                <input class="xlarge span5" id="admin_incident_add_starttime" name="starttime" type="text" value="Now" />
+            </div>
+        </div><!-- /clearfix -->
+        
+        <div class="clearfix">
+            <label for="admin_incident_add_estimatedendtime">Estimated End Time</label>
+            <div class="text">
+                <input class="xlarge span5" id="admin_incident_add_estimatedendtime" name="estimatedendtime" type="text" value="+4 hours" />
+            </div>
+        </div><!-- /clearfix -->
+                    
+        <div class="clearfix">
+            <div class="input">
+                <input type="submit" class="btn primary" name="addincident" value="Add Incident" />
+            </div>
+        </div>
+    </fieldset>
 </form>
