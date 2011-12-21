@@ -19,6 +19,10 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
         
         return $new_service;
     }
+    
+    public function newSite($name, $description) {
+        return StatusBoard_Site::newSiteForService($this, $name, $description);
+    }
        
     public function sites($ignore_cache = false) {
         if ($this->sites === null || $ignore_cache) {

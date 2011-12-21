@@ -50,6 +50,28 @@
 	You haven't created any sites for this service yet. Create some with the button below.
 {/if}
 
-<form id="admin_addsite" method="post" action="{$base_uri}admin/add-site/service/{$service->id}/">
-    <input type="button" class="btn success" name="addsite" value="Add Site" />
+<form id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-site/">
+    <fieldset>
+        <legend>Add Site</legend>
+            
+        <div class="clearfix">
+            <label for="admin_site_add_name">Name</label>
+            <div class="text">
+                <input class="xlarge span5" id="admin_site_add_name" name="name" type="text" value="" />
+            </div>
+        </div><!-- /clearfix -->
+        
+        <div class="clearfix">
+            <label for="admin_site_add_description">Description</label>
+            <div class="text">
+                <textarea class="span12" id="admin_site_add_description" name="description"></textarea>
+            </div>
+        </div><!-- /clearfix -->
+
+        <div class="clearfix">
+            <div class="input">
+                <input type="submit" class="btn success" name="addsite" value="Add Site" />
+            </div>
+        </div>
+    </fieldset>
 </form>

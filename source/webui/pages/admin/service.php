@@ -43,10 +43,26 @@ if ($request->exists('do')) {
                 $messages[] = 'No changes were necessary.';
             }
             
-        } break;
+        } break;        
         
-        default: {
+        case 'add-site': {
+            $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
+            $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+
+            $site = $service->newSite($name, $description);
             
+            $messages[] = array(
+                'severity' => 'success',
+                'content'  => 'The site was created succesfully.',
+            );
+       
+        } break;
+
+        default: {
+            $messages[] = array(
+                'severity' => 'warning',
+                'content'  => "The activity '{$activity}' is not supported.",
+            );
         }
     }
 }

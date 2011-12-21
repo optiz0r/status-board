@@ -16,6 +16,17 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         return static::all_for('service', $service->id);
     } 
     
+    public static function newSiteForService(StatusBoard_Service $service, $name, $description) {
+        $new_service = new self();
+        $new_service->service = $service->id;
+        $new_service->name = $name;
+        $new_service->description = $description;
+        
+        $new_service->create();
+        
+        return $new_service;
+    }
+    
     public function openIncidents($ignore_cache = false) {
         if ($this->incidents_open === null || $ignore_cache) {
             $this->incidents_open = StatusBoard_Incident::open_for_site($this);
