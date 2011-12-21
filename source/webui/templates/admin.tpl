@@ -42,7 +42,7 @@
                                 </td>
                                 <td>
                                     <button class='btn info' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit</button>
-                                    <button class='btn danger' onclick="sb.admin.deleteService('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/');">Delete</button>
+                                    <button class='btn danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/');">Delete</button>
                                 </td>
                             </tr>
                         {/foreach}
@@ -52,7 +52,7 @@
                 You haven't created any services yet. Create some with the button below.
             {/if}
             </div>
-            <div id="confirm_delete_service" class="modal hide fade">
+            <div id="confirm_delete" class="modal hide fade">
                 <div class="modal-header">
                     Confirm deletion
                 </div>
@@ -61,8 +61,8 @@
                     Are you sure you wish to delete this Service?                
                 </div>
                 <div class="modal-footer">
-                    <button class="btn secondary" id="confirm_delete_service_cancel">Cancel</button>
-                    <button class="btn danger" id="confirm_delete_service_do">Delete</button>              
+                    <button class="btn secondary" id="confirm_delete_cancel">Cancel</button>
+                    <button class="btn danger" id="confirm_delete_do">Delete</button>              
                 </div>
             </div>
     </div><!--/Row for Existing Service-->

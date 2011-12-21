@@ -24,22 +24,22 @@ var sb = {
     admin: {
       
         init: function() {
-            $('#confirm_delete_service').modal({
+            $('#confirm_delete').modal({
                 backdrop: true,
                 keyboard: true
             });
+            $('#confirm_delete_cancel').click(function() {
+                $('#confirm_delete').modal('hide'); 
+             });
         },
         
-        deleteService: function(url) {
-            $('#confirm_delete_service_do').click(function() {
+        deleteItem: function(url) {
+            $('#confirm_delete_do').click(function() {
                 location.href = url;
             });
-            $('#confirm_delete_service_cancel').click(function() {
-               $('#confirm_delete_service').modal('hide'); 
-            });
             
-            $('#confirm_delete_service').modal('show');
-        }
+            $('#confirm_delete').modal('show');
+        },
         
     },
      
