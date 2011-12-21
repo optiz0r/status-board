@@ -18,7 +18,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Table structure for table `settings`
 --
-
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE IF NOT EXISTS `settings` (
   `name` varchar(255) NOT NULL,
@@ -30,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 -- Dumping data for table `settings`
 --
-
 INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 ('debug.display_exceptions', '1', 'bool'),
 ('cache.base_dir', '/dev/shm/status-board/', 'string'),
@@ -50,7 +48,6 @@ INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 --
 -- Table structure for table `log`
 --
-
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE IF NOT EXISTS `log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -69,7 +66,6 @@ CREATE TABLE IF NOT EXISTS `log` (
 --
 -- Table structure for table `service`
 --
-
 DROP TABLE IF EXISTS `service`;
 CREATE TABLE IF NOT EXISTS `service` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -81,21 +77,19 @@ CREATE TABLE IF NOT EXISTS `service` (
 --
 -- Table structure for table `service`
 --
-
 DROP TABLE IF EXISTS `site`;
 CREATE TABLE IF NOT EXISTS `site` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `service` int(10) unsigned NOT NULL,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `service` (`service`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
-
 
 --
 -- Table structure for table `incident`
 --
-
 DROP TABLE IF EXISTS `incident`;
 CREATE TABLE IF NOT EXISTS `incident` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -105,13 +99,13 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `start_time` int(10) NOT NULL,
   `estimated_end_time` int(10) NULL,
   `actual_end_time` int(10) NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `site` (`site`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
 -- Table structure for table `incidentstatus`
 --
-
 DROP TABLE IF EXISTS `incidentstatus`;
 CREATE TABLE IF NOT EXISTS `incidentstatus` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -119,13 +113,13 @@ CREATE TABLE IF NOT EXISTS `incidentstatus` (
   `status` int(10) unsigned NOT NULL,
   `description` text NOT NULL,
   `ctime` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `incident` (`incident`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
 -- Table structure for view `incidentstatus_current_int`
 --
-
 DROP VIEW IF EXISTS `incidentstatus_current_int`;
 CREATE VIEW `incidentstatus_current_int` AS (
   SELECT
@@ -140,7 +134,6 @@ CREATE VIEW `incidentstatus_current_int` AS (
 --
 -- Table structure for view `incidentstatus_current`
 --
-
 DROP VIEW IF EXISTS `incidentstatus_current`;
 CREATE VIEW `incidentstatus_current` AS (
   SELECT 
@@ -161,7 +154,6 @@ CREATE VIEW `incidentstatus_current` AS (
 --
 -- Table structure for view `incident_open`
 --
-
 DROP VIEW IF EXISTS `incident_open`;
 CREATE VIEW `incident_open` AS (
   SELECT 
@@ -178,7 +170,6 @@ CREATE VIEW `incident_open` AS (
 --
 -- Table structure for view `incident_closedtime`
 --
-
 DROP VIEW IF EXISTS `incident_closedtime`;
 CREATE VIEW `incident_closedtime` AS (
   SELECT 
@@ -193,7 +184,6 @@ CREATE VIEW `incident_closedtime` AS (
 --
 -- Table structure for view `incident_opentimes`
 --
-
 DROP VIEW IF EXISTS `incident_opentimes`;
 CREATE VIEW `incident_opentimes` AS (
   SELECT
@@ -207,7 +197,6 @@ CREATE VIEW `incident_opentimes` AS (
 --
 -- Table structure for table `user`
 --
-
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -223,14 +212,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 -- Dumping data for table `user`
 --
-
 INSERT INTO `user` (`id`, `username`, `password`, `fullname`, `email`, `last_login`, `last_password_change`) VALUES
 (1, 'admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Administrator', NULL, NULL, 1324211456);
 
 --
 -- Table structure for table `group`
 --
-
 DROP TABLE IF EXISTS `group`;
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -242,34 +229,32 @@ CREATE TABLE IF NOT EXISTS `group` (
 --
 -- Dumping data for table `group`
 --
-
 INSERT INTO `group` (`id`, `name`, `description`) VALUES
 (1, 'admins', 'Administrative users will full control over the status boards.');
 
 --
 -- Table structure for table `usergroup`
 --
-
 DROP TABLE IF EXISTS `usergroup`;
 CREATE TABLE IF NOT EXISTS `usergroup` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user` int(10) unsigned NOT NULL,
   `group` int(10) unsigned NOT NULL,
   `added` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user` (`user`,`group`),
+  KEY `group` (`group`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
 -- Dumping data for table `usergroup`
 --
-
 INSERT INTO `usergroup` (`id`, `user`, `group`, `added`) VALUES
 (1, 1, 1, 1324211572);
 
 --
 -- Table structure for view `groups_by_user`
 --
-
 DROP VIEW IF EXISTS `groups_by_user`;
 CREATE VIEW `groups_by_user` AS (
   SELECT 
@@ -284,7 +269,6 @@ CREATE VIEW `groups_by_user` AS (
 --
 -- Table structure for table `permission`
 --
-
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -296,7 +280,6 @@ CREATE TABLE IF NOT EXISTS `permission` (
 --
 -- Dumping data for table `permission`
 --
-
 INSERT INTO `permission` (`id`, `name`, `description`) VALUES
 (1, 'Administrator', 'Full administrative rights.');
 
@@ -304,27 +287,26 @@ INSERT INTO `permission` (`id`, `name`, `description`) VALUES
 --
 -- Table structure for table `grouppermission`
 --
-
 DROP TABLE IF EXISTS `grouppermission`;
 CREATE TABLE IF NOT EXISTS `grouppermission` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `group` int(10) unsigned NOT NULL,
   `permission` int(10) unsigned NOT NULL,
   `added` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `group` (`group`,`permission`),
+  KEY `permission` (`permission`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
--- Dumping data for table `grouppermissions`
+-- Dumping data for table `grouppermission`
 --
-
 INSERT INTO `grouppermission` (`id`, `group`, `permission`, `added`) VALUES
 (1, 1, 1, 1324211935);
 
 --
 -- Table structure for view `permissions_by_group`
 --
-
 DROP VIEW IF EXISTS `permissions_by_group`;
 CREATE VIEW `permissions_by_group` AS (
   SELECT 
@@ -339,7 +321,6 @@ CREATE VIEW `permissions_by_group` AS (
 --
 -- Table structure for view `permissions_by_user`
 --
-
 DROP VIEW IF EXISTS `permissions_by_user`;
 CREATE VIEW `permissions_by_user` AS (
   SELECT 
@@ -350,3 +331,39 @@ CREATE VIEW `permissions_by_user` AS (
     LEFT JOIN `user` AS `u` ON `ug`.`user`=`u`.`id`
     LEFT JOIN `permissions_by_group` AS `p` on `ug`.`group`=`p`.`group`
 );
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `grouppermission`
+--
+ALTER TABLE `grouppermission`
+  ADD CONSTRAINT `grouppermission_ibfk_2` FOREIGN KEY (`permission`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `grouppermission_ibfk_1` FOREIGN KEY (`group`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `incident`
+--
+ALTER TABLE `incident`
+  ADD CONSTRAINT `incident_ibfk_1` FOREIGN KEY (`site`) REFERENCES `site` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `incidentstatus`
+--
+ALTER TABLE `incidentstatus`
+  ADD CONSTRAINT `incidentstatus_ibfk_1` FOREIGN KEY (`incident`) REFERENCES `incident` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `site`
+--
+ALTER TABLE `site`
+  ADD CONSTRAINT `site_ibfk_1` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `usergroup`
+--
+ALTER TABLE `usergroup`
+  ADD CONSTRAINT `usergroup_ibfk_2` FOREIGN KEY (`group`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usergroup_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
