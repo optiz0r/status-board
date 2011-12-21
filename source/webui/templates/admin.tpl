@@ -1,19 +1,19 @@
 <div class="page-header">
     <h1>Admin Control Panel</h1>
     <ul class="tabs" data-tabs="tabs">
-        <li class="active"><a href="#Admin">Admin</a></li>
-        <li><a href="#Services">Services</a></li>
-        <li><a href="#UserManagement">User Management</a></li>
-        <li><a href="#Settings">Settings</a></li>
+        <li {if $tab == 'admin'}class="active"{/if}><a href="#admin">Admin</a></li>
+        <li {if $tab == 'services'}class="active"{/if}><a href="#services">Services</a></li>
+        <li {if $tab == 'users'}class="active"{/if}><a href="#users">User Management</a></li>
+        <li {if $tab == 'settings'}class="active"{/if}><a href="#settings">Settings</a></li>
     </ul>
 </div>
 
 <div id="my-tab-content" class="tab-content">
-    <div class="tab-pane active" id="Admin">
+    <div class="tab-pane {if $tab == 'admin'}active{/if}" id="tab_admin">
         <p>TODO</p>
     </div>
             
-    <div class="tab-pane" id="Services">
+    <div class="tab-pane {if $tab == 'services'}active{/if}" id="tab_services">
         <h1>Services</h1>
         <p>Click on a Service to edit its properties, or access any of the sites defined under it.</p>
 
@@ -33,7 +33,7 @@
         </form>
     </div>
             
-    <div class="tab-pane" id="UserManagement">
+    <div class="tab-pane {if $tab == 'users'}active{/if}" id="tab_users">
         <h1>Users and Permissions</h1>
         <p>
             Click on a User to edit its properties.
@@ -50,7 +50,7 @@
         </form>
     </div>
     
-    <div class="tab-pane" id="Settings">
+    <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">
         <h1>Settings<h1>
         <p>
             Quick access to important settings. Please use the <a href="{$base_uri}admin/settings/" title="Full settings">full settings</a>
@@ -92,7 +92,6 @@
     </div>
 </div>
           
-          
-        
-
-
+<script type="text/javascript">
+    sb.admin.init();
+</script>

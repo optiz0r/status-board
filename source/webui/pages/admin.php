@@ -3,10 +3,13 @@
 $main = StatusBoard_Main::instance();
 $auth = $main->auth();
 $config = $main->config();
+$request = $main->request();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_Administrator)) {
     throw new StatusBoard_Exception_NotAuthorised();
 }
+
+$this->smarty->assign('tab', $request->get('tab', 'admin'));
 
 $services = StatusBoard_Service::all();
 $this->smarty->assign('services', $services);
