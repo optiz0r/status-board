@@ -26,7 +26,7 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
        
     public function sites($ignore_cache = false) {
         if ($this->sites === null || $ignore_cache) {
-            $this->sites = StatusBoard_Site::all_for_service($this);
+            $this->sites = StatusBoard_Site::allForService($this);
         }
         
         return $this->sites;

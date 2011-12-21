@@ -15,17 +15,17 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     protected $current_status = null;
     protected $statuses = null;
 
-    public static function open_for_site(StatusBoard_Site $site) {
-        return static::all_for('site', $site->id, 'incident_open');
+    public static function openForSite(StatusBoard_Site $site) {
+        return static::allFor('site', $site->id, 'incident_open');
     }
     
-    public static function open_for_site_during(StatusBoard_Site $site, $start, $end) {
+    public static function openForSiteDuring(StatusBoard_Site $site, $start, $end) {
         $params = array(
             array('name' => 'start', 'value' => $start, 'type' => PDO::PARAM_INT),
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::all_for('site', $site->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('site', $site->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
     }
     
     public function currentStatus($ignore_cache = false) {
@@ -42,7 +42,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $this->current_status;
     }
     
-    public function statusAtTime($time) {
+    public function statusAt($time) {
         $database = StatusBoard_Main::instance()->database();
         $row = $database->selectOne('SELECT `status` FROM `incidentstatus` WHERE `incident`=:incident AND ctime < :time ORDER BY ctime DESC LIMIT 1', array(
                 array('name' => 'incident', 'value' => $this->id, 'type' => PDO::PARAM_INT),
@@ -68,7 +68,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         foreach ($incidents as $incident) {
             $incident_status = null;
             if ($time) {
-                $incident_status = $incident->statusAtTime($time);    
+                $incident_status = $incident->statusAt($time);    
             } else {
                 $incident_status = $incident->currentStatus();
             }
@@ -83,7 +83,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     
     public function statusChanges($ignore_cache = false) {
         if ($this->statuses === null || $ignore_cache) {
-            $this->statuses = StatusBoard_IncidentStatus::all_for('incident', $this->id);
+            $this->statuses = StatusBoard_IncidentStatus::allFor('incident', $this->id);
         }
         
         return $this->statuses;
@@ -91,7 +91,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     
     public function changeStatus($status, $description) {
         if ($this->statuses === null) {
-            $this->statuses = StatusBoard_IncidentStatus::all_for('incident', $this->id);
+            $this->statuses = StatusBoard_IncidentStatus::allFor('incident', $this->id);
         }
         
         $new_status = StatusBoard_IncidentStatus::newForIncident($this, $status, $description);

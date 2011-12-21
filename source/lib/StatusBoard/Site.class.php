@@ -12,8 +12,8 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     protected $incidents = null;
     protected $incidents_open = null;
     
-    public static function all_for_service(StatusBoard_Service $service) {
-        return static::all_for('service', $service->id);
+    public static function allForService(StatusBoard_Service $service) {
+        return static::allFor('service', $service->id);
     } 
     
     public static function newSiteForService(StatusBoard_Service $service, $name, $description) {
@@ -29,14 +29,14 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     
     public function openIncidents($ignore_cache = false) {
         if ($this->incidents_open === null || $ignore_cache) {
-            $this->incidents_open = StatusBoard_Incident::open_for_site($this);
+            $this->incidents_open = StatusBoard_Incident::openForSite($this);
         }
         
         return $this->incidents_open;
     }
     
     public function openIncidentsDuring($start, $end) {
-        return StatusBoard_Incident::open_for_site_during($this, $start, $end);
+        return StatusBoard_Incident::openForSiteDuring($this, $start, $end);
     }
     
     public function status() {
