@@ -31,7 +31,7 @@
                 {foreach from=$services item=service}
                     <tr><td><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></td>
                     <td>{$service->description|escape:html}</td>
-                    <td><button class='btn info'>Edit</button><button style="margin-left:10px" class='btn danger'>Delete</button></td>
+                    <td><button class='btn info' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit</button><button style="margin-left:10px" class='btn danger'>Delete</button></td>
                 {/foreach}
             </tr>
         </tbody>
