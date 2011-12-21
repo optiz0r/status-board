@@ -5,9 +5,6 @@ $request = $main->request();
 $auth = $main->auth();
 
 $activity = null;
-$success = true;
-$errors = array();
-$successes = array();
 
 if ($request->exists('do')) {
     $activity = $request->get('do');
@@ -22,27 +19,33 @@ if ($request->exists('do')) {
             if ($user->checkPassword($current_password)) {
                 if ($new_password == $confirm_password) {
                     $auth->changePassword($new_password);
-                    $successes[] = 'The password has been changed successfully.';
+                    $messages[] = array(
+                    	'severity' => 'success',
+                    	'content'  => 'The password has been changed successfully.',
+                    );
                 } else {
-                    $success = false;
-                    $errors[] = 'The passwords did not match.';
+                    $messages[] = array(
+                    	'severity' => 'error',
+                    	'content'  => 'The passwords did not match.',
+                    );
                 }                
             } else {
-                $success = false;
-                $errors[] = 'The current password was incorrect.';
+                $messages[] = array(
+                	'severity' => 'error',
+                	'content'  => 'The current password was incorrect.',
+                );
             }
         } break;
         
         default: {
-            $success = false;
-            $errors[] = "The activity '{$activity}' was not recognised.";
+            $messages[] = array(
+            	'severity' => 'error',
+            	'content'  => "The activity '{$activity}' was not recognised.",
+            );
         } break;
     }
 }
 
 $this->smarty->assign('activity', $activity);
-$this->smarty->assign('successes', $successes);
-$this->smarty->assign('errors', $errors);
-$this->smarty->assign('requested_page', $this->page);
-
+$this->smarty->assign('messages', $messages);
 ?>
