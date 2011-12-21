@@ -9,6 +9,35 @@ if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission
     throw new StatusBoard_Exception_NotAuthorised();
 }
 
+$activity = null;
+$success = true;
+
+if ($request->exists('do')) {
+    $activity = $request->get('do');
+    switch ($activity) {
+
+        case 'add-service': {
+            $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
+            $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+
+            $service = StatusBoard_Service::newService($name, $description);
+            
+            $messages[] = array(
+                'severity' => 'success',
+                'content'  => 'The service was created succesfully.',
+            );
+       
+        } break;
+
+        default: {
+            $messages[] = array(
+                'severity' => 'warning',
+                'content'  => "The activity '{$activity}' is not supported.",
+            );
+        }
+    }
+}
+
 $this->smarty->assign('tab', $request->get('tab', 'admin'));
 
 $services = StatusBoard_Service::all();
@@ -21,5 +50,6 @@ $this->smarty->assign('users', $users);
 $this->smarty->assign('debug_displayexceptions', $config->get('debug.display_exceptions'));
 $this->smarty->assign('cache_basedir', $config->get('cache.base_dir'));
 $this->smarty->assign('templates_tmppath', $config->get('templates.tmp_path'));
+$this->smarty->assign('messages', $messages);
 
 ?>

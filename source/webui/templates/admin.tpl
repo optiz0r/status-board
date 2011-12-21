@@ -28,8 +28,30 @@
             You haven't created any services yet. Create some with the button below.
         {/if}
 
-        <form id="admin_addservice" method="post" action="{$base_uri}admin/add-service/">
-            <input type="button" class="btn success" name="addservice" value="Add Service" />
+        <form id="admin_addservice" method="post" action="{$base_uri}admin/tab/services/do/add-service/">
+            <fieldset>
+                <legend>Add Service</legend>
+                    
+                <div class="clearfix">
+                    <label for="admin_service_add_name">Name</label>
+                    <div class="text">
+                        <input class="xlarge span5" id="admin_service_add_name" name="name" type="text" value="" />
+                    </div>
+                </div><!-- /clearfix -->
+                
+                <div class="clearfix">
+                    <label for="admin_service_add_description">Description</label>
+                    <div class="text">
+                        <textarea class="span12" id="admin_service_add_description" name="description"></textarea>
+                    </div>
+                </div><!-- /clearfix -->
+    
+                <div class="clearfix">
+                    <div class="input">
+                        <input type="submit" class="btn success" name="addservice" value="Add Service" />
+                    </div>
+                </div>
+            </fieldset>
         </form>
     </div>
             

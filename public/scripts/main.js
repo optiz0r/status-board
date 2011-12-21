@@ -20,6 +20,14 @@ var sb = {
           html: true,
         });
     },
+    
+    admin: {
+      
+        init: function() {
+            
+        }
+                
+    },
      
     usercp: {
  
