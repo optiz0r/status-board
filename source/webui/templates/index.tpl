@@ -45,11 +45,11 @@
                                 {if is_array($message)}
                                     {$severity=$message['severity']}
                                     <div class="alert-message {$severity}">
-                                        {$message['content']}
+                                        {$message['content']|escape:html}
                                     </div>
                                 {else}
                                     <div class="alert-message info">
-                                        {$message}
+                                        {$message|escape:html}
                                     </div>
                                 {/if}
                             {/foreach}
