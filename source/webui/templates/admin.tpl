@@ -61,14 +61,14 @@
         <form id="admin_addservice" method="post" action="{$base_uri}admin/tab/services/do/add-service/">
             <fieldset>
                 <div class="clearfix">
-                    <label for="admin_service_add_name">Name</label>
+                    <label for="admin_service_add_name" style="width:87px">Name</label>
                     <div class="text">
                         <input class="xlarge span5" id="admin_service_add_name" name="name" type="text" value="" />
                     </div><!-- /text -->
                 </div><!-- /clearfix -->
                 
                 <div class="clearfix">
-                    <label for="admin_service_add_description">Description</label>
+                    <label for="admin_service_add_description" style="width:87px">Description</label>
                     <div class="text">
                     <textarea class="xxlarge" name="textarea" id="admin_service_add_description" rows="3"  name="description"></textarea>
                     </div><!-- /text -->
