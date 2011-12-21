@@ -8,8 +8,17 @@
 var sb = {
      
     init: function() {
+        // Properly format any alert boxes
         $('.alert-data').alert();
+        
+        // Properly format any tab widgets
         $('.tabs').tabs();
+        
+        // Display popovers on all configured items
+        $("a[rel=popover]").popover({
+          offset: 10,
+          html: true,
+        });
     },
      
     usercp: {
@@ -41,14 +50,3 @@ var sb = {
 };
  
 $('document').ready(sb.init);
- 
-            $(function () {
-              $("a[rel=popover]")
-                .popover({
-                  offset: 10,
-                  html: true
-                })
-                .click(function(e) {
-                  e.preventDefault()
-                })
-            })
