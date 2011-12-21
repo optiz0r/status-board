@@ -61,7 +61,7 @@
                 </div><!-- /content -->
 
         <footer>
-          <p> Powered by StatusBoard {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
+          <p> Powered by <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
         </footer>
 
         </div><!-- /container -->
