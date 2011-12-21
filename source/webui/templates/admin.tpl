@@ -23,39 +23,53 @@
         		<h3>Current Services</h3>
         		<p>Click on a Service to edit its properties, or access any of the sites defined under it.</p>
         	</div>
-        <div class="span12 column">
-			<table class="bordered-table" name="services_list_table"><!--Services table -->
-				<thead>
-				<th>Service</th>
-				<th>Description</th>
-				<th>Action</th>
-				</thead>
-				<tbody>
-    	    {if $services}
-           {foreach from=$services item=service}
-             <tr>
-             	<td>
-             	<a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a>
-             	</td>
-                <td>
-                {$service->description|escape:html}
-                </td>
-                <td>
-                <button class='btn info' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit</button>
-                <button style="margin-left:10px" class='btn danger'>Delete</button></td>
-                </tr>
-            {/foreach}
-        	</tbody>
-        	</table><!--/Services table -->
-        {else}
-            You haven't created any services yet. Create some with the button below.
-        {/if}
-        </div>
-        </div><!--/Row for Existing Service-->
-        <div class="row" name="Services_new"><!--Row for New Service-->
+            <div class="span12 column">
+                {if $services}
+                    <table class="bordered-table" name="services_list_table"><!--Services table -->
+                        <thead>
+    				    <th>Service</th>
+    				    <th>Description</th>
+        				<th>Action</th>
+				    </thead>
+				    <tbody>
+                        {foreach from=$services item=service}
+                            <tr>
+                                <td>
+             	                  <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a>
+                                </td>
+                                <td>
+                                    {$service->description|escape:html}
+                                </td>
+                                <td>
+                                    <button class='btn info' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit</button>
+                                    <button class='btn danger' onclick="sb.admin.deleteService('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/');">Delete</button>
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table><!--/Services table -->
+            {else}
+                You haven't created any services yet. Create some with the button below.
+            {/if}
+            </div>
+            <div id="confirm_delete_service" class="modal hide fade">
+                <div class="modal-header">
+                    Confirm deletion
+                </div>
+                <div class="modal-body">
+                    This action cannot be reversed and all dependent sites and incidents will also be removed.
+                    Are you sure you wish to delete this Service?                
+                </div>
+                <div class="modal-footer">
+                    <button class="btn secondary" id="confirm_delete_service_cancel">Cancel</button>
+                    <button class="btn danger" id="confirm_delete_service_do">Delete</button>              
+                </div>
+            </div>
+    </div><!--/Row for Existing Service-->
+    <div class="row" name="Services_new"><!--Row for New Service-->
 		<div class="span4 column"><!--New Service description-->
-        <h3>Add New Service</h3>
-        <p>Use this form to define a new service</p>
+            <h3>Add New Service</h3>
+            <p>Use this form to define a new service</p>
         </div><!--/New Service description-->
 		<div class="span12 column"><!--Add New Service -->
         <form id="admin_addservice" method="post" action="{$base_uri}admin/tab/services/do/add-service/">
@@ -70,7 +84,7 @@
                 <div class="clearfix">
                     <label for="admin_service_add_description" style="width:87px">Description</label>
                     <div class="text">
-                    <textarea class="xxlarge" name="textarea" id="admin_service_add_description" rows="3"  name="description"></textarea>
+                    <textarea class="xxlarge" id="admin_service_add_description" rows="3"  name="description"></textarea>
                     </div><!-- /text -->
                 </div><!-- /clearfix -->
     

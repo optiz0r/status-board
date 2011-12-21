@@ -28,6 +28,26 @@ if ($request->exists('do')) {
             );
        
         } break;
+        
+        case 'delete-service': {
+            $service_id = $request->get('id', 'Sihnon_Exception_InvalidParameters');
+            
+            try {
+                $service = StatusBoard_Service::fromId($service_id);
+                $service->delete();
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The Service was deleted successfully.',
+                );
+            } catch (Sihnon_Exception_ResultCountMismatch $e) {
+                $messages[] = array(
+                    'severity' => 'error',
+                    'content'  => 'The Service was not deleted as the object requested could not be found.',
+                );
+            }
+            
+        } break;
 
         default: {
             $messages[] = array(

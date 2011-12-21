@@ -24,9 +24,23 @@ var sb = {
     admin: {
       
         init: function() {
+            $('#confirm_delete_service').modal({
+                backdrop: true,
+                keyboard: true
+            });
+        },
+        
+        deleteService: function(url) {
+            $('#confirm_delete_service_do').click(function() {
+                location.href = url;
+            });
+            $('#confirm_delete_service_cancel').click(function() {
+               $('#confirm_delete_service').modal('hide'); 
+            });
             
+            $('#confirm_delete_service').modal('show');
         }
-                
+        
     },
      
     usercp: {
@@ -54,7 +68,7 @@ var sb = {
         }
          
     }
-         
+    
 };
  
 $('document').ready(sb.init);
