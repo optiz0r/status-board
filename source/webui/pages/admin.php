@@ -4,6 +4,7 @@ $main = StatusBoard_Main::instance();
 $auth = $main->auth();
 $config = $main->config();
 $request = $main->request();
+$session = $main->session();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_Administrator)) {
     throw new StatusBoard_Exception_NotAuthorised();
@@ -56,6 +57,9 @@ if ($request->exists('do')) {
             );
         }
     }
+    
+    $session->set('messages', $messages);
+    StatusBoard_Page::redirect('admin/tab/services/');
 }
 
 $this->smarty->assign('tab', $request->get('tab', 'admin'));

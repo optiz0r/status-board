@@ -39,6 +39,11 @@
         <div class="container">
             <div class="content">
 
+                {if ! $messages}
+                    {$session = StatusBoard_Main::instance()->session()}
+                    {$messages = $session->get('messages')}
+                    {$session->delete('messages')}
+                {/if}
                 {if $messages}
                     <div id="messages">
                         {foreach from=$messages item=message}
