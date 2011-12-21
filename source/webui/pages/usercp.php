@@ -3,6 +3,7 @@
 $main = StatusBoard_Main::instance();
 $request = $main->request();
 $auth = $main->auth();
+$session = $main->session();
 
 $activity = null;
 
@@ -44,6 +45,9 @@ if ($request->exists('do')) {
             );
         } break;
     }
+
+    $session->set('messages', $messages);
+    StatusBoard_Page::redirect("usercp/");
 }
 
 $this->smarty->assign('activity', $activity);
