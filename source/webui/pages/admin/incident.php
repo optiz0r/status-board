@@ -31,6 +31,9 @@ if ($request->exists('do')) {
         case 'edit': {
             $reference = StatusBoard_Main::issetelse($_POST['reference'], 'Sihnon_Exception_InvalidParameters');
             $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+            $estimated_end_time = StatusBoard_Main::issetelse($_POST['estimatedendtime'], 'Sihnon_Exception_InvalidParameters');
+            
+            $estimated_end_time = strtotime($estimated_end_time);
 
             if ($reference) {
                 $incident->reference = $reference;
@@ -38,7 +41,10 @@ if ($request->exists('do')) {
             if ($description) {
                 $incident->description = $description;
             }
-            if ($reference || $description) {
+            if ($estimated_end_time) {
+                $incident->estimated_end_time = $estimated_end_time;
+            }
+            if ($reference || $description || $estimated_end_time) {
                 $incident->save();
                 $messages[] = array(
                     'severity' => 'success',
