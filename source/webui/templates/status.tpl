@@ -2,7 +2,8 @@
 	<div class="row">
 		<div class="span16"><!--name content container -->   
 			<h1>Site Status History: {$service->name|escape:html} - {$site->name|escape:html}</h1>
-			<p>This page details the incident history for a site</p>
+			<div class="rounded_content">
+			<p>This page details the incident history for a site:</p>
 			{if $start && $end}
                 {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
                 {$incidentCount=count($incidentsDuring)}
@@ -18,7 +19,7 @@
                                 <p>Estimated End Time: {$time_difference|fuzzyTime}</p>
                             {/if}
                         </div>
-                        <div class="span12 column">
+                        <div class="span11 column">
                             <table class="bordered-table">
                                 <thead>
                                     <th>Status</th>
@@ -51,7 +52,7 @@
     	                	<h3 class="status">{if $day == 0}Today {/if}{$start|date_format:"d M Y"}</h3>
     	                    <p>{$incidentCount} {StatusBoard_Formatting::pluralise('incident','incidents',$incidentCount)}</p>
     	                </div>
-    		            <div class="span12 column">
+    		            <div class="span11 column">
     		            	{if $incidentsDuring}
     							<table class="bordered-table"><!--Services table -->
     								<thead>
@@ -85,7 +86,8 @@
     		       		</div>
     				</div>
     			{/foreach}
-            {/if}      	
+            {/if}   
+            </div> 	
 		</div>
 	</div>
 </div>

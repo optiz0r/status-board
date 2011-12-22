@@ -1,4 +1,12 @@
 <div id="statusboard">
+<div class="row">
+<div class="span14">
+<h2>Atos UK Networks Shared Services Status</h2>
+</div>
+<div class="span2">
+<a href="#" class="btn small">Add Incident</a>
+</div>
+</div>
     <table class="bordered-table">
         <thead>
             <tr>

@@ -9,12 +9,13 @@
             <h1>Service {$service->name|escape:html}</h1>
         </div>
     </div>
+    <div class="rounded_content">
     <div class="row">
         <div class="span4 column"><!--New description-->
             <h3>Edit Service</h3>
             <p>Use this form to update the existing Service</p>
         </div><!--/New Service description-->
-        <div class="span12 column"><!--Add New Service -->
+        <div class="span11 column"><!--Add New Service -->
             <form id="admin_service_edit" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/edit/">
                 <fieldset>
                     <div class="clearfix">
@@ -27,13 +28,13 @@
                     <div class="clearfix">
                         <label for="admin_service_edit_description" style="width:87px">Description</label>
                         <div class="text">
-                        <textarea class="xxlarge" name="textarea" id="admin_service_add_description" rows="3"  name="description" >{$service->description|escape:html}</textarea>
+                        <textarea class="xlarge" name="textarea" id="admin_service_add_description" rows="3"  name="description" >{$service->description|escape:html}</textarea>
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
         
                     <div class="clearfix">
                         <div class="input">
-                            <input type="submit" class="btn primary" value="Edit Service">&nbsp;<button type="reset" class="btn">Cancel</button>
+                            <input type="submit" class="btn small primary" value="Edit Service">&nbsp;<button class="btn small" type="reset" class="btn">Cancel</button>
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
                 </fieldset>
@@ -46,7 +47,7 @@
     		<h3>Existing Sites</h3>
     		<p>Currently the following sites that are defined for the service {$service->name|escape:html}, Edit the site or delete it from the service here, to add a new one use the form below</p>
     	</div>
-        <div class="span12 column">
+        <div class="span11 column">
             {if $sites}
     			<table class="bordered-table" name="sites_list_table"><!--Services table -->
 				    <thead>
@@ -64,8 +65,8 @@
                                     {$site->description|escape:html}
                                 </td>
                                 <td>
-                                    <button class='btn primary' onclick="document.location.href='{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/';return false;">Edit Site</button>
-                                    <button style="margin-left:10px" class='btn danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete Site</button>
+                                    <button class='btn small primary' onclick="document.location.href='{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/';return false;">Edit Site</button>
+                                    <button style="margin-left:10px" class='btn small danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete Site</button>
                                 </td>
                             </tr>
                         {/foreach}
@@ -95,20 +96,20 @@
             <h3>Add Site</h3>
             <p>Use this form to define a new site to the service {$service->name|escape:html}</p>
         </div><!--/New Service description-->
-        <div class="span12 column">
+        <div class="span11 column">
             <form id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-site/">
                 <fieldset>
                     <div class="clearfix">
-                        <label for="admin_site_add_name" style="width:87px">Name</label>
+                        <label for="admin_site_add_name" style="width:85px">Name</label>
                         <div class="text">
                             <input class="xlarge span5" id="admin_site_add_name" name="name" type="text" />
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
                     
                     <div class="clearfix">
-                        <label for="admin_site_edit_description" style="width:87px">Description</label>
+                        <label for="admin_site_edit_description" style="width:85px">Description</label>
                         <div class="text">
-                            <textarea class="xxlarge" id="admin_site_add_description" rows="3"  name="description" ></textarea>
+                            <textarea class="xlarge" id="admin_site_add_description" rows="3"  name="description" ></textarea>
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
         
@@ -121,6 +122,7 @@
             </form>
         </div>
     </div><!--/Row for New Service-->  
+</div>
 </div><!-- /container -->
           
 <script type="text/javascript">
