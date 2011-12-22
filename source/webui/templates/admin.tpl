@@ -1,31 +1,31 @@
 <div class="page-header"><!-- page-header (Header containing navigation menu and title) -->
     <h1>Admin Control Panel</h1>
     <ul class="tabs" data-tabs="tabs">
-        <li {if $tab == 'admin'}class="active"{/if}><a href="{$base_uri}admin">Admin</a></li>
-        <li {if $tab == 'services'}class="active"{/if}><a href="{$base_uri}admin/tab/services">Services</a></li>
-        <li {if $tab == 'users'}class="active"{/if}><a href="{$base_uri}admin/tab/users">User Management</a></li>
-        <li {if $tab == 'settings'}class="active"{/if}><a href="{$base_uri}admin/tab/settings">Settings</a></li>
+        <li {if $tab == 'admin'}class="active"{/if}><a href="#tab_admin">Admin</a></li>
+        <li {if $tab == 'services'}class="active"{/if}><a href="#tab_services">Services</a></li>
+        <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users">User Management</a></li>
+        <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings">Settings</a></li>
     </ul>
 </div><!-- /page-header -->
 
 <div id="my-tab-content" class="tab-content"><!--tab-content(container for all main div content on page -->
 <div class="tab-pane {if $tab == 'admin'}active{/if}" id="tab_admin"><!--Toggled Div to hide admin content -->
-    <div class="span11" name="Admin Home"><!--Admin home content container -->
+    <div class="span11"><!--Admin home content container -->
         <p>TODO</p>
     </div><!--/Admin home content container -->
 </div><!--/Toggled Div to hide admin content -->
 
 <div class="tab-pane {if $tab == 'services'}active{/if}" id="tab_services"><!--Toggled Div to hide services content -->
-    <div class="span16" name="Services"><!--Services content container -->   
+    <div class="span16"><!--Services content container -->   
         <h1>Services</h1>
-        <div class="row" name="Services_existing">
+        <div class="row">
         	<div class="span4 column">
         		<h3>Current Services</h3>
         		<p>Click on a Service to edit its properties, or access any of the sites defined under it.</p>
         	</div>
             <div class="span12 column">
                 {if $services}
-                    <table class="bordered-table" name="services_list_table"><!--Services table -->
+                    <table class="bordered-table"><!--Services table -->
                         <thead>
     				    <th>Service</th>
     				    <th>Description</th>
@@ -66,7 +66,7 @@
                 </div>
             </div>
     </div><!--/Row for Existing Service-->
-    <div class="row" name="Services_new"><!--Row for New Service-->
+    <div class="row"><!--Row for New Service-->
 		<div class="span4 column"><!--New Service description-->
             <h3>Add New Service</h3>
             <p>Use this form to define a new service</p>
@@ -101,7 +101,7 @@
 </div><!--/Toggled Div to hide services content -->
             
 <div class="tab-pane {if $tab == 'users'}active{/if}" id="tab_users">
-<div class="span11" name="Users"><!--Users content container -->  
+<div class="span11"><!--Users content container -->  
         <h1>Users and Permissions</h1>
         <p>
             Click on a User to edit its properties.
@@ -120,7 +120,7 @@
     </div>
     
     <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">
-    <div class="span11" name="Settings"><!--Settings content container --> 
+    <div class="span11"><!--Settings content container --> 
         <h1>Settings<h1>
         <p>
             Quick access to important settings. Please use the <a href="{$base_uri}admin/settings/" title="Full settings">full settings</a>
