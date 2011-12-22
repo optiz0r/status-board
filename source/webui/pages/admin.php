@@ -27,7 +27,7 @@ if ($request->exists('do')) {
                 'severity' => 'success',
                 'content'  => 'The service was created succesfully.',
             );
-       
+            
         } break;
         
         case 'delete-service': {
@@ -49,6 +49,37 @@ if ($request->exists('do')) {
             }
             
         } break;
+        
+        case 'save-settings': {
+            $supported_settings = array(
+                'site_title' => 'site.title',
+                'debug_display_exceptions' => 'debug.display_exceptions',
+                'cache_base_dir' => 'cache.base_dir',
+                'templates_tmp_path' => 'templates.tmp_path',
+            );
+            
+            $dirty = false;
+            foreach ($supported_settings as $param => $setting) {
+                $value = StatusBoard_Main::issetelse($_POST[$param]);
+                if ($value && $value != $config->get($setting)) {
+                    $config->set($setting, $value);
+                    $dirty = true;
+                }   
+            }
+            
+            if ($dirty) {
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'Settings were saved successfully.',
+                );
+            } else {
+                $messages[] = array(
+                    'severity' => 'warning',
+                    'content'  => 'Settings were not saved as no changes were necessary.',
+                );
+            }
+            
+        } break;
 
         default: {
             $messages[] = array(
@@ -58,8 +89,11 @@ if ($request->exists('do')) {
         }
     }
     
+    $destination = $request->get('tab', 'admin');
+    $destination = "admin/tab/{$destination}/";
+    
     $session->set('messages', $messages);
-    StatusBoard_Page::redirect('admin/tab/services/');
+    StatusBoard_Page::redirect($destination);
 }
 
 $this->smarty->assign('tab', $request->get('tab', 'admin'));
@@ -74,6 +108,7 @@ $this->smarty->assign('users', $users);
 $this->smarty->assign('debug_displayexceptions', $config->get('debug.display_exceptions'));
 $this->smarty->assign('cache_basedir', $config->get('cache.base_dir'));
 $this->smarty->assign('templates_tmppath', $config->get('templates.tmp_path'));
+$this->smarty->assign('site_title', $config->get('site.title'));
 $this->smarty->assign('messages', $messages);
 
 ?>

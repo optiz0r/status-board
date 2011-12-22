@@ -102,33 +102,36 @@
     <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">
         <div class="span11"><!--Settings content container --> 
             <h1>Settings<h1>
-            <p>
-                Quick access to important settings. Please use the <a href="{$base_uri}admin/settings/" title="Full settings">full settings</a>
-                page to configure more advanced settings.
-            </p>
         
-            <form id="admin_quicksettings" method="post" action="{$base_uri}admin/settings/do/">
+            <form id="admin_quicksettings" method="post" action="{$base_uri}admin/tab/settings/do/save-settings/">
                 <fieldset>
                     <legend>Quick Settings</legend>
                     
                     <div class="clearfix">
+                        <label for="admin_quicksettings_site_title">Site Title</label>
+                        <div class="checkbox">
+                            <input class="xlarge span5" id="admin_quicksettings_site_title" name="site_title" type="text" value="{$site_title|escape:html}" />
+                        </div><!-- /text -->
+                    </div><!-- /clearfix -->
+                    
+                    <div class="clearfix">
                         <label for="admin_quicksettings_debug_displayexceptions">Display Exceptions?</label>
                         <div class="checkbox">
-                            <input class="" id="admin_quicksettings_debug_displayexceptions" name="debug.displayexceptions" type="checkbox" value="1" {if $debug_displayexceptions}checked="checked" {/if}/>
+                            <input class="" id="admin_quicksettings_debug_displayexceptions" name="debug_displayexceptions" type="checkbox" value="1" {if $debug_displayexceptions}checked="checked" {/if}/>
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
                     
                     <div class="clearfix">
                         <label for="admin_quicksettings_cache_basedir">Cache Base Directory</label>
                         <div class="text">
-                            <input class="xlarge span5" id="admin_quicksettings_cache_basedir" name="cache.base_dir" type="text" value="{$cache_basedir|escape:html}" />
+                            <input class="xlarge span5" id="admin_quicksettings_cache_basedir" name="cache_base_dir" type="text" value="{$cache_basedir|escape:html}" />
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
         
                     <div class="clearfix">
                         <label for="admin_quicksettings_templates_tmppath">Cache Base Directory</label>
                         <div class="text">
-                            <input class="xlarge span5" id="admin_quicksettings_templates_tmppath" name="templates.tmp_path" type="text" value="{$templates_tmppath|escape:html}" />
+                            <input class="xlarge span5" id="admin_quicksettings_templates_tmppath" name="templates_tmp_path" type="text" value="{$templates_tmppath|escape:html}" />
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
         
