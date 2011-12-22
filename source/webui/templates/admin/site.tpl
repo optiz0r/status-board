@@ -57,7 +57,7 @@
 				        <th>Action</th>
 			        </thead>
 				    <tbody>
-                        {foreach from=$sites item=site}
+                        {foreach from=$open_incidents item=incident}
                             <tr>
                                 <td>
                                     <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a>
@@ -69,8 +69,8 @@
                                 {StatusBoard_Status::name($incident->currentStatus())}
                                 </td>
                                 <td>
-                                    <button class='btn small primary' onclick="document.location.href='{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/';return false;">Edit Site</button>
-                                    <button style="margin-left:10px" class='btn small danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete Site</button>
+                                    <button class='btn small primary' onclick="document.location.href='{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/';return false;">Edit</button>
+                                    <button style="margin-left:10px" class='btn small danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete</button>
                                 </td>
                             </tr>
                         {/foreach}
