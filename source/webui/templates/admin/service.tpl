@@ -34,7 +34,7 @@
         
                     <div class="clearfix">
                         <div class="input">
-                            <input type="submit" class="btn small primary" value="Edit Service">&nbsp;<button class="btn small" type="reset" class="btn">Cancel</button>
+                            <input type="submit" class="btn small primary" value="Save Changes">&nbsp;<button class="btn small" type="reset" class="btn">Cancel</button>
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
                 </fieldset>

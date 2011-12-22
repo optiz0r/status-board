@@ -35,7 +35,7 @@
 
                     <div class="input">
                         <div class="clearfix">
-                            <input type="submit" class="btn primary" value="Edit Site">&nbsp;<button type="reset" class="btn">Cancel</button>
+                            <input type="submit" class="btn small primary" value="Save Changes">&nbsp;<button type="reset" class="btn small">Cancel</button>
                         </div>
                     </div>
                 </fieldset>
@@ -134,7 +134,7 @@
 		                    
 		        <div class="clearfix">
 		            <div class="input">
-		                <input type="submit" class="btn primary" name="addincident" value="Add Incident" />
+		                <input type="submit" class="btn small primary" name="addincident" value="Add Incident" />
 		            </div>
 		        </div>
     		</fieldset>
