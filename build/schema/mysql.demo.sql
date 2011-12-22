@@ -16,6 +16,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
+-- Dumping data for table `settings`
+--
+
+UPDATE `settings` SET `value`='Example Status Board' WHERE `name`='site.title';
+
+--
 -- Dumping data for table `service`
 --
 
