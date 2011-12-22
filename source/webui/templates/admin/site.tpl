@@ -70,7 +70,7 @@
                                 </td>
                                 <td>
                                     <button class='btn small primary' onclick="document.location.href='{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/';return false;">Edit</button>
-                                    <button style="margin-left:10px" class='btn small danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete</button>
+                                    <button style="margin-left:10px" class='btn small danger' onclick="sb.admin.deleteItem('{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}//');">Delete</button>
                                 </td>
                             </tr>
                         {/foreach}
