@@ -12,7 +12,13 @@
                     {$statuses=$incident->statusChanges()}
                     <div class="row">
                         <div class="span4 column">
-                            <h3 class="status">{$incident->reference|escape:html}</h3>
+                            <h3 class="status">
+                                {if $display_admin_links && $incident->currentStatus() != StatusBoard_Status::STATUS_Resolved}
+                                    <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
+                                {else}
+                                    {$incident->reference|escape:html}
+                                {/if}
+                            </h3>
                             <p>Opened: {$incident->start_time|date:"r"}<p>
                             {if $incident->estimated_end_time}
                                 {$time_difference=time()-$incident->estimated_end_time}
@@ -65,7 +71,13 @@
     								<tbody>
     								{foreach from=$incidentsDuring item=incident}
     									<tr>
-    			                			<td>{$incident->reference|escape:html}</td>
+    			                			<td>
+                                                {if $display_admin_links && $incident->currentStatus() != StatusBoard_Status::STATUS_Resolved}
+                                                    <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
+                                                {else}
+                                                    {$incident->reference|escape:html}
+                                                {/if}
+    			                			</td>
     			                			<td>{$incident->description|truncate|escape:html}</td>
     			                			<td>{date('d-M H:i', $incident->start_time)}</td>
     			                			<td>{StatusBoard_Status::name($incident->currentStatus())}</td>

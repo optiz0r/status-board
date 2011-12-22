@@ -25,14 +25,22 @@
             {foreach from=$services item=service}
                 <tr>
                     <th colspan="9" class="service">
-                        {$service->name}
+                        {if $display_admin_links}
+                            <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit {$service->name}">{$service->name}</a>
+                        {else}
+                            {$service->name}
+                        {/if}
                     </th>
                 </tr>
                 {foreach from=$service->sites() item=site}
                 {$incidents=$site->openIncidents()}
                     <tr class="site">
                         <td>
-                            {$site->name}
+                            {if $display_admin_links}
+                                <a href="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/" title="Edit {$site->name|escape:html}">{$site->name|escape:html}</a>
+                            {else}
+                                {$site->name}
+                            {/if}
                         </td>
                         <td>
                             {$status=$site->status()}
