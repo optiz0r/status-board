@@ -27,7 +27,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         $new_incident->create();
         $new_incident->changeStatus($status, 'Initial Classification');
         
-        return $new-incident;
+        return $new_incident;
     }
 
     public static function openForSite(StatusBoard_Site $site) {
