@@ -64,8 +64,8 @@
                                     {$site->description|escape:html}
                                 </td>
                                 <td>
-                                    <button class='btn info' onclick="document.location.href='{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/';return false;">Edit</button>
-                                    <button style="margin-left:10px" class='btn danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete</button>
+                                    <button class='btn primary' onclick="document.location.href='{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/';return false;">Edit Site</button>
+                                    <button style="margin-left:10px" class='btn danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">Delete Site</button>
                                 </td>
                             </tr>
                         {/foreach}

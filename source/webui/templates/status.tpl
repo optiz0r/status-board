@@ -8,7 +8,6 @@
 		         	<div class="row" name="edit service">
 		            	<div class="span4 column"><!--New description-->
 		                	<h3 class="status">Today {mktime(0,0,0,date("n"),date("j"))|date_format:"d M Y"}</h3>
-		                    <p>x incidents</p>
 		                </div>
 			            <div class="span12 column">
 			            	{$start=mktime(0,0,0,date("n"),date("j")-$day)}
@@ -49,7 +48,6 @@
   				    <div class="row" name="edit service">
   				    	<div class="span4 column"><!--New description-->
                         	<h3 class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"d M Y"}</h3>
-                        	<p>x incidents</p>
                         </div>
 						<div class="span12 column">
             				{$start=mktime(0,0,0,date("n"),date("j")-$day)}
