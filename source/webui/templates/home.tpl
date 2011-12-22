@@ -42,7 +42,7 @@
                             {$start=mktime(0,0,0,date("n"),date("j")-$day)}
                             {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
                             {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
-                            {$statusDuring=StatusBoard_Incident::highestSeverityStatus($incidentsDuring, $end)}
+                            {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
                             <td>
                                 {include file="fragments/site-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
                             </td>

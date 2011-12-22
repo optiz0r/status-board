@@ -59,7 +59,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     
     public function statusAt($time) {
         $database = StatusBoard_Main::instance()->database();
-        $row = $database->selectOne('SELECT `status` FROM `incidentstatus` WHERE `incident`=:incident AND ctime < :time ORDER BY ctime DESC LIMIT 1', array(
+        $row = $database->selectOne('SELECT `status` FROM `incidentstatus` WHERE `incident`=:incident AND `ctime` < :time ORDER BY `ctime` DESC LIMIT 1', array(
                 array('name' => 'incident', 'value' => $this->id, 'type' => PDO::PARAM_INT),
                 array('name' => 'time',     'value' => $time,     'type' => PDO::PARAM_INT),
             )
@@ -68,18 +68,29 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $row['status'];
     }
     
+    protected function statusesBetween($start, $end) {
+        $database = StatusBoard_Main::instance()->database();
+        
+        $row = $database->selectList('SELECT `status` FROM `incidentstatus` WHERE `incident`=:incident AND `ctime` >= :start AND `ctime` < :end', array(
+                array('name' => 'incident', 'value' => $this->id, 'type' => PDO::PARAM_INT),
+                array('name' => 'start',    'value' => $start,    'type' => PDO::PARAM_INT),
+                array('name' => 'end',      'value' => $end,      'type' => PDO::PARAM_INT),
+            )
+        );
+        
+        return array_map(function($a) {
+            return $a['status'];
+        }, $row);
+    }
+    
     /**
      * Returns the status of the most severe incident in the given set
      * 
      * @param array(StatusBoard_Incident) $incidents
      */
     public static function highestSeverityStatus(array $incidents, $time = null) {
-        if ( ! $incidents) {
-            return StatusBoard_Status::STATUS_Resolved;
-        }
-        
         // Check for the highest severity incident.
-        $status = StatusBoard_Status::STATUS_Maintenance;
+        $status = StatusBoard_Status::STATUS_Resolved;
         foreach ($incidents as $incident) {
             $incident_status = null;
             if ($time) {
@@ -96,6 +107,37 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $status;
     }
     
+    /**
+     * Returns the status of the most severe incident in the given set
+     * 
+     * @param array(StatusBoard_Incident) $incidents
+     */
+    public static function highestSeverityStatusBetween(array $incidents, $start, $end) {
+        // Check for the highest severity incident.
+        $most_severe_status = StatusBoard_Status::STATUS_Resolved;
+        foreach ($incidents as $incident) {
+            $most_severe_incident_status = StatusBoard_Status::STATUS_Resolved;
+            
+            $statuses_between = $incident->statusesBetween($start, $end);
+            foreach ($statuses_between as $status) {
+                $most_severe_incident_status = StatusBoard_Status::mostSevere($most_severe_incident_status, $status);
+            }
+            
+            $incident_status_before = StatusBoard_Status::STATUS_Resolved;
+            try {
+                $incident_status_before = $incident->statusAt($start);
+            } catch (SihnonFramework_Exception_ResultCountMismatch $e) {
+                // Incident was opened after $start, ignore
+            }
+            
+            $most_severe_incident_status = StatusBoard_Status::mostSevere($incident_status_before, $most_severe_incident_status);
+            
+            $most_severe_status = StatusBoard_Status::mostSevere($most_severe_status, $most_severe_incident_status);
+        }
+        
+        return $most_severe_status;
+    }
+
     public function statusChanges($ignore_cache = false) {
         if ($this->statuses === null || $ignore_cache) {
             $this->statuses = StatusBoard_IncidentStatus::allFor('incident', $this->id);

@@ -1,6 +1,6 @@
 <?php
 
-class StatusBoard_Status {
+abstract class StatusBoard_Status {
     
     const STATUS_Resolved    = 0;
     const STATUS_Maintenance = 1;
@@ -24,7 +24,7 @@ class StatusBoard_Status {
         self::STATUS_Major       => 'The service is exeriencing a major outage affecting all customers.',
     );
     
-    public function available() {
+    public static function available() {
         return array(
             self::STATUS_Resolved,
             self::STATUS_Maintenance,
@@ -52,6 +52,10 @@ class StatusBoard_Status {
     
     public static function isMoreSevere($base, $test) {
         return ($test > $base);
+    }
+    
+    public static function mostSevere($first, $second) {
+        return static::isMoreSevere($first, $second) ? $second : $first;
     }
     
 }
