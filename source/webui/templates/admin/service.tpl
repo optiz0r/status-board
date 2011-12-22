@@ -28,7 +28,7 @@
                     <div class="clearfix">
                         <label for="admin_service_edit_description" style="width:87px">Description</label>
                         <div class="text">
-                        <textarea class="xlarge" name="textarea" id="admin_service_add_description" rows="3"  name="description" >{$service->description|escape:html}</textarea>
+                        <textarea class="xlarge" id="admin_service_add_description" rows="3"  name="description" >{$service->description|escape:html}</textarea>
                         </div><!-- /text -->
                     </div><!-- /clearfix -->
         
