@@ -12,7 +12,6 @@
                 <ul class="dropdown-menu">
                     <li><a href="{$base_uri}admin/tab/admin/" title="Admin">Admin</a></li>
                     <li><a href="{$base_uri}admin/tab/services/" title="Manage Services">Services</a></li>
-                    <li><a href="{$base_uri}admin/tab/users/" title="Manage Users">Users</a></li>
                     <li><a href="{$base_uri}admin/tab/settings/" title="Manage Settings">Settings</a></li>
                 </ul>
             </li>
