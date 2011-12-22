@@ -17,14 +17,14 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     } 
     
     public static function newSiteForService(StatusBoard_Service $service, $name, $description) {
-        $new_service = new self();
-        $new_service->service = $service->id;
-        $new_service->name = $name;
-        $new_service->description = $description;
+        $new_site = new self();
+        $new_site->service = $service->id;
+        $new_site->name = $name;
+        $new_site->description = $description;
         
-        $new_service->create();
+        $new_site->create();
         
-        return $new_service;
+        return $new_site;
     }
     
     public function newIncident($reference, $description, $status, $start_time, $estimated_end_time) {
