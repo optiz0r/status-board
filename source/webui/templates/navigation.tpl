@@ -20,10 +20,10 @@
     {else}
         <li><a href="{$base_uri}login/" title="Login">Login</a></li>
     {/if}
+    {if $requested_page == home}<li><a href='#' data-placement='below' rel='popover' data-content='{include file="fragments/icon-help.tpl"}' data-original-title='What do the status icons mean?'>Help</a></li>{/if}
 </ul>
-
 {if $authenticated}
-    <p class="pull-right">
+    <p class="pull-right" style="color:#BFBFBF;">
         Logged in as <a href="{$base_uri}usercp/">{$user->username}</a>
     </p>
 {/if}
