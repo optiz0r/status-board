@@ -5,7 +5,6 @@
         <script lang="javascript">
         </script>
         <link rel="stylesheet" type="text/css" href="{$base_uri}styles/normal.css" />
-        <link rel="icon" href="{$base_uri}images/favicon.ico" type="image/x-icon" />
         
         <script type="text/javascript">
             var base_uri = "{$base_uri|escape:'quote'}";
