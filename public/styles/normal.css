@@ -112,6 +112,7 @@ div.incident {
 
 table{
    background:#fff;
+   table-layout:fixed;
 }
 
 table th, table td {

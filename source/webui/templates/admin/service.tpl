@@ -51,7 +51,7 @@
             {if $sites}
     			<table class="bordered-table" name="sites_list_table"><!--Services table -->
 				    <thead>
-				        <th>Sites</th>
+				        <th>Site</th>
     				    <th>Description</th>
 				        <th>Action</th>
 			        </thead>
