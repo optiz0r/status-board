@@ -62,6 +62,12 @@ if ($request->exists('do')) {
             $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
             
             $incident->changeStatus($status, $description);
+            
+            if ($status == StatusBoard_Status::STATUS_Resolved) {
+                $incident->actual_end_time = time();
+                $incident->save();
+            }
+            
             $messages[] = array(
                 'severity' => 'success',
                 'content'  => 'The incident status was changed successfully.',
