@@ -4,7 +4,7 @@
 <h2>{$site_title}</h2>
 </div>
 <div class="span2">
-<a href="#" class="btn small">Add Incident</a>
+<a href="{$base_uri}admin/add-incident/" class="btn small">Add Incident</a>
 </div>
 </div>
     <table class="bordered-table">
