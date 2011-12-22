@@ -41,7 +41,7 @@
                                     {$service->description|escape:html}
                                 </td>
                                 <td>
-                                    <button class='btn info' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit</button>
+                                    <button class='btn primary' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit Service</button>
                                     <button class='btn danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/');">Delete</button>
                                 </td>
                             </tr>
