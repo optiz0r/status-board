@@ -1,8 +1,12 @@
 <?php
 $main = StatusBoard_Main::instance();
 $request = $main->request();
+
 $service_id = $request->get('service', 'Sihnon_Exception_InvalidParameters');
-$site_id = $request->get('id', 'Sihnon_Exception_InvalidParameters'); 
+$site_id = $request->get('id', 'Sihnon_Exception_InvalidParameters');
+
+$start = $request->get('start');
+$end = $request->get('end');
 
 $service = null;
 $site = null;
@@ -13,7 +17,12 @@ try {
 } catch (Sihnon_Exception_ResultCountMismatch $e) {
     throw new StatusBoard_Exception_FileNotFound();
 }
+
 $services = StatusBoard_Service::all();
+
 $this->smarty->assign('service', $service);
 $this->smarty->assign('site', $site);
+$this->smarty->assign('start', $start);
+$this->smarty->assign('end', $end);
+
 ?>
