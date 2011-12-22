@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Status Board</title>
+        <script lang="javascript">
+        </script>
+        <link rel="stylesheet" type="text/css" href="/~nathanbooth/status-board/public/styles/normal.css" />
+        
+        <script type="text/javascript">
+            var base_uri = "/~nathanbooth/status-board/public/";
+            var base_url = "http://192.168.1.92/~nathanbooth/status-board/public/";
+        </script>
+        
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
+        <link type="text/css" href="/~nathanbooth/status-board/public/styles/3rdparty/jquery.asmselect.css" rel="Stylesheet" />	
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/main.js"></script>
+        <link rel="stylesheet/less" href="/~nathanbooth/status-board/public/less/bootstrap.less" media="all" />
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/less-1.1.5.min.js"></script>
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/bootstrap-alerts.js"></script>
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/bootstrap-twipsy.js"></script>
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/bootstrap-popover.js"></script>
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/bootstrap-dropdown.js"></script>
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/bootstrap-tabs.js"></script>
+        <script type="text/javascript" src="/~nathanbooth/status-board/public/scripts/3rdparty/bootstrap-modal.js"></script>
+    </head>
+    <body>
+
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="/~nathanbooth/status-board/public/home/">StatusBoard</a>
+
+<ul class="nav">
+    <li >
+        <a href="/~nathanbooth/status-board/public/home/" title="Home">Home</a>
+    </li>
+    
+            			<li class="dropdown " data-dropdown="dropdown">
+                <a href="/~nathanbooth/status-board/public/admin/" class="dropdown-toggle" title="Admin">Admin</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/~nathanbooth/status-board/public/admin/tab/admin/" title="Admin">Admin</a></li>
+                    <li><a href="/~nathanbooth/status-board/public/admin/tab/services/" title="Manage Services">Services</a></li>
+                    <li><a href="/~nathanbooth/status-board/public/admin/tab/users/" title="Manage Users">Users</a></li>
+                    <li><a href="/~nathanbooth/status-board/public/admin/tab/settings/" title="Manage Settings">Settings</a></li>
+                </ul>
+            </li>
+                <li><a href="/~nathanbooth/status-board/public/logout/" title="Logout">Logout</a></li>
+    </ul>
+
+    <p class="pull-right">
+        Logged in as <a href="/~nathanbooth/status-board/public/usercp/">admin</a>
+    </p>
+
+                </div><!-- /tobar-inner -->
+            </div><!-- /container-fliud -->
+        </div><!-- /topbar -->
+        
+
+        <div class="container">
+            <div class="content">
+
+                                                                            
+                                
+                <ul class="breadcrumb">
+  <li><a href="/~nathanbooth/status-board/public/admin/">Admin</a> <span class="divider">|</span></li>
+  <li><a href="/~nathanbooth/status-board/public/admin/service/id/5/">Service LDAP</a></li> <span class="divider">|</span></li>
+  <li class="active"><a href="#">Site Livingston Data Center</a></li>
+</ul>
+
+<div class="container">
+    <div class="row">
+        <div class="span16">
+        	<h2>Site: Livingston Data Center - Service: LDAP</h2>
+        </div>
+    </div>
+	<div class="rounded_content">
+    <div class="row">
+        <div class="span4 column"><!--New description-->
+            <h3>Edit Service</h3>
+            <p>Use this form to update the existing Service</p>
+        </div>
+        <div class="span11 column">
+            <form id="admin_site_edit" method="post" action="/~nathanbooth/status-board/public/admin/site/service/5/id/7/do/edit/">
+                <fieldset>
+                    <div class="clearfix">
+                        <label for="admin_site_edit_name">Name</label>
+                        <div class="text">
+                            <input class="xlarge span5" id="admin_site_edit_name" name="name" type="text" value="Livingston Data Center" />
+                        </div>
+                    </div><!-- /clearfix -->
+                    
+                    <div class="clearfix">
+                        <label for="admin_site_edit_description">Description</label>
+                        <div class="text">
+                            <textarea class="xlarge" id="admin_site_edit_description" name="description">Offsite LDAP services</textarea>
+                        </div>
+                    </div><!-- /clearfix -->
+
+                    <div class="input">
+                        <div class="clearfix">
+                            <input type="submit" class="btn primary" value="Edit Site">&nbsp;<button type="reset" class="btn">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div> 
+  
+    <div class="row">
+    	<div class="span4 column">
+			<h3>Open Incidents</h3>
+		</div><!--/New Service description-->
+        <div class="span11 column">
+		             <p style="padding-top:10px;">There are no open incidents for this site . If you need to open one, use the form below.</p>
+                </div>
+    </div><!--/Row for Existing Service-->
+
+<div class="row">
+		<div class="span4 column">
+            <h3>Add Incident</h3>
+            <p>Use this form to add a new incident</p>
+        </div><!--/New Service description-->
+        <div class="span11 column">
+		
+		<form id="admin_addsite" method="post" action="/~nathanbooth/status-board/public/admin/site/service/5/id/7/do/add-incident/">
+		    <fieldset>
+		        <div class="clearfix">
+		            <label for="admin_incident_add_reference">Reference</label>
+		            <div class="text">
+		                <input class="xlarge span5" id="admin_incident_add_reference" name="reference" type="text" value="" />
+		            </div>
+		        </div><!-- /clearfix -->
+		        
+		        <div class="clearfix">
+		            <label for="admin_incident_add_description">Description</label>
+		            <div class="text">
+		                <textarea class="xlarge" id="admin_incident_add_description" name="description"></textarea>
+		            </div>
+		        </div><!-- /clearfix -->
+		        
+		        <div class="clearfix">
+		            <label for="admin_incident_add_status">Initial Classification</label>
+		            <div class="select">
+		                <select class="xlarge span5" id="admin_incident_add_status" name="status">
+		                    		                        		                    		                        		                            <option value="1">Planned Maintenance</option>
+		                        		                    		                        		                            <option value="2">Minor Incident</option>
+		                        		                    		                        		                            <option value="3">Significant Incident</option>
+		                        		                    		                        		                            <option value="4">Major Incident</option>
+		                        		                    		                </select>
+		            </div>
+		        </div><!-- /clearfix -->
+		        
+		        <div class="clearfix">
+		            <label for="admin_incident_add_starttime">Start Time</label>
+		            <div class="text">
+		                <input class="xlarge span5" id="admin_incident_add_starttime" name="starttime" type="text" value="Now" />
+		            </div>
+		        </div><!-- /clearfix -->
+		        
+		        <div class="clearfix">
+		            <label for="admin_incident_add_estimatedendtime">Estimated End Time</label>
+		            <div class="text">
+		                <input class="xlarge span5" id="admin_incident_add_estimatedendtime" name="estimatedendtime" type="text" value="+4 hours" />
+		            </div>
+		        </div><!-- /clearfix -->
+		                    
+		        <div class="clearfix">
+		            <div class="input">
+		                <input type="submit" class="btn primary" name="addincident" value="Add Incident" />
+		            </div>
+		        </div>
+    		</fieldset>
+		</form>
+
+ 		</div><!--/Row for New Service-->  
+	</div>
+</div><!-- /container -->
+
+            </div><!-- /content -->
+
+            <footer>
+              <p> Powered by <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> 0.1.0 (Acai). Written by Ben Roberts and Nathan Booth.</p>          
+            </footer>
+
+        </div><!-- /container -->
+    </body>
+</html>
