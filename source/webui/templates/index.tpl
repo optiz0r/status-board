@@ -15,6 +15,7 @@
         <link type="text/css" href="{$base_uri}styles/3rdparty/jquery.asmselect.css" rel="Stylesheet" />	
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="{$base_uri}scripts/3rdparty/jquery.chained.js"></script>
 		<script type="text/javascript" src="{$base_uri}scripts/main.js"></script>
         <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
