@@ -9,6 +9,8 @@ if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission
     throw new StatusBoard_Exception_NotAuthorised();
 }
 
+$messages = array();
+
 $service_id = $request->get('service', 'Sihnon_Exception_InvalidParameters');
 $site_id = $request->get('site', 'Sihnon_Exception_InvalidParameters'); 
 $incident_id = $request->get('id', 'Sihnon_Exception_InvalidParameters');
