@@ -47,6 +47,12 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         return StatusBoard_Incident::highestSeverityStatus($this->openIncidents());
     }
     
+    public static function count() {
+        $database = StatusBoard_Main::instance()->database();
+        $row = $database->selectOne('SELECT COUNT(*) AS `site_count` FROM `site`');
+        return $row['site_count'];
+    }
+
 }
 
 ?>

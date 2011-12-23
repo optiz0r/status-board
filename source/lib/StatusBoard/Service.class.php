@@ -31,6 +31,12 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
         
         return $this->sites;
     }
+    
+    public static function count() {
+        $database = StatusBoard_Main::instance()->database();
+        $row = $database->selectOne('SELECT COUNT(*) AS `service_count` FROM `service`');
+        return $row['service_count'];
+    }
 
     
 }
