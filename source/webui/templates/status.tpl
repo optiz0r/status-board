@@ -56,7 +56,7 @@
     	    	 	<div class="row">
     	            	<div class="span4 column"><!--New description-->
     	                	<h3 class="status">{if $day == 0}Today {/if}{$start|date_format:"d M Y"}</h3>
-    	                    <p>{$incidentCount} {StatusBoard_Formatting::pluralise('incident','incidents',$incidentCount)}</p>
+    	                    <p>{$incidentCount} {StatusBoard_Formatting::pluralise($incidentCount,'incident','incidents')}</p>
     	                </div>
     		            <div class="span11 column">
     		            	{if $incidentsDuring}
