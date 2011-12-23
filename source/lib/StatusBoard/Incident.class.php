@@ -43,6 +43,19 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return static::allFor('site', $site->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
     }
     
+    public static function allNearDeadline() {
+        return static::all('incident_open', "estimated_end_time>=:threshold AND estimated_end_time>=:now", array(
+            array('name' => 'threshold', 'value' => time() - StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
+            array('name' => 'now', 'value' => time(), 'type' => PDO::PARAM_INT),
+        ));
+    }
+    
+    public static function allPastDeadline() {
+        return static::all('incident_open', "estimated_end_time<=:threshold", array(
+            array('name' => 'threshold', 'value' => time(), 'type' => PDO::PARAM_INT),
+        ));
+    }
+    
     public function currentStatus($ignore_cache = false) {
         if ($this->current_status === null || $ignore_cache) {
             $database = StatusBoard_Main::instance()->database();
@@ -156,6 +169,26 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         
         return $new_status;
     }
+    
+    public static function counts() {
+        $database = StatusBoard_Main::instance()->database();
+        $rows = $database->selectList('SELECT `status`, COUNT(*) AS `incident_count` FROM `incidentstatus_current` GROUP BY `status`');
+        
+        $counts = array();
+        foreach (StatusBoard_Status::available() as $status) {
+            $counts[$status] = 0;
+        }
+        foreach ($rows as $row) {
+            $counts[$row['status']] = $row['incident_count'];
+        }
+        
+        return $counts;
+    }
+    
+    public static function compareEstimatedEndTimes(StatusBoard_Incident $first, StatusBoard_Incident $second) {
+        return $first->estimated_end_time < $second->estimated_end_time;
+    }
+    
     
 }
 
