@@ -13,6 +13,8 @@ if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission
 $activity = null;
 $success = true;
 
+$destination = $request->get('tab', 'summary');
+
 if ($request->exists('do')) {
     $activity = $request->get('do');
     switch ($activity) {
@@ -89,14 +91,28 @@ if ($request->exists('do')) {
         }
     }
     
-    $destination = $request->get('tab', 'admin');
     $destination = "admin/tab/{$destination}/";
     
     $session->set('messages', $messages);
     StatusBoard_Page::redirect($destination);
 }
 
-$this->smarty->assign('tab', $request->get('tab', 'admin'));
+$this->smarty->assign('tab', $destination);
+if ($destination == 'summary') {
+    $this->smarty->assign('service_count', StatusBoard_Service::count());
+    $this->smarty->assign('site_count', StatusBoard_Site::count());
+    $this->smarty->assign('incident_counts', StatusBoard_Incident::counts());
+    
+    $incidents_near_deadline = StatusBoard_Incident::allNearDeadline();
+    usort($incidents_near_deadline, array('StatusBoard_Incident', 'compareEstimatedEndTimes'));
+    
+    $incidents_past_deadline = StatusBoard_Incident::allPastDeadline();
+    usort($incidents_past_deadline, array('StatusBoard_Incident', 'compareEstimatedEndTimes'));
+    
+    $this->smarty->assign('incidents_near_deadline', $incidents_near_deadline);
+    $this->smarty->assign('incidents_past_deadline', $incidents_past_deadline);
+}
+
 
 $services = StatusBoard_Service::all();
 $this->smarty->assign('services', $services);

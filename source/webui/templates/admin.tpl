@@ -1,17 +1,94 @@
 <div class="page-header"><!-- page-header (Header containing navigation menu and title) -->
     <h1>Admin Control Panel</h1>
     <ul class="tabs" data-tabs="tabs">
-        <li {if $tab == 'admin'}class="active"{/if}><a href="#tab_admin">Admin</a></li>
+        <li {if $tab == 'summary'}class="active"{/if}><a href="#tab_summary">Summary</a></li>
         <li {if $tab == 'services'}class="active"{/if}><a href="#tab_services">Services</a></li>
         <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings">Settings</a></li>
     </ul>
 </div><!-- /page-header -->
 
 <div id="my-tab-content" class="tab-content"><!--tab-content(container for all main div content on page -->
-    <div class="tab-pane {if $tab == 'admin'}active{/if}" id="tab_admin"><!--Toggled Div to hide admin content -->
-        <div class="span11"><!--Admin home content container -->
-            <p>TODO</p>
-        </div><!--/Admin home content container -->
+    <div class="tab-pane {if $tab == 'summary'}active{/if}" id="tab_summary"><!--Toggled Div to hide admin content -->
+        <div class="span16"><!--Admin summary content container -->
+            <div class="row">
+                <div class="span4 column">
+                    <h3>Alerts</h3>
+                </div>
+                <div class="span11 column">
+                    <p>
+                        There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_near_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'incident', 'incidents')}
+                        within 1 hour of the current estimated end time.
+                    </p>
+                    {if $incidents_near_deadline}
+                        <ol>
+                            {foreach from=$incidents_near_deadline item=incident}
+                                <li>{$incident->reference|escape:html}</li>
+                            {/foreach}
+                        </ol>
+                    {/if}
+                    <p>
+                        There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_past_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_past_deadline), 'incident', 'incidents')}
+                        already past the set estimated end time.
+                    </p>
+                    {if $incidents_past_deadline}
+                        <ol>
+                            {foreach from=$incidents_past_deadline item=incident}
+                                <li>{$incident->reference|escape:html}</li>
+                            {/foreach}
+                        </ol>
+                    {/if}
+                </div>
+            </div>
+            <div class="row">
+                <div class="span4 column">
+                    <h3>Statistics</h3>
+                </div>
+                <div class="span11 column">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Statistic</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Services</strong></td>
+                                <td>{$service_count}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sites</strong></td>
+                                <td>{$site_count}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Incidents</strong></td>
+                                <td>{array_sum(array_values($incident_counts))}</td>
+                            </tr>
+                            <tr>
+                                <td>Major</td>
+                                <td>{$incident_counts[StatusBoard_Status::STATUS_Major]}</td>
+                            </tr>
+                            <tr>
+                                <td>Significant</td>
+                                <td>{$incident_counts[StatusBoard_Status::STATUS_Significant]}</td>
+                            </tr>
+                            <tr>
+                                <td>Minor</td>
+                                <td>{$incident_counts[StatusBoard_Status::STATUS_Minor]}</td>
+                            </tr>
+                                                    <tr>
+                                <td>Planned Maintenance</td>
+                                <td>{$incident_counts[StatusBoard_Status::STATUS_Maintenance]}</td>
+                            </tr>
+                            <tr>
+                                <td>Resolved</td>
+                                <td>{$incident_counts[StatusBoard_Status::STATUS_Resolved]}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!--/Admin summary content container -->
     </div><!--/Toggled Div to hide admin content -->
     
     <div class="tab-pane {if $tab == 'services'}active{/if}" id="tab_services"><!--Toggled Div to hide services content -->
@@ -129,7 +206,7 @@
                     </div><!-- /clearfix -->
         
                     <div class="clearfix">
-                        <label for="admin_quicksettings_templates_tmppath">Cache Base Directory</label>
+                        <label for="admin_quicksettings_templates_tmppath">Templates Temporary Path</label>
                         <div class="text">
                             <input class="xlarge span5" id="admin_quicksettings_templates_tmppath" name="templates_tmp_path" type="text" value="{$templates_tmppath|escape:html}" />
                         </div><!-- /text -->
