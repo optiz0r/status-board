@@ -35,26 +35,31 @@ if ($request->exists('do')) {
             $reference = StatusBoard_Main::issetelse($_POST['reference'], 'Sihnon_Exception_InvalidParameters');
             $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
             $estimated_end_time = StatusBoard_Main::issetelse($_POST['estimatedendtime'], 'Sihnon_Exception_InvalidParameters');
-            
-            $estimated_end_time = strtotime($estimated_end_time);
 
-            if ($reference) {
-                $incident->reference = $reference;
-            }
-            if ($description) {
-                $incident->description = $description;
-            }
-            if ($estimated_end_time) {
-                $incident->estimated_end_time = $estimated_end_time;
-            }
-            if ($reference || $description || $estimated_end_time) {
-                $incident->save();
+            try {
+                StatusBoard_Validation_Text::length($reference, 1, 32);
+                
+                $estimated_end_time = strtotime($estimated_end_time);
+                if ($estimated_end_time) {
+                    $incident->reference = $reference;
+                    $incident->description = $description;
+                    $incident->estimated_end_time = $estimated_end_time;
+                    $incident->save();
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The incident was updated succesfully.',
+                    );
+                } else {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The incident was not modified because the value entered for estimated end time was not understood.',
+                    );
+                }                    
+            } catch (StatusBoard_Exception_InvalidContent $e) {
                 $messages[] = array(
-                    'severity' => 'success',
-                    'content'  => 'The incident was updated succesfully.',
+                    'severity' => 'error',
+                    'content'  => 'The incident was not modified due to invalid parameters being passed.',
                 );
-            } else {
-                $messages[] = 'No changes were necessary.';
             }
 
         } break;
@@ -63,21 +68,33 @@ if ($request->exists('do')) {
             $status = StatusBoard_Main::issetelse($_POST['status'], 'Sihnon_Exception_InvalidParameters');
             $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
             
-            $incident->changeStatus($status, $description);
-            
-            if ($status == StatusBoard_Status::STATUS_Resolved) {
-                $incident->actual_end_time = time();
-                $incident->save();
+            try {
+                StatusBoard_Validation_Enum::validate($status, 'StatusBoard_Status', 'STATUS_');
+                
+                $incident->changeStatus($status, $description);
+                
+                if ($status == StatusBoard_Status::STATUS_Resolved) {
+                    $incident->actual_end_time = time();
+                    $incident->save();
+                }
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The incident status was changed successfully.',
+                );
+            } catch (StatusBoard_Exception_InvalidContent $e) {
+                $messages[] = array(
+                    'severity' => 'error',
+                    'content'  => 'The status was not modified due to invalid parameters being passed.',
+                );
             }
-            
-            $messages[] = array(
-                'severity' => 'success',
-                'content'  => 'The incident status was changed successfully.',
-            );
         } break;
 
         default: {
-
+            $messages[] = array(
+                'severity' => 'warning',
+                'content'  => "The activity '{$activity}' is not supported.",
+            );
         }
     }
     

@@ -9,6 +9,8 @@ if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission
     throw new StatusBoard_Exception_NotAuthorised();
 }
 
+$messages = array();
+
 $service_id = $request->get('service', 'Sihnon_Exception_InvalidParameters');
 $site_id = $request->get('id', 'Sihnon_Exception_InvalidParameters'); 
 
@@ -30,20 +32,21 @@ if ($request->exists('do')) {
             $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
             $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
 
-            if ($name) {
+            try {
+                StatusBoard_Validation_Text::length($name, 1, 255);
+                
                 $site->name = $name;
-            }
-            if ($description) {
                 $site->description = $description;
-            }
-            if ($name || $description) {
                 $site->save();
                 $messages[] = array(
                     'severity' => 'success',
                     'content'  => 'The site was updated succesfully.',
                 );
-            } else {
-                $messages[] = 'No changes were necessary.';
+            } catch (StatusBoard_Exception_InvalidContent $e) {
+                $messages[] = array(
+                    'severity' => 'error',
+                    'content'  => 'The site was not modified due to invalid parameters being passed.',
+                );
             }
 
         } break;
