@@ -4,6 +4,7 @@ $main = StatusBoard_Main::instance();
 $request = $main->request();
 $auth = $main->auth();
 $session = $main->session();
+$messages = array();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_UpdateIncidents)) {
     throw new StatusBoard_Exception_NotAuthorised();
