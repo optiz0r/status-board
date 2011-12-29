@@ -23,12 +23,19 @@ if ($request->exists('do')) {
             $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
             $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
 
-            $service = StatusBoard_Service::newService($name, $description);
-            
-            $messages[] = array(
-                'severity' => 'success',
-                'content'  => 'The service was created succesfully.',
-            );
+            try {
+                $service = StatusBoard_Service::newService($name, $description);
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The service was created succesfully.',
+                );
+            } catch (StatusBoard_Exception_InvalidContent $e) {
+                $messages[] = array(
+                    'severity' => 'error',
+                    'content'  => 'The service was not added due to invalid parameters being passed.',
+                );
+            }
             
         } break;
         
