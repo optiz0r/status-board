@@ -23,6 +23,10 @@ if ($request->exists('do')) {
     $incident = null;
     
     try {
+        StatusBoard_Validation_Text::content(array($service_id, $site_id), StatusBoard_Validation_Text::Digit);
+        StatusBoard_Validation_Text::length($reference, 1, 32);
+        StatusBoard_Validation_Enum::validate($status, 'StatusBoard_Status', 'STATUS_');
+        
         $service = StatusBoard_Service::fromId($service_id);
         $site = StatusBoard_Site::fromId($site_id);
         
