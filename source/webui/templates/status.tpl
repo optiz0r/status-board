@@ -54,11 +54,11 @@
                     {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
                     {$incidentCount=count($incidentsDuring)}
     	    	 	<div class="row">
-    	            	<div class="span4 column"><!--New description-->
-    	                	<h3 class="status">{if $day == 0}Today {/if}{$start|date_format:"d M Y"}</h3>
+    	            	<div class="span3 column"><!--New description-->
+    	                	<h3 class="status">{$start|date_format:"d M Y"}</h3>
     	                    <p>{$incidentCount} {StatusBoard_Formatting::pluralise($incidentCount,'incident','incidents')}</p>
     	                </div>
-    		            <div class="span11 column">
+    		            <div class="span12 column">
     		            	{if $incidentsDuring}
     							<table class="bordered-table"><!--Services table -->
     								<thead>
@@ -67,6 +67,7 @@
     									<th>Time Opened</th>
     									<th>Status</th>
     									<th>Time Closed</th>
+    									{if $display_admin_links}<th>Actions</th>{/if}
     								</thead>
     								<tbody>
     								{foreach from=$incidentsDuring item=incident}
@@ -88,12 +89,13 @@
                                                     Still Open
                                                 {/if}
     			                			</td>
+    			                			{if $display_admin_links}<td><a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit {$incident->reference|escape:html}">Edit Incident: {$incident->reference|escape:html}</a></td>{/if}
     		             				</tr>
     		             			{/foreach}
                                     </tbody>
                                 </table><!--/name table -->
     		             	{else}
-    		             	    <p>There were no recorded incidents on this day</p>
+    		             	    <p style="padding-top:10px;">There were no recorded incidents on this day</p>
     		             	{/if}
     		       		</div>
     				</div>
