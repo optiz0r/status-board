@@ -73,11 +73,7 @@
     								{foreach from=$incidentsDuring item=incident}
     									<tr>
     			                			<td>
-                                                {if $display_admin_links && $incident->currentStatus() != StatusBoard_Status::STATUS_Resolved}
-                                                    <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
-                                                {else}
-                                                    {$incident->reference|escape:html}
-                                                {/if}
+                                                    <a href="{$base_uri}incident/id/{$incident->id}/" title="Indident History">{$incident->reference|escape:html}</a>
     			                			</td>
     			                			<td>{$incident->description|truncate|escape:html}</td>
     			                			<td>{date('d-M H:i', $incident->start_time)}</td>

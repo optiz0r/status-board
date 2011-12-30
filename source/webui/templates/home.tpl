@@ -4,19 +4,19 @@
 <h2>{$site_title}</h2>
 </div>
 <div class="span2">
-<a href="{$base_uri}admin/add-incident/" class="btn small">Add Incident</a>
+{if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn small">Add Incident</a>{/if}
 </div>
 </div>
     <table class="bordered-table">
         <thead>
             <tr>
-                <th>Service</th>
-                <th class="status">Now</th>
+                <th width="200px">Service / Site</th>
+                <th class="status" width="50px">Now</th>
                 {foreach from=array(0,1,2,3,4,5,6) item=day}
                     {if $day == 0}
-                        <th class="status">Today</th>
+                        <th class="status" width="50px">Today</th>
   				    {else}
-                        <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
+                        <th class="status" width="50px">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
   				    {/if}
 				{/foreach}
             </tr>

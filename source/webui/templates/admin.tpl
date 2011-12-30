@@ -144,7 +144,7 @@
         </div><!--/Row for Existing Service-->
         <div class="row"><!--Row for New Service-->
     		<div class="span4 column"><!--New Service description-->
-                <h3>Add New Service</h3>
+                <h3> New Service</h3>
                 <p>Use this form to define a new service</p>
             </div><!--/New Service description-->
     		<div class="span11 column"><!--Add New Service -->
