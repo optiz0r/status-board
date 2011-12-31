@@ -15,7 +15,7 @@
                     <h3>Alerts</h3>
                 </div>
                 <div class="span11 column">
-                    <p>
+                    <p style="padding-top:10px">
                         There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_near_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'incident', 'incidents')}
                         within 1 hour of the current estimated end time.
                     </p>
@@ -43,8 +43,8 @@
                 <div class="span4 column">
                     <h3>Statistics</h3>
                 </div>
-                <div class="span11 column">
-                    <table>
+                <div class="span11 column" style="padding-top:10px">
+                    <table class="bordered-table condensed-table" >
                         <thead>
                             <tr>
                                 <th>Statistic</th>
@@ -53,19 +53,23 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Services</strong></td>
+                                <td>Services</td>
                                 <td>{$service_count}</td>
                             </tr>
                             <tr>
-                                <td><strong>Sites</strong></td>
+                                <td>Sites</td>
                                 <td>{$site_count}</td>
                             </tr>
                             <tr>
-                                <td><strong>Incidents</strong></td>
+                                <td>Incidents</td>
                                 <td>{array_sum(array_values($incident_counts))}</td>
                             </tr>
+
                             <tr>
-                                <td>Major</td>
+                                <th>Incident Statistics</th>
+                                <th>Count</th>
+                            </tr>
+                            <td>Major</td>
                                 <td>{$incident_counts[StatusBoard_Status::STATUS_Major]}</td>
                             </tr>
                             <tr>

@@ -57,7 +57,7 @@
     	            	<div class="span3 column"><!--New description-->
     	                	<h3 class="status">{$start|date_format:"d M Y"}</h3>
     	                    <p>{$incidentCount} {StatusBoard_Formatting::pluralise($incidentCount,'incident','incidents')}</p>
-    	                    <p style="font-size:small"> Note: Click on incident number to see incident audit trail</p>
+    	                    {if $incidentsDuring}<p style="font-size:small"> Note: Click on incident number to see incident audit trail</p>{/if}
     	                </div>
     		            <div class="span12 column" style="margin-bottom:-40px">
     		            	{if $incidentsDuring}
