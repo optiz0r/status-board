@@ -20,7 +20,7 @@
 	        <div class="span11 column">
 				<p style="padding-top:10px;"><b>Service:</b> {$service->name|escape:html}</p>
 				<p><b>Site:</b> {$site->name|escape:html}</p>
-				<p><b>Opened:</b> {$incident->start_time|date_format:'h:i d-M-y'}</p>
+				<p><b>Opened:</b> {$incident->start_time|date_format:'H:i d-M-y'}</p>
 				<p><b>Estimated End:</b> {ucwords(StatusBoard_DateTime::fuzzyTime($incident->estimated_end_time))}</p>
 
 			</div>
