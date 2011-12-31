@@ -25,7 +25,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         $new_incident->actual_end_time = null;
         
         $new_incident->create();
-        $new_incident->changeStatus($status, 'Initial Classification');
+        $new_incident->changeStatus($status, 'Initial Classification', $start_time);
         
         return $new_incident;
     }
@@ -159,12 +159,12 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $this->statuses;
     }
     
-    public function changeStatus($status, $description) {
+    public function changeStatus($status, $description, $start_time = null) {
         if ($this->statuses === null) {
             $this->statuses = StatusBoard_IncidentStatus::allFor('incident', $this->id);
         }
         
-        $new_status = StatusBoard_IncidentStatus::newForIncident($this, $status, $description);
+        $new_status = StatusBoard_IncidentStatus::newForIncident($this, $status, $description, $start_time);
         $this->statuses[] = $new_status;
         
         return $new_status;

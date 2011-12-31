@@ -14,12 +14,16 @@ class StatusBoard_IncidentStatus extends StatusBoard_DatabaseObject {
         return static::all_for('incident', $incident->id);
     }
     
-    public function newForIncident(StatusBoard_Incident $incident, $status, $description) {
+    public function newForIncident(StatusBoard_Incident $incident, $status, $description, $ctime = null) {
+        if ($ctime === null) {
+            $ctime = time();
+        }
+        
         $new_status = new self();
         $new_status->incident = $incident->id;
         $new_status->status = $status;
         $new_status->description = $description;
-        $new_status->ctime = time();
+        $new_status->ctime = $ctime;
         
         $new_status->create();
         
