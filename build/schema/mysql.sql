@@ -44,7 +44,9 @@ INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 ('logging.FlatFile.tmp.severity', 'debug\ninfo\nwarning\nerror', 'array(string)'),
 ('logging.FlatFile.tmp.category', 'webui\ndefault', 'array(string)'),
 ('templates.tmp_path', '/var/tmp/status-board/', 'string'),
-('site.title', 'Status Board', 'string');
+('site.title', 'Status Board', 'string'),
+('sessions', 1, 'bool'),
+('sessions.path', '/', 'string');
 
 --
 -- Table structure for table `log`
