@@ -104,7 +104,7 @@
 				            <tr>
 				                <td>
 				                    {StatusBoard_DateTime::fuzzyTime($status->ctime)}<br />
-				                    <em>{$status->ctime|date_format:'y-m-d h:i:s'}</em>
+				                    <em>{$status->ctime|date_format:'y-m-d H:i:s'}</em>
 				                </td>
 				                <td>{StatusBoard_Status::name($status->status)}</td>
 				                <td>{$status->description|escape:html}</td>

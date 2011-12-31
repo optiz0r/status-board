@@ -42,7 +42,7 @@
 				            <tr>
 				                <td>
 				                    {ucwords(StatusBoard_DateTime::fuzzyTime($status->ctime))}<br />
-				                    <em>{$status->ctime|date_format:'h:i d-M-y'}</em>
+				                    <em>{$status->ctime|date_format:'H:i d-M-y'}</em>
 				                </td>
 				                <td>{StatusBoard_Status::name($status->status)}</td>
 				                <td>{$status->description|escape:html}</td>
