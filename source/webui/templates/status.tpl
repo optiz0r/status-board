@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="span16"><!--name content container -->   
 			<h1>Site Status History: {$service->name|escape:html} - {$site->name|escape:html}</h1>
-			<div class="rounded_content">
+			<div class="rounded_content" style="padding-bottom:40px">
 			<p>This page details the incident history for a site:</p>
 			{if $start && $end}
                 {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
@@ -53,12 +53,13 @@
                     {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
                     {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
                     {$incidentCount=count($incidentsDuring)}
-    	    	 	<div class="row">
+    	    	 	<div class="row" id="{$start|date_format:"dM"}" style="padding-top:40px">
     	            	<div class="span3 column"><!--New description-->
     	                	<h3 class="status">{$start|date_format:"d M Y"}</h3>
     	                    <p>{$incidentCount} {StatusBoard_Formatting::pluralise($incidentCount,'incident','incidents')}</p>
+    	                    <p style="font-size:small"> Note: Click on incident number to see incident audit trail</p>
     	                </div>
-    		            <div class="span12 column">
+    		            <div class="span12 column" style="margin-bottom:-40px">
     		            	{if $incidentsDuring}
     							<table class="bordered-table"><!--Services table -->
     								<thead>
@@ -85,7 +86,7 @@
                                                     Still Open
                                                 {/if}
     			                			</td>
-    			                			{if $display_admin_links}<td><a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit {$incident->reference|escape:html}">Edit Incident: {$incident->reference|escape:html}</a></td>{/if}
+    			                			{if $display_admin_links}<td><button class='btn small primary' onclick="document.location.href='{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/';return false;">Edit</button>{/if}</td>
     		             				</tr>
     		             			{/foreach}
                                     </tbody>
@@ -94,7 +95,7 @@
     		             	    <p style="padding-top:10px;">There were no recorded incidents on this day</p>
     		             	{/if}
     		       		</div>
-    				</div>
+    		       		</div>
     			{/foreach}
             {/if}   
             </div> 	

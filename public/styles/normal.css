@@ -18,6 +18,10 @@ a {
     color: gray;
 }
 
+.span12 a, .span11 a{
+color: blue;
+}
+
 label {
     margin-left: 1em;
     margin-right: 1em;

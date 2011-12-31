@@ -20,8 +20,8 @@
 	        <div class="span11 column">
 				<p style="padding-top:10px;"><b>Service:</b> {$service->name|escape:html}</p>
 				<p><b>Site:</b> {$site->name|escape:html}</p>
-				<p><b>Opened:</b> {$incident->start_time|date_format:'h:i:s y-m-d'}</p>
-				<p><b>Estimated End:</b> {$incident->estimated_end_time|date_format:'h:i:s y-m-d'}</p>
+				<p><b>Opened:</b> {$incident->start_time|date_format:'h:i d-M-y'}</p>
+				<p><b>Estimated End:</b> {ucwords(StatusBoard_DateTime::fuzzyTime($incident->estimated_end_time))}</p>
 
 			</div>
 </div>
@@ -31,7 +31,7 @@
 	            <p>The table display an audit log of changes to this incident</p>
 	        </div><!--/New Service description-->
 	        <div class="span11 column">
-				<table>
+				<table class="bordered-table">
 				    <thead>
 				        <th>Date/Time</th>
 				        <th>Status</th>
@@ -41,8 +41,8 @@
 				        {foreach from=$statuses item=status}
 				            <tr>
 				                <td>
-				                    {StatusBoard_DateTime::fuzzyTime($status->ctime)}<br />
-				                    <em>{$status->ctime|date_format:'y-m-d h:i:s'}</em>
+				                    {ucwords(StatusBoard_DateTime::fuzzyTime($status->ctime))}<br />
+				                    <em>{$status->ctime|date_format:'h:i d-M-y'}</em>
 				                </td>
 				                <td>{StatusBoard_Status::name($status->status)}</td>
 				                <td>{$status->description|escape:html}</td>

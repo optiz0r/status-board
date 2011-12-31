@@ -44,11 +44,12 @@
                         </td>
                         <td>
                             {$status=$site->status()}
-                            {include file="fragments/site-status.tpl" nocache start=null end=null}
+                            {include file="fragments/site-status.tpl" nocache date=null start=null end=null}
                         </td>
                         {foreach from=array(0,1,2,3,4,5,6) item=day}
                             {$start=mktime(0,0,0,date("n"),date("j")-$day)}
                             {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
+                            {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
                             {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
                             {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
                             <td>
