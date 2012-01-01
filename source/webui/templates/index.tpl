@@ -1,10 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>Status Board</title>
         <script lang="javascript">
         </script>
         <link rel="stylesheet" type="text/css" href="{$base_uri}styles/normal.css" />
+        	<link rel="shortcut icon" href="{$base_uri}images/favicon.ico" />
         
         <script type="text/javascript">
             var base_uri = "{$base_uri|escape:'quote'}";
@@ -15,46 +16,61 @@
         <link type="text/css" href="{$base_uri}styles/3rdparty/jquery.asmselect.css" rel="Stylesheet" />	
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="{$base_uri}scripts/3rdparty/jquery.chained.js"></script>
 		<script type="text/javascript" src="{$base_uri}scripts/main.js"></script>
+        <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-alerts.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-twipsy.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-popover.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-dropdown.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-tabs.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-modal.js"></script>
     </head>
     <body>
 
-        <div id="container">
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    {$page->include_template('navigation')}
+                </div><!-- /tobar-inner -->
+            </div><!-- /container-fliud -->
+        </div><!-- /topbar -->
+        
 
-            <div id="banner">
-                <h1>StatusBoard</h1>
-            </div>
+        <div class="container">
+            <div class="content">
 
-            <div id="navigation">
-                {include file="navigation.tpl"}
-            </div>
+                {if ! $messages}
+                    {$session = StatusBoard_Main::instance()->session()}
+                    {$messages = $session->get('messages')}
+                    {$session->delete('messages')}
+                {/if}
+                {if $messages}
+                    <div id="messages">
+                        {foreach from=$messages item=message}
+                            {if is_array($message)}
+                                {$severity=$message['severity']}
+                                <div class="alert-message {$severity}">
+                                    {$message['content']|escape:html}
+                                </div>
+                            {else}
+                                <div class="alert-message info">
+                                    {$message|escape:html}
+                                </div>
+                            {/if}
+                        {/foreach}
+                    </div><!-- /messages -->
+                {/if}
 
-            <div id="page-container">
-            
-                <div id="sidebar">
-                    {include file="sidebar.tpl"}
-                </div>
+                {$page_content}
 
-                <div id="page">
+            </div><!-- /content -->
 
-                    {if $messages}
-                        <div id="messages">
-                            {foreach from=$messages item=message}
-                                {$message}
-                            {/foreach}
-                        </div>
-                    {/if}
+            <footer>
+              <p> Powered by <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
+            </footer>
 
-                    {$page_content}
-
-                </div>
-
-            </div>
-
-            <div id="footer">
-                Powered by StatusBoard {$version}. Written by Ben Roberts and Nathan Booth.
-            </div>
-
-        </div>
+        </div><!-- /container -->
     </body>
 </html>

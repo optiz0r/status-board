@@ -2,17 +2,24 @@
  * StatusBoard normal stylesheet
  *
  */
-
+@import url('http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css'); 
 @CHARSET "UTF-8";
 
 body {
     margin: 0em;
+    margin-top: 60px;
+    padding-top: 40px;
     padding: 0em;
     font-family: verdana, helvetica, sans-serif;
+    background: #F7F7F7;
 }
 
 a {
     color: gray;
+}
+
+.span12 a, .span11 a{
+color: blue;
 }
 
 label {
@@ -89,4 +96,83 @@ label {
     background: lightcyan;
     color: darkblue;
     margin: 1em;
+}
+
+/**
+ * Page specific content
+ */
+
+div.service {
+    border-top: 1px solid grey;
+}
+
+div.site {
+    margin-left: 5em;
+}
+
+div.incident {
+    margin-left: 2em;
+}
+
+table{
+   background:#fff;
+}
+
+table th, table td {
+    text-align: center;
+    line-height: 20px;
+	vertical-align: middle;
+}
+
+th.service {
+    text-align: left;
+    background-color: #dddddd;
+}
+
+.odd_row {
+    background-color: #eeeeee;
+}
+
+div.page-header{
+margin:10px -5px 20px;
+padding:10px 10px 0 10px;
+-moz-border-radius:5px 5px 0 0;
+-webkit-border-top-left-radius:5px;
+-webkit-border-top-right-radius:5px;
+border-bottom: 0px;
+}
+
+.tabs, .pills {
+margin: 0 0 0px;
+}
+
+
+#my-tab-content{
+ background:#fff;
+ margin:-20px -5px 20px;
+ Padding-top:20px;
+ padding-left:20px;
+ -moz-border-radius:5px 5px 0 0;
+-webkit-border-radius:5px;
+ border-left: 1px solid #DDD;
+ border-right: 1px solid #DDD;
+ border-bottom: 1px solid #DDD;
+ }
+ .rounded_content{
+ background:#fff;
+ margin:0 -5px 20px;
+ Padding-top:20px;
+ padding-left:20px;
+ -moz-border-radius:5px 5px 0 0;
+-webkit-border-radius:5px;
+ border: 1px solid #DDD;
+
+}
+
+dl.help dt {
+    margin-top: 1em;
+}
+
+dl.help dd {
+    padding: 0.5em;
 }
