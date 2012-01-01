@@ -6,16 +6,16 @@ StatusBoard is a simple PHP web-based tool for displaying the status of services
 Features
 -------
 
-#Customisable list of Services and Sites.
-#Manual reporting and status changes for Incidents.
-#Multiple severity levels.
-#Full admin UI.
+*Customisable list of Services and Sites.
+*Manual reporting and status changes for Incidents.
+*Multiple severity levels.
+*Full admin UI.
 
 Requirements
 ------------
 
-PHP
-MYSQL
-Smarty
-sihnon-php-lib: https://github.com/optiz0r/sihnon-php-lib
+*PHP
+*MYSQL
+*Smarty
+*sihnon-php-lib: https://github.com/optiz0r/sihnon-php-lib
 
