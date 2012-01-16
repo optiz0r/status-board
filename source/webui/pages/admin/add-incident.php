@@ -4,6 +4,7 @@ $main = StatusBoard_Main::instance();
 $request = $main->request();
 $auth = $main->auth();
 $session = $main->session();
+$csrf = new StatusBoard_CSRF();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_UpdateIncidents)) {
     throw new StatusBoard_Exception_NotAuthorised();
@@ -24,6 +25,8 @@ if ($request->exists('do')) {
     $incident = null;
     
     try {
+        $csrf->validatePost();
+        
         StatusBoard_Validation_Text::content(array($service_id, $site_id), StatusBoard_Validation_Text::Digit);
         StatusBoard_Validation_Text::length($reference, 1, 32);
         StatusBoard_Validation_Enum::validate($status, 'StatusBoard_Status', 'STATUS_');
@@ -46,6 +49,14 @@ if ($request->exists('do')) {
             'severity' => 'success',
             'content'  => 'The incident was created succesfully.',
         );
+        
+        $session->set('messages', $messages);
+        StatusBoard_Page::redirect("admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/");
+    } catch (SihnonFramework_Exception_CSRFVerificationFailure $e) {
+        $messages[] = array(
+            'severity' => 'error',
+            'content'  => 'The incident was not created due to a problem with your session; please try again.',
+        );
     } catch (StatusBoard_Exception_ResultCountMismatch $e) {
         $messages[] = array(
             'severity' => 'error',
@@ -54,7 +65,7 @@ if ($request->exists('do')) {
     }
     
     $session->set('messages', $messages);
-    StatusBoard_Page::redirect("admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/");
+    StatusBoard_Page::redirect("admin/add-incident/");
 }
 
 $service_id = $request->get('service');
@@ -85,7 +96,7 @@ if ($service) {
 }
 
 
-
+$this->smarty->assign('csrf', $csrf);
 $this->smarty->assign('services', $services);
 $this->smarty->assign('service', $service);
 $this->smarty->assign('all_sites', $all_sites);
