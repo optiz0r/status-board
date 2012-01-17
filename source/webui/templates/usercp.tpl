@@ -1,26 +1,8 @@
 <div class="container">
-
-{if $activity}
-    {if $successes}
-        {foreach from=$successes item=message}
-            <div class="alert-message success">
-                {$message|escape:html}
-            </div>
-        {/foreach}
-    {/if}
-    {if $errors}
-        {foreach from=$errors item=message}
-            <div class="alert-message error">
-                {$message|escape:html}
-            </div>
-        {/foreach}
-    {/if}
-{/if}
-
-
     <div class="row">
         <div class="span16">
             <form id="usercp_pwchange" method="post" action="{$base_uri}usercp/do/change-password/">
+                <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                 <fieldset>
                     <legend>Change Password</legend>
                     

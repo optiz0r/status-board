@@ -96,7 +96,7 @@ if ($service) {
 }
 
 
-$this->smarty->assign('csrf', $csrf);
+$this->smarty->assign('csrftoken', $csrf->generate());
 $this->smarty->assign('services', $services);
 $this->smarty->assign('service', $service);
 $this->smarty->assign('all_sites', $all_sites);

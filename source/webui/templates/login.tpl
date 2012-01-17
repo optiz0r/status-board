@@ -1,15 +1,8 @@
-{if $authentication_failed}
-
-<div class="alert-message error">
-    Incorrect username/password combination entered.
-</div>
-
-{/if}
-
 <div class="container">
     <div class="row">
         <div class="span16">
         	<form id="page_login" method="post" action="{$base_uri}login/do/">
+        	   <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                 <fieldset>
                     <legend>Administrator Login</legend>
                     <div class="clearfix">

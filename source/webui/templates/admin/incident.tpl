@@ -19,6 +19,7 @@
 	        </div>
 	        <div class="span11 column">
 	            <form id="admin_incident_edit" method="post" action="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/do/edit/">
+	               <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
 	                <fieldset>
 	                    <div class="clearfix">
 	                        <label for="admin_incident_edit_name">Reference</label>
@@ -58,6 +59,7 @@
 			</div><!--/New Service description-->
 	        <div class="span11 column">
 	            <form id="admin_incident_changestatus" method="post" action="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/do/change-status/">
+	                <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
 	                <fieldset>
 	                    <p>Use this form to update the current status of an incident</p>
 	                    <div class="clearfix">

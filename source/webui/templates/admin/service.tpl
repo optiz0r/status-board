@@ -17,6 +17,7 @@
         </div><!--/New Service description-->
         <div class="span11 column"><!--Add New Service -->
             <form id="admin_service_edit" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/edit/">
+                <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                 <fieldset>
                     <div class="clearfix">
                         <label for="admin_service_edit_name" style="width:87px">Name</label>
@@ -98,6 +99,7 @@
         </div><!--/New Service description-->
         <div class="span11 column">
             <form id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-site/">
+                <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                 <fieldset>
                     <div class="clearfix">
                         <label for="admin_site_add_name" style="width:85px">Name</label>

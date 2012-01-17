@@ -153,6 +153,7 @@
             </div><!--/New Service description-->
     		<div class="span11 column"><!--Add New Service -->
             <form id="admin_addservice" method="post" action="{$base_uri}admin/tab/services/do/add-service/">
+                <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                 <fieldset>
                     <div class="clearfix">
                         <label for="admin_service_add_name" style="width:85px">Name</label>

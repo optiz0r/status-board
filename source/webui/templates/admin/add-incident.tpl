@@ -8,7 +8,7 @@
 	        <div class="span10 column">
 	        
 		        <form id="admin_addsite" method="post" action="{$base_uri}admin/add-incident/do/">
-                    <input type="hidden" name="csrftoken" value="{$csrf->generate()|escape:html}" />
+                    <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
 		            <fieldset>
 		                <div class="clearfix">
 		                    <label for="admin_incident_add_service">Service</label>

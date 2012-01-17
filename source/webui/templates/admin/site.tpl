@@ -18,6 +18,7 @@
         </div>
         <div class="span11 column">
             <form id="admin_site_edit" method="post" action="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/do/edit/">
+                <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                 <fieldset>
                     <div class="clearfix">
                         <label for="admin_site_edit_name">Name</label>
