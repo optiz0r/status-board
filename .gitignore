@@ -2,3 +2,6 @@
 .buildpath
 .project
 .settings
+
+# Temporary files
+tmp/*
