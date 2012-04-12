@@ -28,11 +28,11 @@ class StatusBoard_Main extends SihnonFramework_Main {
             case 'index': {
                 $smarty_tmp = $this->config->get('templates.tmp_path');
                 $this->smarty = new Smarty();
-                $this->smarty->template_dir = static::makeAbsolutePath(self::TEMPLATE_DIR);
-                $this->smarty->compile_dir  = static::makeAbsolutePath($smarty_tmp . '/templates');
-                $this->smarty->cache_dir    = static::makeAbsolutePath($smarty_tmp . '/cache');
-                $this->smarty->config_dir   = static::makeAbsolutePath($smarty_tmp . '/config');
-                $this->smarty->plugins_dir[]= static::makeAbsolutePath('../source/smarty/plugins');
+                $this->smarty->addTemplateDir(static::makeAbsolutePath(self::TEMPLATE_DIR));
+                $this->smarty->setCompileDir(static::makeAbsolutePath($smarty_tmp . '/templates'));
+                $this->smarty->setCacheDir(static::makeAbsolutePath($smarty_tmp . '/cache'));
+                $this->smarty->addConfigDir(static::makeAbsolutePath($smarty_tmp . '/config'));
+                $this->smarty->addPluginsDir(static::makeAbsolutePath('../source/smarty/plugins'));
                  
                 $this->smarty->registerPlugin('modifier', 'formatDuration', array('StatusBoard_Main', 'formatDuration'));
                 $this->smarty->registerPlugin('modifier', 'formatFilesize', array('StatusBoard_Main', 'formatFilesize'));
