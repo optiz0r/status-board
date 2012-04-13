@@ -36,23 +36,41 @@ INSERT INTO `service` (`id`, `name`, `description`) VALUES
 -- Dumping data for table `site`
 --
 
-INSERT INTO `site` (`id`, `service`, `name`, `description`) VALUES
-(1, 1, 'Local', 'Local Internet access'),
-(2, 2, 'Offsite', 'Offsite web services'),
-(3, 3, 'Offsite', 'Offsite email services'),
-(4, 4, 'Local', 'Primary DNS services'),
-(5, 4, 'Offsite', 'Backup DNS services'),
-(6, 5, 'Local', 'Local LDAP services'),
-(7, 5, 'Offsite', 'Offsite LDAP services');
+INSERT INTO `site` (`id`, `name`, `description`) VALUES
+(1, 'Local', 'Local systems'),
+(2, 'Offsite', 'Offsite systems');
+
+--
+-- Dumping data for table `siteservice`
+--
+
+INSERT INTO `siteservice` (`id`,`service`,`site`) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 2),
+(4, 4, 1),
+(5, 4, 2),
+(6, 5, 1),
+(7, 5, 2);
 
 --
 -- Dumping data for table `incident`
 --
 
 INSERT INTO `incident` (`id`, `site`, `reference`, `description`, `start_time`, `estimated_end_time`, `actual_end_time`) VALUES
-(1, 1, 'UK:0001', 'Intermittent packetloss on primary internet connection', 1324079805, 1324079805, NULL),
-(2, 1, 'UK:0002', 'Full outage', 1324079805, 1324079805, NULL),
-(3, 4, 'UK:0003', 'DNS zone maintenance', 1324082411, 1324082411, NULL);
+(1, 'UK:0001', 'Intermittent packetloss on primary internet connection', 1324079805, 1324079805, NULL),
+(2, 'UK:0002', 'Full outage', 1324079805, 1324079805, NULL),
+(3, 'UK:0003', 'DNS zone maintenance', 1324082411, 1324082411, NULL);
+
+--
+-- Dumping data for table `siteserviceincident`
+--
+
+INSERT INTO `siteserviceincident` (`id`, `siteservice`, `incident`, `description`, `ctime`) VALUES
+(1, 1, 1, 'Initial classification', 1324079864),
+(2, 1, 2, 'Initial classification', 1324079864),
+(3, 4, 3, 'Initial classification', 1324082426),
+(4, 5, 3, 'Initial classification', 1324082426);
 
 --
 -- Dumping data for table `incidentstatus`
@@ -61,8 +79,8 @@ INSERT INTO `incident` (`id`, `site`, `reference`, `description`, `start_time`, 
 INSERT INTO `incidentstatus` (`id`, `incident`, `status`, `description`, `ctime`) VALUES
 (1, 1, 2, 'Initial classification', 1324079864),
 (2, 2, 4, 'Initial classification', 1324079864),
-(3, 1, 3, 'Status upgraded due to increasing impact from the ongoing issue.', 1324080307),
 (4, 3, 1, 'Initial classification', 1324082426);
+(3, 1, 3, 'Status upgraded due to increasing impact from the ongoing issue.', 1324080307),
 
 --
 -- Dumping data for table `user`

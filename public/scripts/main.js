@@ -31,6 +31,8 @@ var sb = {
             $('#confirm_delete_cancel').click(function() {
                 $('#confirm_delete').modal('hide'); 
              });
+            
+            $('input[name="siteservice_mode"]').change(sb.admin.siteservice.modeChanged).trigger('change');
         },
         
         deleteItem: function(url) {
@@ -40,6 +42,13 @@ var sb = {
             
             $('#confirm_delete').modal('show');
         },
+        
+        siteservice: {
+            modeChanged: function(e) {
+                $('.siteservice_contents').hide();
+                $('#siteservice_' + $('input[name="siteservice_mode"]:checked').val()).show();
+            }
+        }
         
     },
      

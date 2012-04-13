@@ -2,7 +2,6 @@
  * StatusBoard normal stylesheet
  *
  */
-@import url('http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css'); 
 @CHARSET "UTF-8";
 
 body {
@@ -77,11 +76,12 @@ label {
     padding: 0.5em;
 }
 
-#footer {
+footer {
     clear: both;
     padding: 2em;
     font-size: smaller;
     font-style: italic;
+    text-align: center;
 
     color: #333333;
 }
@@ -96,6 +96,14 @@ label {
     background: lightcyan;
     color: darkblue;
     margin: 1em;
+}
+
+.nested-controls {
+    margin-left: 2.0em;
+}
+
+.siteservice_mode_contents {
+    display: none;
 }
 
 /**

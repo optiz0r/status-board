@@ -5,7 +5,6 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     protected static $table = 'site';
     
     protected $_db_id;
-    protected $_db_service;
     protected $_db_name;
     protected $_db_description;
     
@@ -13,7 +12,14 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     protected $incidents_open = null;
     
     public static function allForService(StatusBoard_Service $service) {
-        return static::allFor('service', $service->id);
+        $site_services = StatusBoard_SiteService::allForService($service);
+        
+        $sites = array();
+        foreach ($site_services as $site_service) {
+            $sites[] = $site_service->site();
+        } 
+        
+        return $sites;
     } 
     
     public static function newSiteForService(StatusBoard_Service $service, $name, $description) {
@@ -31,6 +37,15 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         return StatusBoard_Incident::newForSite($this, $reference, $description, $status, $start_time, $estimated_end_time);
     }
     
+    /**
+     * Returns the list of SiteService mappings for this site
+     * 
+     * @return array(StatusBoard_SiteService)
+     */
+    public function serviceInstances() {
+        return StatusBoard_SiteService::allForSite($this);    
+    }
+       
     public function openIncidents($ignore_cache = false) {
         if ($this->incidents_open === null || $ignore_cache) {
             $this->incidents_open = StatusBoard_Incident::openForSite($this);

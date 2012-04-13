@@ -83,12 +83,14 @@ CREATE TABLE IF NOT EXISTS `service` (
 DROP TABLE IF EXISTS `site`;
 CREATE TABLE IF NOT EXISTS `site` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `service` int(10) unsigned NOT NULL,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `service` (`service`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+
+
 
 --
 -- Table structure for table `incident`
@@ -104,6 +106,23 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `actual_end_time` int(10) NULL,
   PRIMARY KEY (`id`),
   KEY `site` (`site`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for table `siteserviceincident`
+--
+DROP TABLE IF EXISTS `siteserviceincident`;
+CREATE TABLE IF NOT EXISTS `siteserviceincident` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `service` int(10) unsigned NOT NULL,
+  `site` int(10) unsigned NOT NULL,
+  `incident` int(10) unsigned NOT NULL,
+  `description` text NOT NULL,
+  `ctime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `site` (`site`),
+  KEY `service` (`service`),
+  KEY `incident` (`incident`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
@@ -161,11 +180,16 @@ DROP VIEW IF EXISTS `incident_open`;
 CREATE VIEW `incident_open` AS (
   SELECT 
     `i`.*,
+    `ssi`.`id` as `siteserviceincident`,
+    `ss`.`id` as `siteservice`,
+    `ss`.`service` as `service`,
+    `ss`.`site` as `site`,
     `isc`.`ctime`
   FROM
     `incident` AS `i`
-    JOIN `incidentstatus_current` AS `isc`
-    ON `i`.`id` = `isc`.`incident`
+    JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
+    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
+    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE
     `isc`.`status` IN (1,2,3,4)
 );
@@ -176,10 +200,16 @@ CREATE VIEW `incident_open` AS (
 DROP VIEW IF EXISTS `incident_closedtime`;
 CREATE VIEW `incident_closedtime` AS (
   SELECT 
-    `incident` AS `incident`,
-    `ctime` AS `ctime`
+    `i`.`incident` AS `incident`,
+    `ssi`.`id` as `siteserviceincident`,
+    `ss`.`id` as `siteservice`,
+    `ss`.`service` as `service`,
+    `ss`.`site` as `site`,
+    `i`.`ctime` AS `ctime`
   FROM
-    `incidentstatus`
+    `incidentstatus` AS `i`
+    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
+    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE 
     `status` = 0
 );
@@ -191,10 +221,16 @@ DROP VIEW IF EXISTS `incident_opentimes`;
 CREATE VIEW `incident_opentimes` AS (
   SELECT
     `i`.*,
+    `ssi`.`id` as `siteserviceincident`,
+    `ss`.`id` as `siteservice`,
+    `ss`.`service` as `service`,
+    `ss`.`site` as `site`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
   FROM
     `incident` as `i`
-    LEFT JOIN `incident_closedtime` AS `t` ON `i`.`id`=`t`.`incident`       
+    LEFT JOIN `incident_closedtime` AS `t` ON `i`.`id`=`t`.`incident` 
+    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`      
+    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
 );
 
 --
@@ -338,6 +374,20 @@ CREATE VIEW `permissions_by_user` AS (
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `siteservice`
+--
+ALTER TABLE `siteservice`
+  ADD CONSTRAINT `site_ibfk_1` FOREIGN KEY (`site`) REFERENCES `site` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `service_ibfk_1` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `siteserviceincident`
+--
+ALTER TABLE `siteserviceincident`
+  ADD CONSTRAINT `siteservice_ibfk_1` FOREIGN KEY (`siteservice`) REFERENCES `siteservice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `incident_ibfk_1` FOREIGN KEY (`incident`) REFERENCES `incident` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `grouppermission`
