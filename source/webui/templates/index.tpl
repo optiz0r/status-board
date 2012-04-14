@@ -35,7 +35,7 @@
             </div>
         </div><!-- /navbar -->
 
-        <div class="container">
+        <div class="container content">
 
             {if ! $messages}
                 {$session = StatusBoard_Main::instance()->session()}
@@ -61,11 +61,11 @@
                 </div>
             {/if}
 
-            <article id="content" class="rounded_content">
+            <article id="content">
                 {$page_content}
             </article>
 
-        </div><!-- /container -->
+        </div><!-- /container content -->
         
         <footer>
             Powered by 

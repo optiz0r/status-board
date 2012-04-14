@@ -1,9 +1,14 @@
 <div class="row">
-    <div class="span10">
-        <h2>{$site_title}</h2>
+
+	<div class='span10'>
+	  <h1 class='lead'>
+        <strong>{$site_title}</strong> 
+      </h1>
+      <p>Service Status Dashboard, detailing your current,past and future service status
+      </p>
     </div>
-    
-    <div class="span2 align-right">
+        
+    <div class="span2">
         {if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn"><i class="icon-plus"></i> Add Incident</a>{/if}
     </div>
 </div>
