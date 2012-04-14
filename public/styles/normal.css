@@ -108,7 +108,6 @@ admin-tab-content{
     -moz-border-radius:5px 5px 0 0;
     -webkit-border-radius:5px;
     border: 1px solid #DDD;
-    
     margin-left: -6px;
     padding: 5px;
     width: 950px;
@@ -120,4 +119,22 @@ dl.help dt {
 
 dl.help dd {
     padding: 0.5em;
+}
+
+ul#ticker {
+    height: 20px;
+    overflow: hidden;
+}
+ 
+ul#ticker  li {
+    height: 20px;
+}
+ 
+ul#ticker li a {
+    color: #06C;
+    display:inline;
+}
+ 
+ul#ticker li p {
+    display:inline;
 }

@@ -14,7 +14,38 @@
 </div>
 
 <div class="row">
-    <div class="span12">
+	<div class="span2">
+	<h5>Upcoming maintenance:</h5>
+	</div>
+    <div class="span10">
+                <ul id="ticker">
+                    <li>
+                        <a href="#">
+                         Service X1    
+                        </a>
+                        <p>Description</p>
+                    </li>
+                     <li>
+                        <a href="#">
+                         Service X2    
+                        </a>
+                        <p>Description</p>
+                    </li>
+					<li>
+                        <a href="#">
+                         Service X3  
+                        </a>
+                        <p>Description</p>
+                    </li>
+                   <li>
+                        <a href="#">
+                         Service X4    
+                        </a>
+                        <p>Description</p>
+                    </li>
+                </ul>
+            </div>
+         <div class="span12">
         <table class="table table-bordered">
             <thead>
                 <tr>
