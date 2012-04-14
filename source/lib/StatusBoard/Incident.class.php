@@ -200,6 +200,22 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $new_status;
     }
     
+    /**
+     * Returns a list of SiteService mappings that are affected by this Incident
+     * 
+     * @return array(StatusBoard_SiteService)
+     */
+    public function affectedSiteServices() {
+        $siteServiceIncidents = StatusBoard_SiteServiceIncident::allForIncident($this);
+        
+        $siteServices = array();
+        foreach ($siteServiceIncidents as $ssi) {
+            $siteServices[] = $ssi->siteService();
+        }
+        
+        return $siteServices;
+    }
+    
     public static function counts() {
         $database = StatusBoard_Main::instance()->database();
         $rows = $database->selectList('SELECT `status`, COUNT(*) AS `incident_count` FROM `incidentstatus_current` GROUP BY `status`');
@@ -219,7 +235,6 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $first->estimated_end_time < $second->estimated_end_time;
     }
     
-    
-}
+};
 
 ?>

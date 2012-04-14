@@ -36,7 +36,7 @@ class StatusBoard_SiteServiceIncident extends StatusBoard_DatabaseObject {
      * 
      * @param StatusBoard_Incident $incident
      */
-    public static function allForService(StatusBoard_Incident $incident) {
+    public static function allForIncident(StatusBoard_Incident $incident) {
         return static::allFor('incident', $incident->id);
     }
     

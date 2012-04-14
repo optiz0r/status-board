@@ -34,18 +34,17 @@
                 </div>
             </div>
         </div><!-- /navbar -->
-        
 
         <div class="container">
-            <div class="content">
 
-                {if ! $messages}
-                    {$session = StatusBoard_Main::instance()->session()}
-                    {$messages = $session->get('messages')}
-                    {$session->delete('messages')}
-                {/if}
-                {if $messages}
-                    <div id="messages">
+            {if ! $messages}
+                {$session = StatusBoard_Main::instance()->session()}
+                {$messages = $session->get('messages')}
+                {$session->delete('messages')}
+            {/if}
+            {if $messages}
+                <div class="row">
+                    <div class="span12" id="messages">
                         {foreach from=$messages item=message}
                             {if is_array($message)}
                                 {$severity=$message['severity']}
@@ -59,18 +58,19 @@
                             {/if}
                         {/foreach}
                     </div><!-- /messages -->
-                {/if}
+                </div>
+            {/if}
 
+            <article id="content" class="rounded_content">
                 {$page_content}
-
-            </div><!-- /content -->
-
-            <footer>
-              Powered by 
-              <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}).
-              Written by Ben Roberts and Nathan Booth.          
-            </footer>
+            </article>
 
         </div><!-- /container -->
+        
+        <footer>
+            Powered by 
+            <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}).
+            Written by Ben Roberts and Nathan Booth.          
+        </footer>
     </body>
 </html>

@@ -1,25 +1,25 @@
-<div id="statusboard" class="container">
-    <div class="row">
-        <div class="span10">
-            <h2>{$site_title}</h2>
-        </div>
-        
-        <div class="span2">
-            {if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn"><i class="icon-plus"></i> Add Incident</a>{/if}
-        </div>
+<div class="row">
+    <div class="span10">
+        <h2>{$site_title}</h2>
     </div>
     
-    <div class="row">
+    <div class="span2 align-right">
+        {if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn"><i class="icon-plus"></i> Add Incident</a>{/if}
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th width="200px">Service / Site</th>
-                    <th class="status" width="50px">Now</th>
+                    <th>Service / Site</th>
+                    <th class="status">Now</th>
                     {foreach from=array(0,1,2,3,4,5,6) item=day}
                         {if $day == 0}
-                            <th class="status" width="50px">Today</th>
+                            <th class="status">Today</th>
       				    {else}
-                            <th class="status" width="50px">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
+                            <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
       				    {/if}
     				{/foreach}
                 </tr>
@@ -46,7 +46,7 @@
                                     {$site->name}
                                 {/if}
                             </td>
-                            <td>
+                            <td class="status">
                                 {$status=$site_instance->status()}
                                 {include file="fragments/site-status.tpl" nocache date=null start=null end=null}
                             </td>
@@ -56,7 +56,7 @@
                                 {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
                                 {$incidentsDuring=$site_instance->openIncidentsDuring($start, $end)}
                                 {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
-                                <td>
+                                <td class="status">
                                     {include file="fragments/site-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
                                 </td>
                             {/foreach}
@@ -65,7 +65,5 @@
                 {/foreach}
             </tbody>
         </table>
-    </div><!-- row -->
-</div><!-- /status-board /container -->
-
-
+    </div>
+</div><!-- row -->
