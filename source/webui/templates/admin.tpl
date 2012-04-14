@@ -4,6 +4,9 @@
         <ul class="nav nav-tabs">
             <li {if $tab == 'summary'}class="active"{/if}><a href="#tab_summary" data-toggle="tab">Summary</a></li>
             <li {if $tab == 'services'}class="active"{/if}><a href="#tab_services" data-toggle="tab">Services</a></li>
+            <li {if $tab == 'sites'}class="active"{/if}><a href="#tab_sites" data-toggle="tab">Sites</a></li>
+            <li {if $tab == 'incidents'}class="active"{/if}><a href="#tab_incidents" data-toggle="tab">Incidents</a></li>
+            <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users" data-toggle="tab">Users</a></li>
             <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings" data-toggle="tab">Settings</a></li>
         </ul>
     </div><!-- /span12 -->
@@ -99,7 +102,7 @@
         <div class="row">
         	<div class="span3">
         		<h3>Current Services</h3>
-        		<p>Click on a Service to edit its properties, or access any of the sites defined under it.</p>
+        		<p>Click on a Service to edit its properties.</p>
         	</div>
             <div class="span9 column">
                 {if $services}
@@ -123,7 +126,7 @@
                                         <i class="icon-edit icon-white"></i>
                                         Edit Service
                                     </button>
-                                    <button class="btn btn-danger" onclick="sb.admin.deleteItem('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/');">
+                                    <button class="btn btn-danger" onclick="sb.admin.deleteItem('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/', '{$csrftoken|escape:quotes}');">
                                         <i class="icon-trash icon-white"></i>
                                         Delete
                                     </button>
@@ -135,24 +138,6 @@
             {else}
                 You haven't created any services yet. Create some with the button below.
             {/if}
-            </div>
-            <div id="confirm_delete" class="modal hide fade">
-                <div class="modal-header">
-                    Confirm deletion
-                </div>
-                <div class="modal-body">
-                    This action cannot be reversed and all dependent sites and incidents will also be removed.
-                    Are you sure you wish to delete this Service?                
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger" id="confirm_delete_do">
-                        <i class="icon-trash icon-white"></i>
-                        Delete
-                    </button>              
-                     <button class="btn btn-secondary" id="confirm_delete_cancel">
-                        Cancel
-                    </button>
-               </div>
             </div>
         </div><!--/Row for Existing Service-->
         <div class="row"><!--Row for New Service-->
@@ -177,12 +162,30 @@
                                 <textarea class="" id="admin_service_add_description" rows="3"  name="description"></textarea>
                             </div>
                         </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label">Add Sites</label>
+                            <div class="controls">
+                                {foreach from=$sites item=site}
+                                    <label class="checkbox" for="admin_add_service_site_{$site->id}">
+                                        <input type="checkbox" id="admin_add_service_site_{$site->id}" name="sites[]" value="{$site->id}" />
+                                        {$site->name|escape:html}
+                                    </label>
+                                {foreachelse}
+                                    <em>You have not yet defined any sites.</em>
+                                {/foreach}
+                            </div>
+                        </div><!-- /control-group -->
             
                         <div class="control-group">
                             <div class="controls">
                                 <button class="btn btn-primary" name="addservice">
                                     <i class="icon-plus icon-white"></i>
                                     Add Service
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="icon-refresh"></i>
+                                    Reset
                                 </button>
                             </div>
                         </div><!-- /control-group -->
@@ -192,6 +195,112 @@
         </div><!--/Row for New Service-->
     </div><!--/Toggled Div to hide services content -->
                 
+    <div class="tab-pane {if $tab == 'sites'}active{/if}" id="tab_sites"><!--Toggled Div to hide sites content -->
+        <div class="row">
+            <div class="span3">
+                <h3>Existing Sites</h3>
+                <p>Click on a Site to edit its properties</p>
+            </div>
+            <div class="span9">
+                {if $sites}
+                    <table class="table table-bordered table-striped" name="sites_list_table">
+                        <thead>
+                            <th>Site</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            {foreach from=$sites item=site}
+                                <tr>
+                                    <td>
+                                        <a href="{$base_uri}admin/site/id/{$site->id}/" title="Edit site {$site->name|escape:html}">{$site->name|escape:html}</a>
+                                    </td>
+                                    <td>
+                                        {$site->description|escape:html}
+                                    </td>
+                                    <td>
+                                        <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/site/id/{$site->id}/';return false;">
+                                            <i class="icon-edit icon-white"></i>
+                                            Edit Site
+                                        </button>
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/sites/do/delete-site/id/{$site->id}/', '{$csrftoken|escape:quotes}');">
+                                            <i class="icon-trash icon-white"></i>
+                                            Delete Site
+                                        </button>
+                                    </td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table><!--/name table -->
+                {else}
+                    You haven't created any sites yet. Create some with the button below.
+                {/if}
+            </div>
+        </div><!--/Row for Existing Service-->
+        
+        <div class="row">
+            <div class="span3">
+                <h3>Add Site</h3>
+                <p>Use this form to define a new site.</p>
+            </div><!--/New Service description-->
+            <div class="span9">
+                <form class="form-horizontal" id="admin_addsite" method="post" action="{$base_uri}admin/tab/sites/do/add-site/">
+                    <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="admin_site_add_name">Name</label>
+                            <div class="control">
+                                <input id="admin_site_add_name" name="name" type="text" />
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="admin_site_edit_description">Description</label>
+                            <div class="text">
+                                <textarea id="admin_site_add_description" rows="3"  name="description" ></textarea>
+                            </div>
+                        </div><!-- /control-group -->
+            
+                        <div class="control-group">
+                            <label class="control-label">Add Services</label>
+                            <div class="controls">
+                                {foreach from=$services item=service}
+                                    <label class="checkbox" for="admin_add_site_service_{$service->id}">
+                                        <input type="checkbox" id="admin_add_site_service_{$service->id}" name="services[]" value="{$service->id}" />
+                                        {$service->name|escape:html}
+                                    </label>
+                                {foreachelse}
+                                    <em>You have not yet defined any services.</em>
+                                {/foreach}
+                            </div>
+                        </div><!-- /control-group -->
+            
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn btn-primary">
+                                    <i class="icon-plus icon-white"></i>
+                                    Add Site
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="icon-refresh"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </div><!-- /control-group -->
+                    </fieldset>
+                </form>
+            </div>
+        </div><!--/Row for New Service-->
+    </div><!--/Toggled Div to hide services content -->             
+                
+    <div class="tab-pane {if $tab == 'incidents'}active{/if}" id="tab_incidents">
+        <em>Not yet implemented</em>
+    </div>
+    
+    <div class="tab-pane {if $tab == 'users'}active{/if}" id="tab_users">
+        <em>Not yet implemented</em>
+    </div>
+
     <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">
         <div class="row">
             <div class="span12">
@@ -247,6 +356,23 @@
     </div><!--/tab -->
 </div><!--/tab-content(container for all main div content on page -->
 
+<div id="confirm_delete" class="modal hide fade">
+    <div class="modal-header">
+        Confirm deletion
+    </div>
+    <div class="modal-body">
+        Deleting this object is final and cannot be reversed.                
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="confirm_delete_do">
+            <i class="icon-trash icon-white"></i>
+            Delete
+        </button>              
+         <button class="btn btn-secondary" id="confirm_delete_cancel">
+            Cancel
+        </button>
+   </div>
+</div>
 
 <script type="text/javascript">
     sb.admin.init();

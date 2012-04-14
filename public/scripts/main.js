@@ -36,9 +36,11 @@ var sb = {
             $('input[name="siteservice_mode"]').change(sb.admin.siteservice.modeChanged).trigger('change');
         },
         
-        deleteItem: function(url) {
+        deleteItem: function(url, csrftoken) {
             $('#confirm_delete_do').click(function() {
-                sb.request.post(url);
+                sb.request.post(url, {
+                    csrftoken: csrftoken,
+                });
             });
             
             $('#confirm_delete').modal('show');
@@ -85,7 +87,7 @@ var sb = {
             console.log('Posting');
             var form = $('<form />').attr('method', 'post').attr('action', url);
             for (var key in data) {
-                form.appendChild($('<input type="hidden">').attr('name', key).val(data[key]));
+                form.append($('<input type="hidden">').attr('name', key).val(data[key]));
             }
             
             form.submit();

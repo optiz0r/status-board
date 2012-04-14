@@ -111,26 +111,26 @@
 <div class="row">
 	<div class="span3">
         <h3>Add Site</h3>
-        <p>Use this form to define a new site to the service {$service->name|escape:html}</p>
+        <p>Use this form to add an existing site to this service.</p>
     </div><!--/New Service description-->
     <div class="span9">
         <form class="form-horizontal" id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-site/">
             <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
             <fieldset>
                 <div class="control-group">
-                    <label class="control-label" for="admin_site_add_name">Name</label>
-                    <div class="control">
-                        <input id="admin_site_add_name" name="name" type="text" />
+                    <label class="control-label" for="admin_service_add_site">Name</label>
+                    <div class="controls">
+                        {foreach from=StatusBoard_Site::all() item=site}
+                            <label class="checkbox" id="admin_service_add_site_{$site->id}">
+                                <input type="checkbox" id="admin_service_add_site_{$site->id}" name="sites" value="{$site->id}" />
+                                {$site->name|escape:html}
+                            </label>
+                        {foreachelse}
+                            <em>You have not yet defined any sites.</em>
+                        {/foreach}
                     </div>
                 </div><!-- /control-group -->
                 
-                <div class="control-group">
-                    <label class="control-label" for="admin_site_edit_description">Description</label>
-                    <div class="text">
-                        <textarea id="admin_site_add_description" rows="3"  name="description" ></textarea>
-                    </div>
-                </div><!-- /control-group -->
-    
                 <div class="control-group">
                     <div class="controls">
                         <button class="btn btn-primary">

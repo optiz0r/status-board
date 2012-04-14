@@ -27,9 +27,15 @@ if ($request->exists('do')) {
             case 'add-service': {
                 $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
                 $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+                $site_ids = StatusBoard_Main::issetelse($_POST['sites'], array());
     
                 try {
-                    $service = StatusBoard_Service::newService($name, $description);
+                    $sites = array();
+                    foreach ($site_ids as $site_id) {
+                        $sites[] = StatusBoard_Site::fromId($site_id);
+                    }
+                    
+                    $service = StatusBoard_Service::newFor($sites, $name, $description);
                     
                     $messages[] = array(
                         'severity' => 'success',
@@ -64,6 +70,54 @@ if ($request->exists('do')) {
                 
             } break;
             
+            case 'add-site': {
+                $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
+                $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+                $service_ids = StatusBoard_Main::issetelse($_POST['services'], array());
+    
+                try {
+                    StatusBoard_Validation_Text::length($name, 1, 255);
+                    
+                    $services = array();
+                    foreach ($service_ids as $service_id) {
+                        $services[] = StatusBoard_Service::fromId($service_id);
+                    }
+                    
+                    $site = StatusBoard_Site::newFor($services, $name, $description);
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The site was created succesfully.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The site was not added due to invalid parameters being passed.',
+                    );
+                }
+           
+            } break;
+    
+            case 'delete-site': {
+                $site_id = $request->get('id', 'Sihnon_Exception_InvalidParameters');
+                
+                try {
+                    $site = StatusBoard_Site::fromId($site_id);
+                    $site->delete();
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The Site was deleted successfully.',
+                    );
+                } catch (Sihnon_Exception_ResultCountMismatch $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The Site was not deleted as the object requested could not be found.',
+                    );
+                }
+                
+            } break;
+    
             case 'save-settings': {
                 $supported_settings = array(
                     'site_title' => 'site.title',
@@ -110,7 +164,7 @@ if ($request->exists('do')) {
     } catch (SihnonFramework_Exception_CSRFVerificationFailure $e) {
         $messages[] = array(
             'severity' => 'error',
-            'content'  => 'The incident was not created due to a problem with your session; please try again.',
+            'content'  => 'The last action was not taken due to a problem with your session; please try again.',
         );
     }
 }
@@ -134,6 +188,9 @@ if ($destination == 'summary') {
 
 $services = StatusBoard_Service::all();
 $this->smarty->assign('services', $services);
+
+$sites = StatusBoard_Site::all();
+$this->smarty->assign('sites', $sites);
 
 $users = $auth->listUsers();
 $this->smarty->assign('users', $users);

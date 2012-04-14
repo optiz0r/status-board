@@ -15,7 +15,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     protected $statuses = null;
     protected $siteserviceincidents = null;
     
-    public static function newForSiteServices(array $siteservices, $reference, $description, $status, $start_time, $estimated_end_time) {
+    public static function newFor(array $siteservices, $reference, $description, $status, $start_time, $estimated_end_time) {
         $new_incident = new self();
         $new_incident->reference = $reference;
         $new_incident->description = $description;

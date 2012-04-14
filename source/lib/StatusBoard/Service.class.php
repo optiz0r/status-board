@@ -8,6 +8,7 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
     protected $_db_name;
     protected $_db_description;
     
+    protected $siteservices = null;
     protected $sites = null;
     protected $incidents_open = null;
     
@@ -22,18 +23,19 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
         return $services;
     } 
     
-    public static function newService($name, $description) {
+    public static function newFor(array $sites, $name, $description) {
         $new_service = new self();
         $new_service->name = $name;
         $new_service->description = $description;
         
         $new_service->create();
         
+        $new_service->siteservices = array();
+        foreach ($sites as $site) {
+            $new_service->siteservices[] = StatusBoard_SiteService::newFor($new_service, $site);
+        }
+        
         return $new_service;
-    }
-    
-    public function newSite($name, $description) {
-        return StatusBoard_Site::newSiteForService($this, $name, $description);
     }
     
     /**

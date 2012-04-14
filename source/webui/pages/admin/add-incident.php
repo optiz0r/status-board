@@ -44,7 +44,7 @@ if ($request->exists('do')) {
             throw new StatusBoard_Exception_InvalidParameters('estimatedendtime');
         }
     
-        $incident = StatusBoard_Incident::newForSiteServices($siteservices, $reference, $description, $status, $start_time, $estimated_end_time);
+        $incident = StatusBoard_Incident::newFor($siteservices, $reference, $description, $status, $start_time, $estimated_end_time);
         
         $messages[] = array(
             'severity' => 'success',
