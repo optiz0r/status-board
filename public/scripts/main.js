@@ -26,7 +26,8 @@ var sb = {
         init: function() {
             $('#confirm_delete').modal({
                 backdrop: true,
-                keyboard: true
+                keyboard: true,
+                show:     false,
             });
             $('#confirm_delete_cancel').click(function() {
                 $('#confirm_delete').modal('hide'); 

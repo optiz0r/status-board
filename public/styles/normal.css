@@ -93,36 +93,24 @@ th.service {
     background-color: #eeeeee;
 }
 
-/*div.page-header{
-margin:10px -5px 20px;
-padding:10px 10px 0 10px;
--moz-border-radius:5px 5px 0 0;
--webkit-border-top-left-radius:5px;
--webkit-border-top-right-radius:5px;
-border-bottom: 0px;
-}*/
+admin-tab-content{
+    background:#fff;
+    margin:-20px -5px 20px;
+    Padding-top:20px;
+    padding-left:20px;
+    
+    -moz-border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px;
+    border-left: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+}
 
-/*.tabs, .pills {
-margin: 0 0 0px;
-}*/
-
-
-/*#my-tab-content{
- background:#fff;
- margin:-20px -5px 20px;
- Padding-top:20px;
- padding-left:20px;
- -moz-border-radius:5px 5px 0 0;
--webkit-border-radius:5px;
- border-left: 1px solid #DDD;
- border-right: 1px solid #DDD;
- border-bottom: 1px solid #DDD;
- }*/
- .rounded_content{
- background:#fff;
- -moz-border-radius:5px 5px 0 0;
--webkit-border-radius:5px;
- border: 1px solid #DDD;
+.rounded_content{
+    background:#fff;
+    -moz-border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px;
+    border: 1px solid #DDD;
     
     margin-left: -6px;
     padding: 5px;
