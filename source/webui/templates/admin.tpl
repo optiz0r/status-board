@@ -196,6 +196,7 @@
         <div class="row">
             <div class="span12">
                 <form class="form-horizontal" id="admin_quicksettings" method="post" action="{$base_uri}admin/tab/settings/do/save-settings/">
+                    <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                     <fieldset>
                         <legend>Quick Settings</legend>
                         
