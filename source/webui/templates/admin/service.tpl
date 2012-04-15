@@ -75,7 +75,7 @@
                                     <i class="icon-edit icon-white"></i>
                                     Edit Site
                                 </button>
-                                <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/');">
+                                <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/', '{$csrftoken|escape:quotes}');">
                                     <i class="icon-trash icon-white"></i>
                                     Delete Site
                                 </button>
@@ -114,19 +114,19 @@
         <p>Use this form to add an existing site to this service.</p>
     </div><!--/New Service description-->
     <div class="span9">
-        <form class="form-horizontal" id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-site/">
+        <form class="form-horizontal" id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-sites/">
             <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
             <fieldset>
                 <div class="control-group">
                     <label class="control-label" for="admin_service_add_site">Name</label>
                     <div class="controls">
-                        {foreach from=StatusBoard_Site::all() item=site}
+                        {foreach from=$service->unusedSites() item=site}
                             <label class="checkbox" id="admin_service_add_site_{$site->id}">
-                                <input type="checkbox" id="admin_service_add_site_{$site->id}" name="sites" value="{$site->id}" />
+                                <input type="checkbox" id="admin_service_add_site_{$site->id}" name="sites[]" value="{$site->id}" />
                                 {$site->name|escape:html}
                             </label>
                         {foreachelse}
-                            <em>You have not yet defined any sites.</em>
+                            <em>There are no other sites that can be added to this service.</em>
                         {/foreach}
                     </div>
                 </div><!-- /control-group -->
@@ -135,7 +135,7 @@
                     <div class="controls">
                         <button class="btn btn-primary">
                             <i class="icon-plus icon-white"></i>
-                            Add Service
+                            Add Sites
                         </button>
                         <button type="reset" class="btn btn-secondary">
                             <i class="icon-refresh"></i>

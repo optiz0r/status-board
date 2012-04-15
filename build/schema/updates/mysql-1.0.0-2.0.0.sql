@@ -32,6 +32,41 @@ CREATE TABLE IF NOT EXISTS `siteservice` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
+--
+-- Table structure for view `site_unmatchedservices`
+--
+DROP VIEW IF EXISTS `site_unmatchedservices`;
+CREATE VIEW `site_unmatchedservices` AS (
+  SELECT
+    `si`.*,
+    `se`.`id` AS `service`
+  FROM
+    `site` AS `si`
+    CROSS JOIN `service` AS `se`
+    LEFT JOIN `siteservice` AS `ss`
+      ON `ss`.`site` = `si`.`id`
+      AND `ss`.`service` = `se`.`id`
+  WHERE
+    `ss`.`id` IS NULL
+);
+
+--
+-- Table structure for view `service_unusedsites`
+--
+DROP VIEW IF EXISTS `service_unmatchedsites`;
+CREATE VIEW `service_unmatchedsites` AS (
+  SELECT
+    `se`.*,
+    `si`.`id` AS `site`
+  FROM
+    `site` AS `si`
+    CROSS JOIN `service` AS `se`
+    LEFT JOIN `siteservice` AS `ss`
+      ON `ss`.`site` = `si`.`id`
+      AND `ss`.`service` = `se`.`id`
+  WHERE
+    `ss`.`id` IS NULL
+);
 
 --
 -- Table structure for table `siteserviceincident`

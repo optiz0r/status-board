@@ -59,7 +59,7 @@ if ($request->exists('do')) {
                         try {
                             $site = StatusBoard_Site::fromId($site_id);
                             
-                            StatusBoard_SiteService::newFor($service, $site);
+                            $new_ss = StatusBoard_SiteService::newFor($service, $site);
                         } catch (StatusBoard_Exception_ResultCountMismatch $e) {
                             $messages[] = array(
                                 'severity' => 'warning',
@@ -81,7 +81,25 @@ if ($request->exists('do')) {
             } break;
             
             case 'delete-site': {
+                $site_id = $request->get('site', 'Sihnon_Exception_InvalidParameters');
                 
+                try {
+                    $site = StatusBoard_Site::fromId($site_id);
+                    $ss = StatusBoard_SiteService::fromSiteService($service, $site);
+
+                    $ss->delete();
+                    
+                    $messages[] = array(
+                                            'severity' => 'success',
+                                            'content'  => 'The service was updated succesfully.',
+                    );
+                } catch (StatusBoard_Exception_ResultCountMismatch $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The Site was not removed as the object requested could not be found.',
+                    );
+
+                }
             } break;
             
             default: {

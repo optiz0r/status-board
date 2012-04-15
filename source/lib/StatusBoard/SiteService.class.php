@@ -38,7 +38,6 @@ class StatusBoard_SiteService extends StatusBoard_DatabaseObject {
         return static::allFor('service', $service->id);
     }
     
-    
     /**
      * Returns the Site object associated with this mapping
      * 
@@ -46,6 +45,17 @@ class StatusBoard_SiteService extends StatusBoard_DatabaseObject {
      */
     public function site() {
         return StatusBoard_Site::fromId($this->site);
+    }
+    
+    /**
+     * Returns a site-service mapping given the Site and Service objects
+     *
+     * @param StatusBoard_Service $service
+     * @param StatusBoard_Site $site
+     * @return StatusBoard_SiteService
+    */
+    public static function fromSiteService(StatusBoard_Service $service, StatusBoard_Site $site) {
+        return static::from(array('site', 'service'), array($site->id, $service->id));
     }
     
     /**

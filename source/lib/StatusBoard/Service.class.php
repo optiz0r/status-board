@@ -23,6 +23,14 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
         return $services;
     } 
     
+    public function unusedSites() {
+        return StatusBoard_Site::unusedBy($this);
+    }
+    
+    public static function unusedBy(StatusBoard_Site $site) {
+        return static::allFor('site', $site->id, 'service_unmatched');
+    }
+    
     public static function newFor(array $sites, $name, $description) {
         $new_service = new self();
         $new_service->name = $name;
@@ -45,6 +53,10 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
      */
     public function siteInstances() {
         return StatusBoard_SiteService::allForService($this);    
+    }
+    
+    public function siteInstance(StatusBoard_Site $site) {
+        return StatusBoard_SiteService::fromSiteService($this, $site);
     }
        
     public function sites($ignore_cache = false) {

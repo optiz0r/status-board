@@ -21,7 +21,15 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         } 
         
         return $sites;
-    } 
+    }
+    
+    public function unusedServices() {
+        return StatusBoard_Service::unusedBy($this);
+    }
+    
+    public static function unusedBy(StatusBoard_Service $service) {
+        return static::allFor('service', $service->id, 'site_unmatchedservices');
+    }
     
     public static function newFor(array $services, $name, $description) {
         $new_site = new self();
