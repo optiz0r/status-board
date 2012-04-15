@@ -35,7 +35,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
 
     public static function openForSite(StatusBoard_Site $site) {
-        return static::allFor('site', $site->id, 'incident_open');
+        return static::allFor('site', $site->id, 'incident_open_site');
     }
     
     public static function openForSiteDuring(StatusBoard_Site $site, $start, $end) {
@@ -48,7 +48,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
     
     public static function openForService(StatusBoard_Service $service) {
-        return static::allFor('service', $service->id, 'incident_open');
+        return static::allFor('service', $service->id, 'incident_open_service');
     }
     
     public static function openForServiceDuring(StatusBoard_Service $service, $start, $end) {
@@ -61,7 +61,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
     
     public static function openForSiteService(StatusBoard_SiteService $siteservice) {
-        return static::allFor('siteservice', $siteservice->id, 'incident_open');
+        return static::allFor('siteservice', $siteservice->id, 'incident_open_siteservice');
     }
     
     public static function openForSiteServiceDuring(StatusBoard_SiteService $siteservice, $start, $end) {
@@ -74,14 +74,14 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
     
     public static function allNearDeadline() {
-        return static::all('incident_open', "estimated_end_time>=:threshold AND estimated_end_time>=:now", array(
+        return static::all('incident_open_siteservice', "estimated_end_time>=:threshold AND estimated_end_time>=:now", array(
             array('name' => 'threshold', 'value' => time() - StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
             array('name' => 'now', 'value' => time(), 'type' => PDO::PARAM_INT),
         ));
     }
     
     public static function allPastDeadline() {
-        return static::all('incident_open', "estimated_end_time<=:threshold", array(
+        return static::all('incident_open_siteservice', "estimated_end_time<=:threshold", array(
             array('name' => 'threshold', 'value' => time(), 'type' => PDO::PARAM_INT),
         ));
     }

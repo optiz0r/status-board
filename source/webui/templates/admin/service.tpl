@@ -129,7 +129,74 @@
         </form>
     </div>
 </div> 
-         
+
+<div class="row space-below">
+    <div class="span3">
+        <h3>Open Incidents</h3>
+    </div>
+    <div class="span9">
+        {if $open_incidents}
+            <table class="table table-bordered table-striped" name="sites_list_table">
+                <thead>
+                    <th>Reference</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    {foreach from=$open_incidents item=incident}
+                        <tr>
+                            <td>
+                                <a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a>
+                            </td>
+                            <td>
+                                {$incident->description|escape:html}
+                            </td>
+                            <td>
+                            {StatusBoard_Status::name($incident->currentStatus())}
+                            </td>
+                            <td>
+                                <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/incident/id/{$incident->id}/';return false;">
+                                    <i class="icon-edit icon-white"></i>
+                                    Edit
+                                </button>
+                                <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/incident/id/{$incident->id}/', '{$csrftoken|escape:quotes}');">
+                                    <i class="icon-trash icon-white"></i>
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        {else}
+            <em>There are no open incidents for this site.</em>
+        {/if}
+    </div>
+</div><!--/Row for Existing Service-->
+
+<div class="row">
+    <div class="span3">
+        <h3>Add Incident</h3>
+        <p>
+            Click the button to open the Add Incident page.
+        </p>
+    </div><!--/New Service description-->
+    
+    <div class="span9">
+        <form class="form-horizontal" method="get" action="{$base_uri}admin/add-incident/service/{$service->id}/site/{$site->id}/">
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary">
+                        <i class="icon-plus icon-white"></i>
+                        Add Incident
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>          
+</div>
+
 <div id="confirm_delete" class="modal hide fade">
     <div class="modal-header">
         Confirm deletion

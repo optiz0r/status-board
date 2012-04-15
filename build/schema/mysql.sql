@@ -207,24 +207,60 @@ CREATE VIEW `incidentstatus_current` AS (
 );
 
 --
--- Table structure for view `incident_open`
+-- Table structure for view incident_open_service
 --
-DROP VIEW IF EXISTS `incident_open`;
-CREATE VIEW `incident_open` AS (
-  SELECT 
+DROP VIEW IF EXISTS `incident_open_service`;
+CREATE VIEW `incident_open_service` AS (
+  SELECT DISTINCT
     `i`.*,
-    `ssi`.`id` as `siteserviceincident`,
-    `ss`.`id` as `siteservice`,
     `ss`.`service` as `service`,
+    `isc`.`ctime`
+  FROM
+    `incident` AS `i`
+    LEFT JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
+    LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+  WHERE
+    `isc`.`status` IN (1,2,3,4)
+    AND `ss`.`service` IS NOT NULL
+);
+
+--
+-- Table structure for view incident_open_site
+--
+DROP VIEW IF EXISTS `incident_open_site`;
+CREATE VIEW `incident_open_site` AS (
+  SELECT DISTINCT
+    `i`.*,
     `ss`.`site` as `site`,
     `isc`.`ctime`
   FROM
     `incident` AS `i`
-    JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
-    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
-    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+    LEFT JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
+    LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE
     `isc`.`status` IN (1,2,3,4)
+    AND `ss`.`site` IS NOT NULL
+);
+
+--
+-- Table structure for view incident_open_site
+--
+DROP VIEW IF EXISTS `incident_open_siteservice`;
+CREATE VIEW `incident_open_siteservice` AS (
+  SELECT DISTINCT
+    `i`.*,
+    `ss`.`id` as `siteservice`,
+    `isc`.`ctime`
+  FROM
+    `incident` AS `i`
+    LEFT JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
+    LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+  WHERE
+    `isc`.`status` IN (1,2,3,4)
+    AND `ss`.`id` IS NOT NULL
 );
 
 --

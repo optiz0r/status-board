@@ -122,9 +122,11 @@ if ($request->exists('do')) {
     
 
 $sites = $service->sites();
+$open_incidents = $service->openIncidents();
 
 $this->smarty->assign('service', $service);
 $this->smarty->assign('sites', $sites);
+$this->smarty->assign('open_incidents', $open_incidents);
 $this->smarty->assign('messages', $messages);
 $this->smarty->assign('csrftoken', $csrf->generate());
 

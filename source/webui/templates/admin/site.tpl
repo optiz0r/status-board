@@ -151,7 +151,7 @@
                                 <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a>
                             </td>
                             <td>
-                                {$site->description|escape:html}
+                                {$incident->description|escape:html}
                             </td>
                             <td>
                             {StatusBoard_Status::name($incident->currentStatus())}
