@@ -8,7 +8,7 @@
       </p>
     </div>
         
-    <div class="span2">
+    <div class="span2 align-right">
         {if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn"><i class="icon-plus"></i> Add Incident</a>{/if}
     </div>
 </div>
