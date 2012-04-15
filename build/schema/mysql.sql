@@ -108,7 +108,7 @@ CREATE VIEW `site_unmatchedservices` AS (
 );
 
 --
--- Table structure for view `service_unusedsites`
+-- Table structure for view `service_unmatchedsites`
 --
 DROP VIEW IF EXISTS `service_unmatchedsites`;
 CREATE VIEW `service_unmatchedsites` AS (
