@@ -28,7 +28,7 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
     }
     
     public static function unusedBy(StatusBoard_Site $site) {
-        return static::allFor('site', $site->id, 'service_unmatched');
+        return static::allFor('site', $site->id, 'service_unmatchedsites');
     }
     
     public static function newFor(array $sites, $name, $description) {

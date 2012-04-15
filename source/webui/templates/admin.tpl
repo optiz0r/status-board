@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row space-below">
     <div class="span12">
         <h1>Admin Control Panel</h1>
         <ul class="nav nav-tabs">
@@ -14,7 +14,7 @@
 
 <div id="admin-tab-content" class="tab-content"><!--tab-content(container for all main div content on page -->
     <div class="tab-pane {if $tab == 'summary'}active{/if}" id="tab_summary"><!--Toggled Div to hide admin content -->
-        <div class="row">
+        <div class="row space-below">
             <div class="span3 column">
                 <h3>Alerts</h3>
             </div>
@@ -99,7 +99,7 @@
     </div><!--/Toggled Div to hide admin content -->
     
     <div class="tab-pane {if $tab == 'services'}active{/if}" id="tab_services"><!--Toggled Div to hide services content -->
-        <div class="row">
+        <div class="row space-below">
         	<div class="span3">
         		<h3>Current Services</h3>
         		<p>Click on a Service to edit its properties.</p>
@@ -196,7 +196,7 @@
     </div><!--/Toggled Div to hide services content -->
                 
     <div class="tab-pane {if $tab == 'sites'}active{/if}" id="tab_sites"><!--Toggled Div to hide sites content -->
-        <div class="row">
+        <div class="row space-below">
             <div class="span3">
                 <h3>Existing Sites</h3>
                 <p>Click on a Site to edit its properties</p>

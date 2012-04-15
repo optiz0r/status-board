@@ -1,17 +1,17 @@
-<div class="row">
+<div class="row space-below">
     <div class="span12"><!--name content container -->   
         <ul class="breadcrumb">
-          <li><a href="{$base_uri}admin/">Admin</a> <span class="divider">|</span></li>
+          <li><a href="{$base_uri}admin/tab/services/">Admin</a> <span class="divider">|</span></li>
           <li class="active"><a href="#">Service {$service->name|escape:html}</a></li>
         </ul>
 
         <h1>Service {$service->name|escape:html}</h1>
     </div>
 </div>
-<div class="row">
+<div class="row space-below">
     <div class="span3">
         <h3>Edit Service</h3>
-        <p>Use this form to update the existing Service</p>
+        <p>Use this form to update the Service.</p>
     </div>
     <div class="span9">
         <form class="form-horizontal" id="admin_service_edit" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/edit/">
@@ -48,21 +48,21 @@
     </div>
 </div><!-- /row -->  
 
-<div class="row">
+<div class="row space-below">
 	<div class="span3">
-		<h3>Existing Sites</h3>
-		<p>Currently the following sites that are defined for the service {$service->name|escape:html}, Edit the site or delete it from the service here, to add a new one use the form below</p>
+		<h3>Associated Sites</h3>
+		<p>These sites are currently associated with this service.</p>
 	</div>
     <div class="span9">
         {if $sites}
-			<table class="table table-bordered table-striped" name="sites_list_table"><!--Services table -->
+			<table class="table table-bordered table-striped" name="sites_list_table">
 			    <thead>
-			        <th>Site</th>
+			        <th>Service</th>
 				    <th>Description</th>
 			        <th>Action</th>
 		        </thead>
 			    <tbody>
-                    {foreach from=$sites item=site}
+                    {foreach from=$service->sites() item=site}
                         <tr>
                             <td>
                                 <a href="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/" title="Edit site {$site->name|escape:html}">{$site->name|escape:html}</a>
@@ -76,8 +76,8 @@
                                     Edit Site
                                 </button>
                                 <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/service/do/delete-site/id/{$service->id}/site/{$site->id}/', '{$csrftoken|escape:quotes}');">
-                                    <i class="icon-trash icon-white"></i>
-                                    Delete Site
+                                    <i class="icon-minus icon-white"></i>
+                                    Disassociate Site
                                 </button>
                             </td>
                         </tr>
@@ -85,34 +85,16 @@
                 </tbody>
             </table><!--/name table -->
         {else}
-            You haven't created any sites for this service yet. Create some with the button below.
+            You haven't associated any sites with this service yet. Add some with the button below.
         {/if}
-        <div id="confirm_delete" class="modal hide fade">
-            <div class="modal-header">
-                Confirm deletion
-            </div>
-            <div class="modal-body">
-                This action cannot be reversed and all dependent incidents will also be removed.
-                Are you sure you wish to delete this Site?
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" id="confirm_delete_do">
-                    <i class="icon-trash"></i>
-                    Delete
-                </button>              
-                <button class="btn btn-secondary" id="confirm_delete_cancel">
-                    Cancel
-                </button>
-            </div>
-        </div>
     </div>
-</div><!--/Row for Existing Service-->
+</div>
 
-<div class="row">
+<div class="row space-below">
 	<div class="span3">
-        <h3>Add Site</h3>
-        <p>Use this form to add an existing site to this service.</p>
-    </div><!--/New Service description-->
+        <h3>Add Sites</h3>
+        <p>Use this form to associate existing sites with this service.</p>
+    </div>
     <div class="span9">
         <form class="form-horizontal" id="admin_addsite" method="post" action="{$base_uri}admin/service/id/{$service->id}/do/add-sites/">
             <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
@@ -126,7 +108,7 @@
                                 {$site->name|escape:html}
                             </label>
                         {foreachelse}
-                            <em>There are no other sites that can be added to this service.</em>
+                            <em>There are no other sites that can be associated with this service.</em>
                         {/foreach}
                     </div>
                 </div><!-- /control-group -->
@@ -135,7 +117,7 @@
                     <div class="controls">
                         <button class="btn btn-primary">
                             <i class="icon-plus icon-white"></i>
-                            Add Sites
+                            Associate Sites
                         </button>
                         <button type="reset" class="btn btn-secondary">
                             <i class="icon-refresh"></i>
@@ -146,8 +128,27 @@
             </fieldset>
         </form>
     </div>
-</div><!--/Row for New Service-->  
-          
+</div> 
+         
+<div id="confirm_delete" class="modal hide fade">
+    <div class="modal-header">
+        Confirm deletion
+    </div>
+    <div class="modal-body">
+        This action cannot be reversed and all dependent incidents will also be removed.
+        Are you sure you wish to remove the association with this site?
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="confirm_delete_do">
+            <i class="icon-trash icon-white"></i>
+            Delete
+        </button>              
+        <button class="btn btn-secondary" id="confirm_delete_cancel">
+            Cancel
+        </button>
+    </div>
+</div>
+ 
 <script type="text/javascript">
     sb.admin.init();
 </script>

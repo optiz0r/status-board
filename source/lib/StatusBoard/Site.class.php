@@ -9,6 +9,7 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     protected $_db_description;
     
     protected $siteservices = null;
+    protected $services = null;
     protected $incidents = null;
     protected $incidents_open = null;
     
@@ -59,6 +60,19 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
         return StatusBoard_SiteService::allForSite($this);    
     }
        
+    /**
+     * Returns a list of all Services associated with this Site
+     * 
+     * @param bool $ignore_cache
+     */
+    public function services($ignore_cache = false) {
+        if ($this->services === null || $ignore_cache) {
+            $this->services = StatusBoard_Service::allForSite($this);
+        }
+        
+        return $this->services;
+    }
+    
     public function openIncidents($ignore_cache = false) {
         if ($this->incidents_open === null || $ignore_cache) {
             $this->incidents_open = StatusBoard_Incident::openForSite($this);
