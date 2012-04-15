@@ -48,11 +48,13 @@
                         {foreach from=$messages item=message}
                             {if is_array($message)}
                                 {$severity=$message['severity']}
-                                <div class="alert-message {$severity}">
+                                <div class="alert alert-{$severity}">
+                                    <a class="close" data-dismiss="alert">&times;</a>
                                     {$message['content']|escape:html}
                                 </div>
                             {else}
-                                <div class="alert-message info">
+                                <div class="alert alert-info">
+                                    <a class="close" data-dismiss="alert">&times;</a>
                                     {$message|escape:html}
                                 </div>
                             {/if}
