@@ -13,6 +13,7 @@ if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission
 
 $activity = null;
 $success = true;
+$messages = array();
 
 $destination = $request->get('tab', 'summary');
 
