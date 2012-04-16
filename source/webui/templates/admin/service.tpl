@@ -153,7 +153,8 @@
                                 {$incident->description|escape:html}
                             </td>
                             <td>
-                            {StatusBoard_Status::name($incident->currentStatus())}
+                                {include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()}
+                                {StatusBoard_Status::name($incident->currentStatus())}
                             </td>
                             <td>
                                 <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/incident/id/{$incident->id}/';return false;">

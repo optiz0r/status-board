@@ -121,8 +121,13 @@
 		                    {StatusBoard_DateTime::fuzzyTime($status->ctime)}<br />
 		                    <em>{$status->ctime|date_format:'y-m-d H:i:s'}</em>
 		                </td>
-		                <td>{StatusBoard_Status::name($status->status)}</td>
-		                <td>{$status->description|escape:html}</td>
+		                <td>
+                            {include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()}
+                            {StatusBoard_Status::name($status->status)}
+	                    </td>
+		                <td>
+                            {$status->description|escape:html}
+                        </td>
 		            </tr>
 		        {/foreach}
 		    </tbody>
