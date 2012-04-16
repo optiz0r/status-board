@@ -26,7 +26,7 @@
                 {if $incidents_near_deadline}
                     <ol>
                         {foreach from=$incidents_near_deadline item=incident}
-                            <li>{$incident->reference|escape:html}</li>
+                            <li><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident">{$incident->reference|escape:html}</a></li>
                         {/foreach}
                     </ol>
                 {/if}
@@ -37,7 +37,7 @@
                 {if $incidents_past_deadline}
                     <ol>
                         {foreach from=$incidents_past_deadline item=incident}
-                            <li>{$incident->reference|escape:html}</li>
+                            <li><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident">{$incident->reference|escape:html}</a></li>
                         {/foreach}
                     </ol>
                 {/if}
