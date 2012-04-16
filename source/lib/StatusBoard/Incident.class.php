@@ -44,7 +44,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('site', $site->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('site', $site->id, 'incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params);
     }
     
     public static function openForService(StatusBoard_Service $service) {
@@ -57,7 +57,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('service', $service->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('service', $service->id, 'incident_opentimes_service', '`start_time` < :end AND `ctime` > :start', $params);
     }
     
     public static function openForSiteService(StatusBoard_SiteService $siteservice) {
@@ -70,7 +70,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('siteservice', $siteservice->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('siteservice', $siteservice->id, 'incident_opentimes_siteservice', '`start_time` < :end AND `ctime` > :start', $params);
     }
     
     public static function allNearDeadline() {

@@ -153,29 +153,20 @@ DROP VIEW IF EXISTS `incident_closedtime`;
 CREATE VIEW `incident_closedtime` AS (
   SELECT 
     `i`.`incident` AS `incident`,
-    `ssi`.`id` as `siteserviceincident`,
-    `ss`.`id` as `siteservice`,
-    `ss`.`service` as `service`,
-    `ss`.`site` as `site`,
     `i`.`ctime` AS `ctime`
   FROM
     `incidentstatus` AS `i`
-    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`
-    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE 
     `status` = 0
 );
 
 --
--- Table structure for view `incident_opentimes`
+-- Table structure for view `incident_opentimes_site`
 --
-DROP VIEW IF EXISTS `incident_opentimes`;
-CREATE VIEW `incident_opentimes` AS (
+DROP VIEW IF EXISTS `incident_opentimes_site`;
+CREATE VIEW `incident_opentimes_site` AS (
   SELECT
     `i`.*,
-    `ssi`.`id` as `siteserviceincident`,
-    `ss`.`id` as `siteservice`,
-    `ss`.`service` as `service`,
     `ss`.`site` as `site`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
   FROM
@@ -185,6 +176,37 @@ CREATE VIEW `incident_opentimes` AS (
     JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
 );
 
+--
+-- Table structure for view `incident_opentimes_service`
+--
+DROP VIEW IF EXISTS `incident_opentimes_service`;
+CREATE VIEW `incident_opentimes_service` AS (
+  SELECT
+    `i`.*,
+    `ss`.`service` as `service`,
+    IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
+  FROM
+    `incident` as `i`
+    LEFT JOIN `incident_closedtime` AS `t` ON `i`.`id`=`t`.`incident` 
+    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`      
+    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+);
+
+--
+-- Table structure for view `incident_opentimes_siteservice`
+--
+DROP VIEW IF EXISTS `incident_opentimes_siteservice`;
+CREATE VIEW `incident_opentimes_siteservice` AS (
+  SELECT
+    `i`.*,
+    `ss`.`id` as `siteservice`,
+    IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
+  FROM
+    `incident` as `i`
+    LEFT JOIN `incident_closedtime` AS `t` ON `i`.`id`=`t`.`incident` 
+    JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`      
+    JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+);
 
 --
 -- Constraints for table `siteservice`
