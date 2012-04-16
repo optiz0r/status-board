@@ -33,6 +33,19 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         
         return $new_incident;
     }
+    
+    public static function open() {
+        return static::all('incident_open');
+    }
+    
+    public static function openDuring($start, $end) {
+        $params = array(
+        array('name' => 'start', 'value' => $start, 'type' => PDO::PARAM_INT),
+        array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
+        );
+    
+        return static::all('incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params);
+    }
 
     public static function openForSite(StatusBoard_Site $site) {
         return static::allFor('site', $site->id, 'incident_open_site');

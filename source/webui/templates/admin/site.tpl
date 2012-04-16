@@ -148,7 +148,7 @@
                     {foreach from=$open_incidents item=incident}
                         <tr>
                             <td>
-                                <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a>
+                                <a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a>
                             </td>
                             <td>
                                 {$incident->description|escape:html}

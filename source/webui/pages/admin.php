@@ -193,6 +193,9 @@ $this->smarty->assign('services', $services);
 $sites = StatusBoard_Site::all();
 $this->smarty->assign('sites', $sites);
 
+$open_incidents = StatusBoard_Incident::open();
+$this->smarty->assign('open_incidents', $open_incidents);
+
 $users = $auth->listUsers();
 $this->smarty->assign('users', $users);
 
