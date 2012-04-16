@@ -87,14 +87,14 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
     
     public static function allNearDeadline() {
-        return static::all('incident_open_siteservice', "estimated_end_time>=:threshold AND estimated_end_time>=:now", array(
-            array('name' => 'threshold', 'value' => time() - StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
+        return static::all('incident_open', "estimated_end_time<=:threshold AND estimated_end_time>=:now", array(
+            array('name' => 'threshold', 'value' => time() + StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
             array('name' => 'now', 'value' => time(), 'type' => PDO::PARAM_INT),
         ));
     }
     
     public static function allPastDeadline() {
-        return static::all('incident_open_siteservice', "estimated_end_time<=:threshold", array(
+        return static::all('incident_open', "estimated_end_time<=:threshold", array(
             array('name' => 'threshold', 'value' => time(), 'type' => PDO::PARAM_INT),
         ));
     }
