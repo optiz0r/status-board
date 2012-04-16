@@ -118,6 +118,25 @@ if ($request->exists('do')) {
                 }
                 
             } break;
+            
+            case 'delete-incident': {
+                $incident_id = $request->get('id', 'Sihnon_Exception_InvalidParameters');
+                
+                try {
+                    $incident = StatusBoard_Incident::fromId($incident_id);
+                    $incident->delete();
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The incident was deleted successfully.',
+                    );
+                } catch (Sihnon_Exception_ResultCountMismatch $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The incident was not deleted as the object requested could not be found.',
+                    );
+                }
+            } break;
     
             case 'save-settings': {
                 $supported_settings = array(

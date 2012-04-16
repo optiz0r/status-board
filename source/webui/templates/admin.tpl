@@ -325,7 +325,7 @@
                                             <i class="icon-edit icon-white"></i>
                                             Edit
                                         </button>
-                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/', '{$csrftoken|escape:quotes}');">
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/incidents/do/delete-incident/id/{$incident->id}/', '{$csrftoken|escape:quotes}');">
                                             <i class="icon-trash icon-white"></i>
                                             Delete
                                         </button>
