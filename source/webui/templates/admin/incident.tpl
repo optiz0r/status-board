@@ -92,7 +92,7 @@
                             Update Status
                         </button>
                         <button type="reset" class="btn btn-secondary">
-                            <i class="icon-reset"></i>
+                            <i class="icon-refresh"></i>
                             Reset
                         </button>
                     </div>
