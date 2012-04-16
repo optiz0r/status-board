@@ -99,6 +99,10 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         ));
     }
     
+    public static function futureMaintenance() {
+        return static::all('incident_futuremaintenance');
+    }
+    
     public function currentStatus($ignore_cache = false) {
         if ($this->current_status === null || $ignore_cache) {
             $database = StatusBoard_Main::instance()->database();

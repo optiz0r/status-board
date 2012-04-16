@@ -13,45 +13,36 @@
     </div>
 </div>
 
-<div class="row">
-	<div class="span2">
-	<h5>Upcoming maintenance:</h5>
-	</div>
-    <div class="span10">
-                <ul id="ticker">
+{if $upcoming_maintenance}
+    <div class="row">
+    	<div class="span2">
+    	   <h5>Upcoming maintenance:</h5>
+    	</div>
+        <div class="span10">
+            <ul id="maintenance-list">
+                {foreach from=$upcoming_maintenance item=incident}
                     <li>
-                        <a href="#">
-                         Service X1    
-                        </a>
-                        <p>Description</p>
+                        <a href="{$base_uri}incident/id/{$incident->id}/" title="View Maintenance">{$incident->reference|escape:html}</a>
+                        <p>{$incident->description|escape:html}</p>
                     </li>
-                     <li>
-                        <a href="#">
-                         Service X2    
-                        </a>
-                        <p>Description</p>
-                    </li>
-					<li>
-                        <a href="#">
-                         Service X3  
-                        </a>
-                        <p>Description</p>
-                    </li>
-                   <li>
-                        <a href="#">
-                         Service X4    
-                        </a>
-                        <p>Description</p>
-                    </li>
-                </ul>
-            </div>
-         <div class="span12">
-         {switch $home_output}
-	         {case 'site'}
-	         	{$page->include_template('fragments/home-site')}
-         		{/case} 
-         	{default}
-         		{$page->include_template('fragments/home-service')}  
-         {/switch}
-	    </div>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+{/if}
+
+<div class="row">
+    <div class="span12">
+        {switch $home_output}
+            {case 'site'}
+                {$page->include_template('fragments/home-site')}
+            {/case} 
+            {default}
+                {$page->include_template('fragments/home-service')}  
+        {/switch}
+    </div>
 </div><!-- row -->
+
+<script type="text/javascript">
+    sb.home.init();
+</script>

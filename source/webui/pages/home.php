@@ -11,6 +11,9 @@ $this->smarty->assign('services', $services);
 $sites = StatusBoard_Site::all();
 $this->smarty->assign('sites', $sites);
 
+$upcoming_maintenance = StatusBoard_Incident::futureMaintenance();
+$this->smarty->assign('upcoming_maintenance', $upcoming_maintenance);
+
 $home_output = $request->get('by');
 
 $display_admin_links = ($auth->isAuthenticated() && $auth->isAdministrator());

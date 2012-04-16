@@ -125,20 +125,20 @@ dl.help dd {
     padding: 0.5em;
 }
 
-ul#ticker {
+#maintenance-list {
     height: 20px;
     overflow: hidden;
 }
  
-ul#ticker  li {
+#maintenance-list  li {
     height: 20px;
 }
  
-ul#ticker li a {
+#maintenance-list li a {
     color: #06C;
-    display:inline;
+    display: inline;
 }
  
-ul#ticker li p {
-    display:inline;
+#maintenance-list li p {
+    display: inline;
 }

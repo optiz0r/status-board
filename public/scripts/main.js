@@ -21,6 +21,23 @@ var sb = {
         });
     },
     
+    home: {
+        
+        init: function() {
+            sb.home.maintenanceListTicker();
+        },
+        
+        maintenanceListTicker: function() {
+            if ($('#maintenance-list li').size() > 1) {
+                $('#maintenance-list li:first').animate({marginTop: '-20px'}, 800, function() {
+                    $(this).detach().appendTo('#maintenance-list').removeAttr('style');
+                });
+                
+                setTimeout(sb.home.maintenanceListTicker, 5000);
+            }
+        },
+    },
+    
     admin: {
       
         init: function() {
@@ -98,19 +115,3 @@ var sb = {
 };
  
 $('document').ready(sb.init);
-
-
-$(function()
-{
-    var ticker = function()
-    {
-        setTimeout(function(){
-            $('#ticker li:first').animate( {marginTop: '-20px'}, 800, function()
-            {
-                $(this).detach().appendTo('ul#ticker').removeAttr('style');
-            });
-            ticker();
-        }, 4000);
-    };
-    ticker();
-});

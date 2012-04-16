@@ -39,7 +39,7 @@ if ($request->exists('do')) {
         if ($start_time === null) {
             throw new StatusBoard_Exception_InvalidParameters('starttime');
         }
-        $estimated_end_time = strtotime($estimated_end_time);
+        $estimated_end_time = strtotime($estimated_end_time, $start_time);
         if ($estimated_end_time === null) {
             throw new StatusBoard_Exception_InvalidParameters('estimatedendtime');
         }

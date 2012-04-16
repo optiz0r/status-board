@@ -84,6 +84,21 @@ CREATE TABLE IF NOT EXISTS `siteserviceincident` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
+-- Table structure for view incident_futuremaintenance
+--
+DROP VIEW IF EXISTS `incident_futuremaintenance`;
+CREATE VIEW `incident_futuremaintenance` AS (
+  SELECT DISTINCT
+    `i`.*
+  FROM
+    `incident` AS `i`
+    LEFT JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
+  WHERE
+    `isc`.`status` = 1
+    AND `i`.`start_time` > UNIX_TIMESTAMP()
+);
+
+--
 -- Table structure for view incident_open
 --
 DROP VIEW IF EXISTS `incident_open`;
