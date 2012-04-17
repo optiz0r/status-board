@@ -111,6 +111,7 @@ CREATE VIEW `incident_open` AS (
     LEFT JOIN `incidentstatus_current` AS `isc` ON `i`.`id` = `isc`.`incident`
   WHERE
     `isc`.`status` IN (1,2,3,4)
+    AND `i`.`start_time` <= UNIX_TIMESTAMP()
 );
 
 --
@@ -129,6 +130,7 @@ CREATE VIEW `incident_open_service` AS (
     LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE
     `isc`.`status` IN (1,2,3,4)
+    AND `i`.`start_time` <= UNIX_TIMESTAMP()
     AND `ss`.`service` IS NOT NULL
 );
 
@@ -148,6 +150,7 @@ CREATE VIEW `incident_open_site` AS (
     LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE
     `isc`.`status` IN (1,2,3,4)
+    AND `i`.`start_time` <= UNIX_TIMESTAMP()
     AND `ss`.`site` IS NOT NULL
 );
 
@@ -167,6 +170,7 @@ CREATE VIEW `incident_open_siteservice` AS (
     LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
   WHERE
     `isc`.`status` IN (1,2,3,4)
+    AND `i`.`start_time` <= UNIX_TIMESTAMP()
     AND `ss`.`id` IS NOT NULL
 );
 
