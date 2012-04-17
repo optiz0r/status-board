@@ -383,6 +383,16 @@
                         </div><!-- /control-group -->
                         
                         <div class="control-group">
+                            <label class="control-label" for="admin_quicksettings_overview_displaymode">Overview Display Mode</label>
+                            <div class="controls">
+                                <select id="admin_quicksettings_overview_displaymode" name="overview_display_mode">
+                                    <option value="service" {if $overview_display_mode == 'service'}selected="selected"{/if}>By Service</option>
+                                    <option value="site" {if $overview_display_mode == 'site'}selected="selected"{/if}>By Site</option>
+                                </select>
+                            </div>
+                        </div><!-- /control-group -->
+
+                        <div class="control-group">
                             <label class="control-label" for="admin_quicksettings_debug_displayexceptions">Display Exceptions?</label>
                             <div class="controls">
                                 <input id="admin_quicksettings_debug_displayexceptions" name="debug_displayexceptions" type="checkbox" value="1" {if $debug_displayexceptions}checked="checked" {/if}/>
