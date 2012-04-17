@@ -54,30 +54,23 @@ if ($request->exists('do')) {
             case 'add-sites': {
                 $site_ids = StatusBoard_Main::issetelse($_POST['sites'], 'Sihnon_Exception_InvalidParameters');
                 
-                try {
-                    foreach ($site_ids as $site_id) {
-                        try {
-                            $site = StatusBoard_Site::fromId($site_id);
-                            
-                            $new_ss = StatusBoard_SiteService::newFor($service, $site);
-                        } catch (StatusBoard_Exception_ResultCountMismatch $e) {
-                            $messages[] = array(
-                                'severity' => 'warning',
-                                'content'  => 'A Site was not added as the object requested could not be found.',
-                            );
-                        }
+                foreach ($site_ids as $site_id) {
+                    try {
+                        $site = StatusBoard_Site::fromId($site_id);
+                        
+                        $new_ss = StatusBoard_SiteService::newFor($service, $site);
+                    } catch (StatusBoard_Exception_ResultCountMismatch $e) {
+                        $messages[] = array(
+                            'severity' => 'warning',
+                            'content'  => 'A Site was not added as the object requested could not be found.',
+                        );
                     }
-                    
-                    $messages[] = array(
-                        'severity' => 'success',
-                        'content'  => 'The service was updated succesfully.',
-                    );
-                } catch (StatusBoard_Exception_ResultCountMismatch $e) {
-                    $messages[] = array(
-                        'severity' => 'error',
-                        'content'  => 'The Site was not added as the object requested could not be found.',
-                    );
                 }
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The service was updated succesfully.',
+                );
             } break;
             
             case 'delete-site': {
