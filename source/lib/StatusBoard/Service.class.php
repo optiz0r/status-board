@@ -8,20 +8,63 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
     protected $_db_name;
     protected $_db_description;
     
+    protected $siteservices = null;
     protected $sites = null;
+    protected $incidents_open = null;
     
-    public static function newService($name, $description) {
+    public static function allForSite(StatusBoard_Site $site) {
+        $site_services = StatusBoard_SiteService::allForSite($site);
+        
+        $services = array();
+        foreach ($site_services as $site_service) {
+            $services[] = $site_service->service();
+        } 
+        
+        return $services;
+    } 
+    
+    public function unusedSites() {
+        return StatusBoard_Site::unusedBy($this);
+    }
+    
+    public static function unusedBy(StatusBoard_Site $site) {
+        return static::all('site', $site->id, 'service_unmatchedsites');
+    }
+    
+    public static function unusedByIncident(StatusBoard_Incident $incident) {
+        return static::allFor('incident', $incident->id, 'service_unmatchedincidents');
+    }
+    
+    public static function unusedBySiteIncident(StatusBoard_Site $site, StatusBoard_Incident $incident) {
+        return static::allFor(array('site', 'incident'), array($site->id, $incident->id), 'service_unmatchedsiteincidents');
+    }
+    
+    public static function newFor(array $sites, $name, $description) {
         $new_service = new self();
         $new_service->name = $name;
         $new_service->description = $description;
         
         $new_service->create();
         
+        $new_service->siteservices = array();
+        foreach ($sites as $site) {
+            $new_service->siteservices[] = StatusBoard_SiteService::newFor($new_service, $site);
+        }
+        
         return $new_service;
     }
     
-    public function newSite($name, $description) {
-        return StatusBoard_Site::newSiteForService($this, $name, $description);
+    /**
+     * Returns the list of SiteService mappings for this service
+     * 
+     * @return array(StatusBoard_SiteService)
+     */
+    public function siteInstances() {
+        return StatusBoard_SiteService::allForService($this);    
+    }
+    
+    public function siteInstance(StatusBoard_Site $site) {
+        return StatusBoard_SiteService::fromSiteService($this, $site);
     }
        
     public function sites($ignore_cache = false) {
@@ -38,6 +81,21 @@ class StatusBoard_Service extends StatusBoard_DatabaseObject {
         return $row['service_count'];
     }
 
+    public function openIncidents($ignore_cache = false) {
+        if ($this->incidents_open === null || $ignore_cache) {
+            $this->incidents_open = StatusBoard_Incident::openForService($this);
+        }
+    
+        return $this->incidents_open;
+    }
+    
+    public function openIncidentsDuring($start, $end) {
+        return StatusBoard_Incident::openForServiceDuring($this, $start, $end);
+    }
+    
+    public function status() {
+        return StatusBoard_Incident::highestSeverityStatus($this->openIncidents());
+    }
     
 }
 

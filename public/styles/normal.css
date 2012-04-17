@@ -2,15 +2,11 @@
  * StatusBoard normal stylesheet
  *
  */
-@import url('http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css'); 
 @CHARSET "UTF-8";
 
 body {
-    margin: 0em;
-    margin-top: 60px;
-    padding-top: 40px;
-    padding: 0em;
-    font-family: verdana, helvetica, sans-serif;
+    padding-top: 60px;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-seri
     background: #F7F7F7;
 }
 
@@ -18,19 +14,19 @@ a {
     color: gray;
 }
 
-.span12 a, .span11 a{
-color: blue;
-}
-
 label {
     margin-left: 1em;
     margin-right: 1em;
 }
 
-#container {
-    width: 75%;
-    min-width: 75em;
-    margin: auto;
+footer {
+    clear: both;
+    padding: 2em;
+    font-size: smaller;
+    font-style: italic;
+    text-align: center;
+
+    color: #333333;
 }
 
 #banner {
@@ -42,60 +38,20 @@ label {
     padding: 0.5em;
 }
 
-#navigation {
-    margin-top: 0em;
-    margin-bottom: 1em;
-    padding: 0.2em;
+.nested-controls {
+    margin-left: 2.0em;
 }
 
-#navigation ul {
-   margin: 0em;
-   padding: 0em 5em;;
-   list-style: none;
+.siteservice_mode_contents {
+    display: none;
 }
 
-#navigation li {
-    margin: 1em;
-    padding: 0em;
-    display: inline;
+.align-right {
+    text-align: right;
 }
 
-#page-container {
-    margin: 0em;
-    padding: 0em;
-}
-
-#sidebar {
-    float: left;
-    width: 20em;
-    margin-bottom: 1em;
-}
-
-#page {
-    margin-left: 21em;
-    margin-bottom: 1em;
-    padding: 0.5em;
-}
-
-#footer {
-    clear: both;
-    padding: 2em;
-    font-size: smaller;
-    font-style: italic;
-
-    color: #333333;
-}
-
-#errors {
-    background: peachpuff;
-    color: darkred;
-    margin: 1em;
-}
-
-#messages {
-    background: lightcyan;
-    color: darkblue;
-    margin: 1em;
+.row.space-below {
+    margin-bottom: 2.0em;
 }
 
 /**
@@ -124,6 +80,11 @@ table th, table td {
 	vertical-align: middle;
 }
 
+th.status, td.status {
+    width: 70px;
+    text-align: center;
+}
+
 th.service {
     text-align: left;
     background-color: #dddddd;
@@ -133,40 +94,27 @@ th.service {
     background-color: #eeeeee;
 }
 
-div.page-header{
-margin:10px -5px 20px;
-padding:10px 10px 0 10px;
--moz-border-radius:5px 5px 0 0;
--webkit-border-top-left-radius:5px;
--webkit-border-top-right-radius:5px;
-border-bottom: 0px;
+admin-tab-content{
+    background:#fff;
+    margin:-20px -5px 20px;
+    Padding-top:20px;
+    padding-left:20px;
+    
+    -moz-border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px;
+    border-left: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
 }
 
-.tabs, .pills {
-margin: 0 0 0px;
-}
-
-
-#my-tab-content{
- background:#fff;
- margin:-20px -5px 20px;
- Padding-top:20px;
- padding-left:20px;
- -moz-border-radius:5px 5px 0 0;
--webkit-border-radius:5px;
- border-left: 1px solid #DDD;
- border-right: 1px solid #DDD;
- border-bottom: 1px solid #DDD;
- }
- .rounded_content{
- background:#fff;
- margin:0 -5px 20px;
- Padding-top:20px;
- padding-left:20px;
- -moz-border-radius:5px 5px 0 0;
--webkit-border-radius:5px;
- border: 1px solid #DDD;
-
+.rounded_content{
+    background:#fff;
+    -moz-border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px;
+    border: 1px solid #DDD;
+    margin-left: -6px;
+    padding: 5px;
+    width: 950px;
 }
 
 dl.help dt {
@@ -175,4 +123,22 @@ dl.help dt {
 
 dl.help dd {
     padding: 0.5em;
+}
+
+#maintenance-list {
+    height: 20px;
+    overflow: hidden;
+}
+ 
+#maintenance-list  li {
+    height: 20px;
+}
+ 
+#maintenance-list li a {
+    color: #06C;
+    display: inline;
+}
+ 
+#maintenance-list li p {
+    display: inline;
 }

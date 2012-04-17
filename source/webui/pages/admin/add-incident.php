@@ -14,8 +14,7 @@ $messages = array();
 
 if ($request->exists('do')) {
     
-    $service_id = StatusBoard_Main::issetelse($_POST['service'], 'Sihnon_Exception_InvalidParameters');
-    $site_id = StatusBoard_Main::issetelse($_POST['site'], 'Sihnon_Exception_InvalidParameters');
+    $siteservice_ids = StatusBoard_Main::issetelse($_POST['siteservice'], 'Sihnon_Exception_InvalidParameters');
     $reference = StatusBoard_Main::issetelse($_POST['reference'], 'Sihnon_Exception_InvalidParameters');
     $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
     $status = StatusBoard_Main::issetelse($_POST['status'], 'Sihnon_Exception_InvalidParameters');
@@ -27,23 +26,25 @@ if ($request->exists('do')) {
     try {
         $csrf->validatePost();
         
+        $siteservices = array();
+        foreach ($siteservice_ids as $siteservice_id) {
+            $siteservices[] = StatusBoard_SiteService::fromId($siteservice_id);
+        }
+        
         StatusBoard_Validation_Text::content(array($service_id, $site_id), StatusBoard_Validation_Text::Digit);
         StatusBoard_Validation_Text::length($reference, 1, 32);
         StatusBoard_Validation_Enum::validate($status, 'StatusBoard_Status', 'STATUS_');
-        
-        $service = StatusBoard_Service::fromId($service_id);
-        $site = StatusBoard_Site::fromId($site_id);
-        
+                
         $start_time = strtotime($start_time);
         if ($start_time === null) {
             throw new StatusBoard_Exception_InvalidParameters('starttime');
         }
-        $estimated_end_time = strtotime($estimated_end_time);
+        $estimated_end_time = strtotime($estimated_end_time, $start_time);
         if ($estimated_end_time === null) {
             throw new StatusBoard_Exception_InvalidParameters('estimatedendtime');
         }
     
-        $incident = $site->newIncident($reference, $description, $status, $start_time, $estimated_end_time);
+        $incident = StatusBoard_Incident::newFor($siteservices, $reference, $description, $status, $start_time, $estimated_end_time);
         
         $messages[] = array(
             'severity' => 'success',
@@ -51,7 +52,7 @@ if ($request->exists('do')) {
         );
         
         $session->set('messages', $messages);
-        StatusBoard_Page::redirect("admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/");
+        StatusBoard_Page::redirect("admin/incident/id/{$incident->id}/");
     } catch (SihnonFramework_Exception_CSRFVerificationFailure $e) {
         $messages[] = array(
             'severity' => 'error',
@@ -60,7 +61,7 @@ if ($request->exists('do')) {
     } catch (StatusBoard_Exception_ResultCountMismatch $e) {
         $messages[] = array(
             'severity' => 'error',
-            'content'  => 'The incident was not created because the Service or Site could not be found.',
+            'content'  => 'The incident was not created because one of the Services or Sites could not be found.',
         );
     }
     
@@ -71,36 +72,16 @@ if ($request->exists('do')) {
 $service_id = $request->get('service');
 $site_id = $request->get('site'); 
 
+$site_services = null;
 $service = null;
 $site = null;
 
 $services = StatusBoard_Service::all();
-try {
-    if ($service_id) {
-        $service = StatusBoard_Service::fromId($service_id);
-    }
-    if ($site_id) {
-        $site = StatusBoard_Site::fromId($site_id);
-    }
-} catch (Sihnon_Exception_ResultCountMismatch $e) {
-    throw new StatusBoard_Exception_FileNotFound();
-}
-
-$all_sites = array();
-if ($service) {
-    $all_sites[$service->id] = $service->sites();
-} else {
-    foreach ($services as $all_service) {
-        $all_sites[$all_service->id] = $all_service->sites();
-    }
-}
-
+$sites = StatusBoard_Site::all();
 
 $this->smarty->assign('csrftoken', $csrf->generate());
 $this->smarty->assign('services', $services);
-$this->smarty->assign('service', $service);
-$this->smarty->assign('all_sites', $all_sites);
-$this->smarty->assign('site', $site);
+$this->smarty->assign('sites', $sites);
 $this->smarty->assign('messages', $messages);
 
 ?>

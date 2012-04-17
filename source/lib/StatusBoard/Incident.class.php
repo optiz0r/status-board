@@ -5,7 +5,6 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     protected static $table = 'incident';
 
     protected $_db_id;
-    protected $_db_site;
     protected $_db_reference;
     protected $_db_description;
     protected $_db_start_time;
@@ -14,10 +13,10 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     
     protected $current_status = null;
     protected $statuses = null;
+    protected $siteserviceincidents = null;
     
-    public static function newForSite(StatusBoard_Site $site, $reference, $description, $status, $start_time, $estimated_end_time) {
+    public static function newFor(array $siteservices, $reference, $description, $status, $start_time, $estimated_end_time) {
         $new_incident = new self();
-        $new_incident->site = $site->id;
         $new_incident->reference = $reference;
         $new_incident->description = $description;
         $new_incident->start_time = $start_time;
@@ -27,11 +26,29 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         $new_incident->create();
         $new_incident->changeStatus($status, 'Initial Classification', $start_time);
         
+        $new_incident->siteserviceincidents = array();
+        foreach ($siteservices as $siteservice) {
+            $new_incident->siteserviceincidents[] = StatusBoard_SiteServiceIncident::newFor($siteservice, $new_incident, 'Initial classification', time());
+        }
+        
         return $new_incident;
+    }
+    
+    public static function open() {
+        return static::all('incident_open');
+    }
+    
+    public static function openDuring($start, $end) {
+        $params = array(
+        array('name' => 'start', 'value' => $start, 'type' => PDO::PARAM_INT),
+        array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
+        );
+    
+        return static::all('incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params);
     }
 
     public static function openForSite(StatusBoard_Site $site) {
-        return static::allFor('site', $site->id, 'incident_open');
+        return static::allFor('site', $site->id, 'incident_open_site');
     }
     
     public static function openForSiteDuring(StatusBoard_Site $site, $start, $end) {
@@ -40,12 +57,38 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('site', $site->id, 'incident_opentimes', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('site', $site->id, 'incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params);
+    }
+    
+    public static function openForService(StatusBoard_Service $service) {
+        return static::allFor('service', $service->id, 'incident_open_service');
+    }
+    
+    public static function openForServiceDuring(StatusBoard_Service $service, $start, $end) {
+        $params = array(
+            array('name' => 'start', 'value' => $start, 'type' => PDO::PARAM_INT),
+            array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
+        );
+        
+        return static::allFor('service', $service->id, 'incident_opentimes_service', '`start_time` < :end AND `ctime` > :start', $params);
+    }
+    
+    public static function openForSiteService(StatusBoard_SiteService $siteservice) {
+        return static::allFor('siteservice', $siteservice->id, 'incident_open_siteservice');
+    }
+    
+    public static function openForSiteServiceDuring(StatusBoard_SiteService $siteservice, $start, $end) {
+        $params = array(
+            array('name' => 'start', 'value' => $start, 'type' => PDO::PARAM_INT),
+            array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
+        );
+        
+        return static::allFor('siteservice', $siteservice->id, 'incident_opentimes_siteservice', '`start_time` < :end AND `ctime` > :start', $params);
     }
     
     public static function allNearDeadline() {
-        return static::all('incident_open', "estimated_end_time>=:threshold AND estimated_end_time>=:now", array(
-            array('name' => 'threshold', 'value' => time() - StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
+        return static::all('incident_open', "estimated_end_time<=:threshold AND estimated_end_time>=:now", array(
+            array('name' => 'threshold', 'value' => time() + StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
             array('name' => 'now', 'value' => time(), 'type' => PDO::PARAM_INT),
         ));
     }
@@ -54,6 +97,10 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return static::all('incident_open', "estimated_end_time<=:threshold", array(
             array('name' => 'threshold', 'value' => time(), 'type' => PDO::PARAM_INT),
         ));
+    }
+    
+    public static function futureMaintenance() {
+        return static::all('incident_futuremaintenance');
     }
     
     public function currentStatus($ignore_cache = false) {
@@ -170,6 +217,40 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $new_status;
     }
     
+    /**
+     * Returns a list of site-service-incident mappings associated with this incident
+     * 
+     * @return array(StatusBoard_SiteServiceIncident)
+     */
+    public function siteServiceIncidents() {
+        return StatusBoard_SiteServiceIncident::allForIncident($this);
+    }
+    
+    /**
+     * Returns a list of SiteService mappings that are affected by this Incident
+     * 
+     * @return array(StatusBoard_SiteService)
+     */
+    public function affectedSiteServices() {
+        return StatusBoard_SiteService::allForIncident($this);
+    }
+    
+    public function unusedSites(StatusBoard_Service $service = null) {
+        if ($service) {
+            return StatusBoard_Site::unusedByServiceIncident($service, $this);
+        } else {
+            return StatusBoard_Site::unusedByIncident($this);
+        }
+    }
+    
+    public function unusedServices(StatusBoard_Site $site = null) {
+        if ($site) {
+            return StatusBoard_Service::unusedBySiteIncident($site, $this);
+        } else {
+            return StatusBoard_Service::unusedByIncident($this);
+        }
+    }
+    
     public static function counts() {
         $database = StatusBoard_Main::instance()->database();
         $rows = $database->selectList('SELECT `status`, COUNT(*) AS `incident_count` FROM `incidentstatus_current` GROUP BY `status`');
@@ -189,7 +270,6 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         return $first->estimated_end_time < $second->estimated_end_time;
     }
     
-    
-}
+};
 
 ?>

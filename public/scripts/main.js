@@ -21,25 +21,54 @@ var sb = {
         });
     },
     
+    home: {
+        
+        init: function() {
+            sb.home.maintenanceListTicker();
+        },
+        
+        maintenanceListTicker: function() {
+            if ($('#maintenance-list li').size() > 1) {
+                $('#maintenance-list li:first').animate({marginTop: '-20px'}, 800, function() {
+                    $(this).detach().appendTo('#maintenance-list').removeAttr('style');
+                });
+                
+                setTimeout(sb.home.maintenanceListTicker, 5000);
+            }
+        },
+    },
+    
     admin: {
       
         init: function() {
             $('#confirm_delete').modal({
                 backdrop: true,
-                keyboard: true
+                keyboard: true,
+                show:     false,
             });
             $('#confirm_delete_cancel').click(function() {
                 $('#confirm_delete').modal('hide'); 
              });
+            
+            $('input[name="siteservice_mode"]').change(sb.admin.siteservice.modeChanged).trigger('change');
         },
         
-        deleteItem: function(url) {
+        deleteItem: function(url, csrftoken) {
             $('#confirm_delete_do').click(function() {
-                sb.request.post(url);
+                sb.request.post(url, {
+                    csrftoken: csrftoken,
+                });
             });
             
             $('#confirm_delete').modal('show');
         },
+        
+        siteservice: {
+            modeChanged: function(e) {
+                $('.siteservice_contents').hide();
+                $('#siteservice_' + $('input[name="siteservice_mode"]:checked').val()).show();
+            }
+        }
         
     },
      
@@ -75,7 +104,7 @@ var sb = {
             console.log('Posting');
             var form = $('<form />').attr('method', 'post').attr('action', url);
             for (var key in data) {
-                form.appendChild($('<input type="hidden">').attr('name', key).val(data[key]));
+                form.append($('<input type="hidden">').attr('name', key).val(data[key]));
             }
             
             form.submit();
