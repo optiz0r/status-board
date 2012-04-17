@@ -364,7 +364,50 @@
     </div>
     
     <div class="tab-pane {if $tab == 'users'}active{/if}" id="tab_users">
-        <em>Not yet implemented</em>
+        <div class="row">
+            <div class="span3">
+                <h3>User List</h3>
+                <p>All users accounts for the system.</p>
+            </div>
+            
+            <div class="span9">
+                <table class="table table-bordered table-striped" name="user_list">
+                    <thead>
+                        <th>Username</th>
+                        <th>Full name</th>
+                        <th>Last Login</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {foreach from=$users item=user}
+                            <tr>
+                                <td>
+                                    <a href="{$base_uri}admin/user/id/{$user->id}/" title="Edit User {$user->username|escape:htmll}">{$user->username|escape:html}</a>
+                                </td>
+                                <td>
+                                    {$user->fullname|escape:html}
+                                </td>
+                                <td>
+                                    {$user->last_login|fuzzyTime}
+                                </td>
+                                <td>
+                                    <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/{$user->id}/';return false;">
+                                        <i class="icon-edit icon-white"></i>
+                                        Edit
+                                    </button>
+                                    {if $user->id != 1}
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/users/do/delete-user/id/{$user->id}/', '{$csrftoken|escape:quotes}');">
+                                            <i class="icon-trash icon-white"></i>
+                                            Delete
+                                        </button>
+                                    {/if}
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">
