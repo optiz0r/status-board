@@ -22,6 +22,12 @@ ALTER TABLE  `incident` DROP  `site`;
 
 
 --
+-- Add new field for homepage display mode
+--
+INSERT INTO `settings` (`name`, `value`, `type`) VALUES
+('overview.display_mode', 'service', 'string');
+
+--
 -- Table structure for table `siteservice`
 --
 DROP TABLE IF EXISTS `siteservice`;
