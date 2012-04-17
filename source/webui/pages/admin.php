@@ -191,22 +191,22 @@ if ($request->exists('do')) {
 }
 
 $this->smarty->assign('tab', $destination);
-if ($destination == 'summary') {
-    $this->smarty->assign('service_count', StatusBoard_Service::count());
-    $this->smarty->assign('site_count', StatusBoard_Site::count());
-    $this->smarty->assign('incident_counts', StatusBoard_Incident::counts());
-    
-    $incidents_near_deadline = StatusBoard_Incident::allNearDeadline();
-    usort($incidents_near_deadline, array('StatusBoard_Incident', 'compareEstimatedEndTimes'));
-    
-    $incidents_past_deadline = StatusBoard_Incident::allPastDeadline();
-    usort($incidents_past_deadline, array('StatusBoard_Incident', 'compareEstimatedEndTimes'));
-    
-    $this->smarty->assign('incidents_near_deadline', $incidents_near_deadline);
-    $this->smarty->assign('incidents_past_deadline', $incidents_past_deadline);
-}
 
+// Summary
+$this->smarty->assign('service_count', StatusBoard_Service::count());
+$this->smarty->assign('site_count', StatusBoard_Site::count());
+$this->smarty->assign('incident_counts', StatusBoard_Incident::counts());
 
+$incidents_near_deadline = StatusBoard_Incident::allNearDeadline();
+usort($incidents_near_deadline, array('StatusBoard_Incident', 'compareEstimatedEndTimes'));
+
+$incidents_past_deadline = StatusBoard_Incident::allPastDeadline();
+usort($incidents_past_deadline, array('StatusBoard_Incident', 'compareEstimatedEndTimes'));
+
+$this->smarty->assign('incidents_near_deadline', $incidents_near_deadline);
+$this->smarty->assign('incidents_past_deadline', $incidents_past_deadline);
+
+// Service, Site and incident
 $services = StatusBoard_Service::all();
 $this->smarty->assign('services', $services);
 
@@ -216,6 +216,7 @@ $this->smarty->assign('sites', $sites);
 $open_incidents = StatusBoard_Incident::open();
 $this->smarty->assign('open_incidents', $open_incidents);
 
+// User Management
 $users = $auth->listUsers();
 $this->smarty->assign('users', $users);
 
