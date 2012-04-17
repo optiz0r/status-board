@@ -109,8 +109,6 @@ if ($request->exists('do')) {
 
 $statuses = $incident->statusChanges();
 
-$this->smarty->assign('service', $service);
-$this->smarty->assign('site', $site);
 $this->smarty->assign('incident', $incident);
 $this->smarty->assign('statuses', $statuses);
 $this->smarty->assign('messages', $messages);
