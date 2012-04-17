@@ -33,7 +33,7 @@
 
 <div class="row">
     <div class="span12">
-        {switch $home_output}
+        {switch $home_mode}
             {case 'site'}
                 {$page->include_template('fragments/home-site')}
             {/case} 

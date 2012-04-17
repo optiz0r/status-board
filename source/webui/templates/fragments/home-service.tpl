@@ -1,7 +1,18 @@
 <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Service / Site</th>
+                    <th>
+	                    <div class="btn-group">
+						  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						    Display by: Service
+						    <span class="caret"></span>
+						  </a>
+					  <ul class="dropdown-menu">
+					    <li>
+						   <a href="{$base_uri}home/by/site/">Site</a>
+					    </li>
+					  </ul>
+					</div></th>
                     <th class="status">Now</th>
                     {foreach from=array(0,1,2,3,4,5,6) item=day}
                         {if $day == 0}

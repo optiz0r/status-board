@@ -47,6 +47,7 @@ INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 ('site.title', 'Status Board', 'string'),
 ('sessions', 1, 'bool'),
 ('sessions.path', '/', 'string');
+('overview.display_mode', 'service', 'string');
 
 --
 -- Table structure for table `log`
