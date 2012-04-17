@@ -39,6 +39,16 @@ class StatusBoard_SiteService extends StatusBoard_DatabaseObject {
     }
     
     /**
+     * Returns a list of all site-service mappings affected by the given Incident
+     * 
+     * @param StatusBoard_Incident $incident)
+     * @return array(StatusBoard_SiteService
+     */
+    public static function allForIncident(StatusBoard_Incident $incident) {
+        return static::allFor('incident', $incident->id, 'siteservice_incident');
+    }
+    
+    /**
      * Returns the Site object associated with this mapping
      * 
 	 * @return StatusBoard_Site

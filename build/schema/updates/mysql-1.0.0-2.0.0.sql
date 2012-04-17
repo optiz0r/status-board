@@ -69,6 +69,86 @@ CREATE VIEW `service_unmatchedsites` AS (
 );
 
 --
+-- Table structure for view `site_unmatchedincidents`
+--
+DROP VIEW IF EXISTS `site_unmatchedincidents`;
+CREATE VIEW `site_unmatchedincidents` AS (
+  SELECT DISTINCT
+    `si`.*,
+    `i`.`id` AS `incident`
+  FROM
+    `site` AS `si`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`site` =  `si`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
+-- Table structure for view `site_unmatchedincidents`
+--
+DROP VIEW IF EXISTS `service_unmatchedincidents`;
+CREATE VIEW `service_unmatchedincidents` AS (
+  SELECT DISTINCT
+    `se`.*,
+    `i`.`id` AS `incident`
+  FROM
+    `service` AS `se`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`service` =  `se`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
+-- Table structure for view `site_unmatchedserviceincidents`
+--
+DROP VIEW IF EXISTS `site_unmatchedserviceincidents`;
+CREATE VIEW `site_unmatchedserviceincidents` AS (
+  SELECT DISTINCT
+    `si`.*,
+    `se`.`id` AS `service`,
+    `i`.`id` AS `incident`
+  FROM
+    `site` AS `si`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`site` =  `si`.`id`
+    LEFT JOIN `service` AS `se` ON `ss`.`service` = `se`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
+-- Table structure for view `service_unmatchedsiteincidents`
+--
+DROP VIEW IF EXISTS `service_unmatchedsiteincidents`;
+CREATE VIEW `service_unmatchedsiteincidents` AS (
+  SELECT DISTINCT
+    `se`.*,
+    `si`.`id` AS `site`,
+    `i`.`id` AS `incident`
+  FROM
+    `service` AS `se`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`service` =  `se`.`id`
+    LEFT JOIN `site` AS `si` ON `ss`.`site` = `si`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
 -- Table structure for table `siteserviceincident`
 --
 DROP TABLE IF EXISTS `siteserviceincident`;
@@ -82,6 +162,19 @@ CREATE TABLE IF NOT EXISTS `siteserviceincident` (
   KEY `siteservice` (`siteservice`),
   KEY `incident` (`incident`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for view `siteservice_incident`
+--
+DROP VIEW IF EXISTS `siteservice_incident`;
+CREATE VIEW `siteservice_incident` AS (
+  SELECT
+    `ss`.*,
+    `ssi`.`incident` AS `incident`
+  FROM
+    `siteserviceincident` AS `ssi`
+    LEFT JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+);
 
 --
 -- Table structure for view incident_futuremaintenance

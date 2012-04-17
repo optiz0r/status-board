@@ -218,19 +218,37 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
     
     /**
+     * Returns a list of site-service-incident mappings associated with this incident
+     * 
+     * @return array(StatusBoard_SiteServiceIncident)
+     */
+    public function siteServiceIncidents() {
+        return StatusBoard_SiteServiceIncident::allForIncident($this);
+    }
+    
+    /**
      * Returns a list of SiteService mappings that are affected by this Incident
      * 
      * @return array(StatusBoard_SiteService)
      */
     public function affectedSiteServices() {
-        $siteServiceIncidents = StatusBoard_SiteServiceIncident::allForIncident($this);
-        
-        $siteServices = array();
-        foreach ($siteServiceIncidents as $ssi) {
-            $siteServices[] = $ssi->siteService();
+        return StatusBoard_SiteService::allForIncident($this);
+    }
+    
+    public function unusedSites(StatusBoard_Service $service = null) {
+        if ($service) {
+            return StatusBoard_Site::unusedByServiceIncident($service, $this);
+        } else {
+            return StatusBoard_Site::unusedByIncident($this);
         }
-        
-        return $siteServices;
+    }
+    
+    public function unusedServices(StatusBoard_Site $site = null) {
+        if ($site) {
+            return StatusBoard_Service::unusedBySiteIncident($site, $this);
+        } else {
+            return StatusBoard_Service::unusedByIncident($this);
+        }
     }
     
     public static function counts() {
