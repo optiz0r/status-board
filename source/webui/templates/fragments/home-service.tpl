@@ -3,10 +3,14 @@
                 <tr>
                     <th>
 	                    <div class="btn-group">
-						  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						  
+						  <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+						    <a href="#">
 						    Display by: Service
+						     </a>
 						    <span class="caret"></span>
-						  </a>
+						    </button>
+						 
 					  <ul class="dropdown-menu">
 					    <li>
 						   <a href="{$base_uri}home/by/site/">Site</a>
