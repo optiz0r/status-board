@@ -3,7 +3,6 @@
 $main = StatusBoard_Main::instance();
 $request = $main->request();
 $auth = $main->auth();
-
 $messages = array();
 
 try {
@@ -13,8 +12,11 @@ try {
     throw new StatusBoard_Exception_FileNotFound();
 }
 
+$statuses = $incident->statusChanges();      
+$siteserviceincidents = $incident->siteServiceIncidents();
 $this->smarty->assign('incident', $incident);
-$this->smarty->assign('messages', $messages);
+$this->smarty->assign('statuses', $statuses);
+$this->smarty->assign('siteserviceincidents', $siteserviceincidents);
 
 $display_admin_links = ($auth->isAuthenticated() && $auth->isAdministrator());
 $this->smarty->assign('display_admin_links', $display_admin_links);

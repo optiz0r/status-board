@@ -10,6 +10,16 @@ body {
     background: #F7F7F7;
 }
 
+h1, h2, h3, h4, h5, h6 {
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+h6 {
+	font-size: 13px;
+	color: #999;
+	text-transform: uppercase;
+}
+
 a {
     color: gray;
 }
@@ -141,4 +151,23 @@ dl.help dd {
  
 #maintenance-list li p {
     display: inline;
+}
+
+.block_info {
+	margin-top: 10px;
+	margin-bottom: 18px;
+}
+
+.block_info .block_info_content h4 {
+	color: #454545;
+	line-height: 24px;
+}
+.block_info .block_info_title h6 {
+	font-weight: normal;
+	line-height: 15px;
+}
+
+dd p {
+	margin-top:5px;
+	padding-bottom:5px;
 }
