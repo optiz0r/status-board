@@ -30,11 +30,7 @@
         {foreach from=$sites item=site}
 	    	<tr>
 	        	<th colspan="9" class="service">
-	            	{if $display_admin_links}
-	                <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit {$service->name}">{$site->name}</a>
-	                {else}
-	                	{$site->name}
-	                {/if}
+	                <a href="{$base_uri}status/service/{$service->id}/" title="Edit {$service->name}">{$site->name}</a>
 	            </th>
 	        </tr>
 	        {foreach from=$site->serviceInstances() item=service_instance}
@@ -42,11 +38,7 @@
 	            {$incidents=$service_instance->openIncidents()}
 	            <tr class="site">
 	                <td>
-	                    {if $display_admin_links}
-	                    <a href="{$base_uri}admin/site/id/{$site->id}/" title="Edit {$site->name|escape:html}">{$service->name|escape:html}</a>
-	                    {else}
-	                    {$service->name}
-	                    {/if}
+	                    <a href="{$base_uri}status/site/{$site->id}/" title="Edit {$site->name|escape:html}">{$service->name|escape:html}</a>
 	                </td>
 	                <td class="status">
 	                    {$status=$service_instance->status()}

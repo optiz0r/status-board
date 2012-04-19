@@ -1,93 +1,132 @@
-<div class="row">
-	<div class="span12"><!--name content container -->   
-		<h1>Site Status History: {$service->name|escape:html} - {$site->name|escape:html}</h1>
-		<p>This page details the incident history for a site:</p>
+<div class="row space-below">
+	<div class="span10"><!--name content container --> 
+	{if $service != null}
+    <h1>Service History
+    {else}
+    <h1>Site History
+    {/if}
+	</div>
+		<div class="span2 align-right">
+	    {if $display_admin_links}
+	    {if $service != null}
+	        <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">
+	            <i class="icon-edit icon-white"></i>
+	            Edit Service
+            </button>
+        {else}
+        	<button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/site/id/{$site->id}/';return false;">
+	            <i class="icon-edit icon-white"></i>
+	            Edit Site
+            </button>
+        {/if}
+	    {/if}
 	</div>
 </div>
-{if $start && $end}
-    {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
+<div class="row">
+{if $service != null}
+	<div class="span3">
+        <h3>Service Details</h3>
+    </div>
+	<div class="span9">
+		<div class="row">
+			<div class="span2">
+				<div class="block_info">
+					<div class="block_info_title">
+						<h6>Name</h6>
+					</div>
+					<div class="block_info_content">
+						<h4>{$service->name|ucwords|escape:html}</h4>
+					</div>
+				</div>
+			</div>
+			<div class="span7">
+				<div class="block_info">
+						<div class="block_info_title">
+							<h6>Description</h6>
+						</div>
+						<div class="block_info_content">
+							<h4>{$service->description|ucfirst|escape:html}</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{else}
+	<div class="span3">
+        <h3>Service Details</h3>
+    </div>
+	<div class="span9">
+		<div class="row">
+			<div class="span2">
+				<div class="block_info">
+					<div class="block_info_title">
+						<h6>Name</h6>
+					</div>
+					<div class="block_info_content">
+						<h4>{$site->name|ucwords|escape:html}</h4>
+					</div>
+				</div>
+			</div>
+			<div class="span7">
+				<div class="block_info">
+						<div class="block_info_title">
+							<h6>Description</h6>
+						</div>
+						<div class="block_info_content">
+							<h4>{$site->description|ucfirst|escape:html}</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{/if}
     {$incidentCount=count($incidentsDuring)}
-    <h2>{$start|date_format:'d-M H:i'} to {$end|date_format:'d-M H:i'}</h2>
-    {foreach from=$incidentsDuring item=incident}
-        {$statuses=$incident->statusChanges()}
-        <div class="row">
-            <div class="span3 column">
-                <h3 class="status">
-                    {if $display_admin_links && $incident->currentStatus() != StatusBoard_Status::STATUS_Resolved}
-                        <a href="{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/" title="Edit {$incident->reference|escape:html}">{$incident->reference|escape:html}</a>
-                    {else}
-                        {$incident->reference|escape:html}
-                    {/if}
-                </h3>
-                <p>Opened: {$incident->start_time|date:"r"}<p>
-                {if $incident->estimated_end_time}
-                    {$time_difference=time()-$incident->estimated_end_time}
-                    <p>Estimated End Time: {$time_difference|fuzzyTime}</p>
-                {/if}
-            </div>
-            <div class="span9 column">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <th>Status</th>
-                        <th>Time</th>
-                        <th>Description</th>
-                    </thead>
-                    <tbody>
-                        {foreach from=$statuses item=status}
-                            <tr>
-                                <td>{$status->status|escape:html}</td>
-                                <td>{$status->ctime|date_format:'d-M H:i'}</td>
-                                <td>{$status->description|escape:html}</td>
-                            </tr>
-                        {/foreach}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    {foreachelse}
-        <p>There were no recorded incidents during this time period.</p>
-    {/foreach}
-{else}
 	{foreach from=array(0,1,2,3,4,5,6) item=day}
         {$start=mktime(0,0,0,date("n"),date("j")-$day)}
         {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
-        {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
+        {if $service != null}
+    		{$incidentsDuring=$service->openIncidentsDuring($start, $end)}
+		{else}
+   			{$incidentsDuring=$site->openIncidentsDuring($start, $end)}
+		{/if}
         {$incidentCount=count($incidentsDuring)}
-	 	<div class="row" id="{$start|date_format:"dM"}" style="padding-top:40px">
+	 	<div class="row">
         	<div class="span3">
             	<h3 class="status">{$start|date_format:"d M Y"}</h3>
                 <p>{$incidentCount} {StatusBoard_Formatting::pluralise($incidentCount,'incident','incidents')}</p>
-                {if $incidentsDuring}<p style="font-size:small"> Note: Click on incident number to see incident audit trail</p>{/if}
+                {if $incidentsDuring}<p style="font-size:small"> Note: Click on incident number to see incident history</p>{/if}
             </div>
-            <div class="span9" style="margin-bottom:-40px">
+            <div class="span9">
             	{if $incidentsDuring}
 					<table class="table table-bordered table-striped"><!--Services table -->
 						<thead>
-							<th>Incident</th>
+							<th>Reference</th>
 							<th>Description</th>
-							<th>Time Opened</th>
 							<th>Status</th>
-							<th>Time Closed</th>
+							<th>Opened</th>
+							<th>Closed</th>
 							{if $display_admin_links}<th>Actions</th>{/if}
 						</thead>
 						<tbody>
 						{foreach from=$incidentsDuring item=incident}
 							<tr>
-	                			<td>
+	                			<td style="width:100px;">
                                         <a href="{$base_uri}incident/id/{$incident->id}/" title="Indident History">{$incident->reference|escape:html}</a>
 	                			</td>
-	                			<td>{$incident->description|truncate|escape:html}</td>
-	                			<td>{date('d-M H:i', $incident->start_time)}</td>
-	                			<td>{StatusBoard_Status::name($incident->currentStatus())}</td>
-	                			<td>
+	                			<td style="width:200px;">{$incident->description|truncate|escape:html}</td>
+	                			<td style="width:100px;">{StatusBoard_Status::name($incident->currentStatus())}</td>
+	                			<td style="width:60px;">{date('d-M-y H:i', $incident->start_time)}</td>
+	                			<td style="width:60px;">
                                     {if $incident->actual_end_time}
-                                        {date('d-M H:i', $incident->actual_end_time)}
+                                        {date('d-M-y H:i', $incident->actual_end_time)}
                                     {else}
                                         Still Open
                                     {/if}
 	                			</td>
 	                			{if $display_admin_links}
-	                			    <td>
+	                			    <td style="width:60px;">
 	                			        <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/';return false;">
 	                			            <i class="icon-edit icon-white"></i>
 	                			            Edit
@@ -104,4 +143,3 @@
        		</div>
        		</div>
 	{/foreach}
-{/if}
