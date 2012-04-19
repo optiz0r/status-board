@@ -1,9 +1,9 @@
 <div class="row space-below">
 	<div class="span10"><!--name content container --> 
 	{if $service != null}
-    <h1>Service History
+    <h1>Service History</h1>
     {else}
-    <h1>Site History
+    <h1>Site History</h1>
     {/if}
 	</div>
 		<div class="span2 align-right">
@@ -25,7 +25,7 @@
 <div class="row">
 {if $service != null}
 	<div class="span3">
-        <h3>Service Details</h3>
+	    <h3>Service Details</h3>
     </div>
 	<div class="span9">
 		<div class="row">
@@ -54,7 +54,7 @@
 	</div>
 	{else}
 	<div class="span3">
-        <h3>Service Details</h3>
+	    <h3>Site Details</h3>
     </div>
 	<div class="span9">
 		<div class="row">
