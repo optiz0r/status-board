@@ -224,14 +224,14 @@
                         <div class="siteservice_contents" id="siteservice_service">
                             {foreach from=$incident->unusedServices() item=service}
                                 <label class="checkbox" for="service_{$service->id}">
-                                    <input type="checkbox" id="service_{$service->id}" class="select_all" />
+                                    <input type="checkbox" id="service_{$service->id}" class="select-all" />
                                     {$service->name|escape:html}
                                 </label>
                                 <div class="nested-controls">
                                     {foreach from=$incident->unusedSites($service) item=site}
                                         {assign var=siteservice value=StatusBoard_SiteService::fromSiteService($service, $site)}
-                                        <label class="checkbox" for="siteservice_{$service_instance->id}">
-                                            <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-selectall="service_{$service->id}" />
+                                        <label class="checkbox" for="siteservice_{$siteservice->id}">
+                                            <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-select-all="service_{$service->id}" />
                                             {$site->name|escape:html}
                                         </label>
                                     {foreachelse}
@@ -245,14 +245,14 @@
                         <div class="siteservice_contents" id="siteservice_site">
                             {foreach from=$incident->unusedSites() item=site}
                                 <label class="checkbox" for="site_{$site->id}">
-                                    <input type="checkbox" id="site_{$site->id}" class="select_all" />
+                                    <input type="checkbox" id="site_{$site->id}" class="select-all" />
                                     {$site->name|escape:html}
                                 </label>
                                 <div class="nested-controls">
                                     {foreach from=$incident->unusedServices($site) item=service}
                                         {assign var=siteservice value=StatusBoard_SiteService::fromSiteService($service, $site)}
-                                        <label class="checkbox" for="siteservice_{$service_instance->id}">
-                                            <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-selectall="site_{$site->id}" />
+                                        <label class="checkbox" for="siteservice_{$siteservice->id}">
+                                            <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-select-all="site_{$site->id}" />
                                             {$service->name|escape:html}
                                         </label>
                                     {foreachelse}
