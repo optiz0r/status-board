@@ -20,7 +20,7 @@
     {else}
         <li><a href="{$base_uri}login/" title="Login">Login</a></li>
     {/if}
-    {if $requested_page == home}<li><a href='#' data-placement='below' rel='popover' data-content='{include file="fragments/icon-help.tpl"}' data-original-title='What do the status icons mean?'>Help</a></li>{/if}
+    {if $requested_page == home}<li><a href='#' data-placement='bottom' rel='popover' data-content='{include file="fragments/icon-help.tpl"}' data-original-title='What do the status icons mean?'>Help</a></li>{/if}
 </ul>
 {if $authenticated}
     <ul class="nav pull-right" >
