@@ -30,7 +30,7 @@
         {foreach from=$sites item=site}
 	    	<tr>
 	        	<th colspan="9" class="service">
-	                <a href="{$base_uri}status/service/{$service->id}/" title="Edit {$service->name}">{$site->name}</a>
+	                <a href="{$base_uri}status/site/{$site->id}/" title="Edit {$site->name}">{$site->name}</a>
 	            </th>
 	        </tr>
 	        {foreach from=$site->serviceInstances() item=service_instance}
