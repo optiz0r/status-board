@@ -1,37 +1,35 @@
 <table class="table table-bordered">
-	<thead>
-    	<tr>
+    <thead>
+        <tr>
             <th>
                 <div class="btn-group">
-					<button class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-				    	<a href="#">
-				    	Display by: Service
-				     	</a>
-				    	<span class="caret"></span>
-				    </button>
-			  		<ul class="dropdown-menu">
-						<li>
-					   		<a href="{$base_uri}home/by/site/">Site</a>
-				    	</li>
-			  		</ul>
-				</div>
-			</th>
+                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a href="#">Display by: Service</a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{$base_uri}home/by/site/">Site</a>
+                        </li>
+                    </ul>
+                </div>
+            </th>
             <th class="status">Now</th>
             {foreach from=array(0,1,2,3,4,5,6) item=day}
                 {if $day == 0}
-            <th class="status">Today</th>
-				{else}
-            <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
-				{/if}
-			{/foreach}
-		</tr>
+                    <th class="status">Today</th>
+                {else}
+                    <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
+                {/if}
+            {/foreach}
+        </tr>
     </thead>
     <tbody>
         {foreach from=$services item=service}
-	        <tr>
-		        <th colspan="9" class="service">
-		            <a href="{$base_uri}status/service/{$service->id}/" title="Edit {$service->name}">{$service->name}</a>
-	            </th>
+            <tr>
+                <th colspan="9" class="service">
+                    <a href="{$base_uri}status/service/{$service->id}/" title="Edit {$service->name}">{$service->name}</a>
+                </th>
             </tr>
             {foreach from=$service->siteInstances() item=site_instance}
                 {$site=$site_instance->site()}
@@ -55,7 +53,7 @@
                         </td>
                     {/foreach}
                 </tr>
-        	{/foreach}
-        	{/foreach}
+            {/foreach}
+            {/foreach}
     </tbody>
 </table>
