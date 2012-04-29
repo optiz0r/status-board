@@ -142,6 +142,7 @@ if ($request->exists('do')) {
                 $supported_settings = array(
                     'site_title' => 'site.title',
                     'debug_display_exceptions' => 'debug.display_exceptions',
+                    'incident_reference_default' => 'incident.reference_default',
                     'cache_base_dir' => 'cache.base_dir',
                     'templates_tmp_path' => 'templates.tmp_path',
                     'overview_display_mode' => 'overview.display_mode',
@@ -226,6 +227,7 @@ $this->smarty->assign('cache_basedir', $config->get('cache.base_dir'));
 $this->smarty->assign('templates_tmppath', $config->get('templates.tmp_path'));
 $this->smarty->assign('site_title', $config->get('site.title'));
 $this->smarty->assign('overview_display_mode', $config->get('overview.display_mode'));
+$this->smarty->assign('incident_reference_default', $config->get('incident.reference_default'));
 $this->smarty->assign('messages', $messages);
 $this->smarty->assign('csrftoken', $csrf->generate());
 

@@ -435,6 +435,13 @@
                         </div><!-- /control-group -->
 
                         <div class="control-group">
+                            <label class="control-label" for="admin_quicksettings_incident_reference_default">Default Incident Reference</label>
+                            <div class="controls">
+                                <input id="admin_quicksettings_incident_reference_default" name="incident_reference_default" type="text" value="{$incident_reference_default|escape:html}" />
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
                             <label class="control-label" for="admin_quicksettings_debug_displayexceptions">Display Exceptions?</label>
                             <div class="controls">
                                 <input id="admin_quicksettings_debug_displayexceptions" name="debug_displayexceptions" type="checkbox" value="1" {if $debug_displayexceptions}checked="checked" {/if}/>

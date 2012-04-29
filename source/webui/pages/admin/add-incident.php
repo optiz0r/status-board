@@ -1,6 +1,7 @@
 <?php
 
 $main = StatusBoard_Main::instance();
+$config = $main->config();
 $request = $main->request();
 $auth = $main->auth();
 $session = $main->session();
@@ -82,6 +83,7 @@ $sites = StatusBoard_Site::all();
 $this->smarty->assign('csrftoken', $csrf->generate());
 $this->smarty->assign('services', $services);
 $this->smarty->assign('sites', $sites);
+$this->smarty->assign('incident_reference_default', $config->get('incident.reference_default'));
 $this->smarty->assign('messages', $messages);
 
 ?>

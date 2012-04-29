@@ -75,7 +75,7 @@
 		                <div class="control-group">
 		                    <label class="control-label" for="admin_incident_add_reference">Reference</label>
 		                    <div class="controls">
-		                        <input class="xlarge span5" id="admin_incident_add_reference" name="reference" type="text" value="" />
+		                        <input class="xlarge span5" id="admin_incident_add_reference" name="reference" type="text" value="{$incident_reference_default|escape:html}" />
 		                    </div>
 		                </div><!-- /control-group -->
 		                

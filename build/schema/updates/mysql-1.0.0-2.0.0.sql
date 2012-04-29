@@ -25,7 +25,8 @@ ALTER TABLE  `incident` DROP  `site`;
 -- Add new field for homepage display mode
 --
 INSERT INTO `settings` (`name`, `value`, `type`) VALUES
-('overview.display_mode', 'service', 'string');
+('overview.display_mode', 'service', 'string'),
+('incident.reference_default', 'I', 'string');
 
 --
 -- Table structure for table `siteservice`
