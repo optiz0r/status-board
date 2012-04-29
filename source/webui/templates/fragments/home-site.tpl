@@ -28,7 +28,7 @@
         {foreach from=$sites item=site}
             <tr>
                 <th colspan="9" class="service">
-                    <a href="{$base_uri}status/site/{$site->id}/" title="Edit {$site->name}">{$site->name}</a>
+                    <a href="{$base_uri}status/site/{$site->id}/" title="View Status for Site {$site->name}">{$site->name}</a>
                 </th>
             </tr>
             {foreach from=$site->serviceInstances() item=service_instance}
@@ -36,7 +36,7 @@
                 {$incidents=$service_instance->openIncidents()}
                 <tr class="site">
                     <td>
-                        <a href="{$base_uri}status/site/{$site->id}/" title="Edit {$site->name|escape:html}">{$service->name|escape:html}</a>
+                        <a href="{$base_uri}status/service/{$service->id}/" title="View Status for Service {$service->name|escape:html}">{$service->name|escape:html}</a>
                     </td>
                     <td class="status">
                         {$status=$service_instance->status()}
