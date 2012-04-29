@@ -68,7 +68,6 @@
                             <td>Incidents</td>
                             <td>{array_sum(array_values($incident_counts))}</td>
                         </tr>
-
                         <tr>
                             <th>Incident Statistics</th>
                             <th>Count</th>
@@ -84,7 +83,7 @@
                             <td>Minor</td>
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Minor]}</td>
                         </tr>
-                                                <tr>
+                        <tr>
                             <td>Planned Maintenance</td>
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Maintenance]}</td>
                         </tr>
@@ -100,23 +99,23 @@
     
     <div class="tab-pane {if $tab == 'services'}active{/if}" id="tab_services"><!--Toggled Div to hide services content -->
         <div class="row space-below">
-        	<div class="span3">
-        		<h3>Current Services</h3>
-        		<p>Click on a Service to edit its properties.</p>
-        	</div>
+            <div class="span3">
+                <h3>Current Services</h3>
+                <p>Click on a Service to edit its properties.</p>
+            </div>
             <div class="span9 column">
                 {if $services}
                     <table class="table table-bordered table-striped"><!--Services table -->
                         <thead>
-    				    <th>Service</th>
-    				    <th>Description</th>
-        				<th>Action</th>
-				    </thead>
-				    <tbody>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
                         {foreach from=$services item=service}
                             <tr>
                                 <td>
-             	                  <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a>
+                                <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a>
                                 </td>
                                 <td>
                                     {$service->description|escape:html}
@@ -141,11 +140,11 @@
             </div>
         </div><!--/Row for Existing Service-->
         <div class="row"><!--Row for New Service-->
-    		<div class="span3">
+            <div class="span3">
                 <h3>New Service</h3>
                 <p>Use this form to define a new service</p>
             </div>
-    		<div class="span9"><!--Add New Service -->
+            <div class="span9"><!--Add New Service -->
                 <form class="form-horizontal" id="admin_addservice" method="post" action="{$base_uri}admin/tab/services/do/add-service/">
                     <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
                     <fieldset>
@@ -487,10 +486,10 @@
             <i class="icon-trash icon-white"></i>
             Delete
         </button>              
-         <button class="btn btn-secondary" id="confirm_delete_cancel">
+        <button class="btn btn-secondary" id="confirm_delete_cancel">
             Cancel
         </button>
-   </div>
+    </div>
 </div>
 
 <script type="text/javascript">
