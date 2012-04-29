@@ -86,11 +86,9 @@ var sb = {
             confirm_container = confirm.parent().parent();
              
             if (password.val() == confirm.val()) {
-                console.log("passwords match");
                 confirm_container.removeClass('error').addClass('success');
                 $('#usercp_confirmpassword_help').hide();
             } else {
-                console.log("passwords do not match");
                 confirm_container.addClass('error').removeClass('success');
                 $('#usercp_confirmpassword_help').show();
             }
@@ -101,7 +99,6 @@ var sb = {
     request: {
         
         post: function(url, data) {
-            console.log('Posting');
             var form = $('<form />').attr('method', 'post').attr('action', url);
             for (var key in data) {
                 form.append($('<input type="hidden">').attr('name', key).val(data[key]));
@@ -110,7 +107,7 @@ var sb = {
             form.submit();
         }
         
-    }
+    },
     
 };
  
