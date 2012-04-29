@@ -20,20 +20,20 @@
             <div class="span3">
                 <div class="block_info">
                     <div class="block_info_title">
-                        <h6>Reference</h6>
+                        <h4>Reference</h4>
                     </div>
                     <div class="block_info_content">
-                        <h4>{$incident->reference|ucwords|escape:html}</h4>
+                        {$incident->reference|ucwords|escape:html}
                     </div>
                 </div>
             </div>
             <div class="span6">
                 <div class="block_info">
                         <div class="block_info_title">
-                            <h6>Description</h6>
+                            <h4>Description</h4>
                         </div>
                         <div class="block_info_content">
-                            <h4>{$incident->description|ucfirst|escape:html}</h4>
+                            {$incident->description|ucfirst|escape:html}
                         </div>
                     </div>
                 </div>
@@ -42,40 +42,37 @@
             <div class="span3">
                 <div class="block_info">
                     <div class="block_info_title">
-                        <h6>Opened</h6>
+                        <h4>Opened</h4>
                     </div>
                     <div class="block_info_content">
-                        <h4>{$incident->start_time|date_format:'d-M-y H:i'} 
-                            <small>{StatusBoard_DateTime::fuzzyTime($incident->start_time)|ucwords|escape:html}</small>
-                        </h4>
+                        {StatusBoard_DateTime::fuzzyTime($incident->start_time)|ucwords|escape:html}<br />
+                        <em>{$incident->start_time|date_format:'d-M-y H:i'}</em>
                     </div>
                 </div>
             </div>
             <div class="span3">
                 <div class="block_info">
                     <div class="block_info_title">
-                        <h6>Estimated End</h6>
+                        <h4>Estimated End</h4>
                     </div>
                     <div class="block_info_content">
-                        <h4>
-                        {StatusBoard_DateTime::fuzzyTime($incident->estimated_end_time)|ucfirst|escape:html}
-                        </h4>
+                        {StatusBoard_DateTime::fuzzyTime($incident->estimated_end_time)|ucfirst|escape:html}<br />
+                        <em>{$incident->estimated_end_time|date_format:'d-M-y H:i'}</em>
                     </div>
                 </div>
             </div>
             <div class="span3">
                 <div class="block_info">
                     <div class="block_info_title">
-                        <h6>Actual End</h6>
+                        <h4>Actual End</h4>
                     </div>
                     <div class="block_info_content">
-                        <h4>
                         {if ($incident->actual_end_time!=null)}
-                        {StatusBoard_DateTime::fuzzyTime($incident->actual_end_time)|ucwords|escape:html}
+                            {StatusBoard_DateTime::fuzzyTime($incident->actual_end_time)|ucwords|escape:html}<br />
+                            <em>{$incident->actual_end_time|date_format:'d-M-y H:i'}</em>
                         {else}
-                        Incident is still open
+                            Incident is still open
                         {/if}
-                        </h4>
                     </div>
                 </div>
             </div>
