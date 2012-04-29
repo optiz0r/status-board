@@ -31,8 +31,6 @@ else {
 
 $this->smarty->assign('service', $service);
 $this->smarty->assign('site', $site);
-$this->smarty->assign('start', $start);
-$this->smarty->assign('end', $end);
 
 $display_admin_links = ($auth->isAuthenticated() && $auth->isAdministrator());
 $this->smarty->assign('display_admin_links', $display_admin_links);
