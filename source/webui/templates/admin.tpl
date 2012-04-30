@@ -1,13 +1,13 @@
 <div class="row space-below">
     <div class="span12">
         <h1>Admin Control Panel</h1>
-        <ul class="nav nav-tabs">
-            <li {if $tab == 'summary'}class="active"{/if}><a href="#tab_summary" data-toggle="tab">Summary</a></li>
-            <li {if $tab == 'services'}class="active"{/if}><a href="#tab_services" data-toggle="tab">Services</a></li>
-            <li {if $tab == 'sites'}class="active"{/if}><a href="#tab_sites" data-toggle="tab">Sites</a></li>
-            <li {if $tab == 'incidents'}class="active"{/if}><a href="#tab_incidents" data-toggle="tab">Incidents</a></li>
-            <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users" data-toggle="tab">Users</a></li>
-            <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings" data-toggle="tab">Settings</a></li>
+        <ul class="nav nav-tabs" id="admin_tabs">
+            <li {if $tab == 'summary'}class="active"{/if}><a href="#tab_summary" data-toggle="tab" data-uri="{$base_uri}admin/tab/summary/">Summary</a></li>
+            <li {if $tab == 'services'}class="active"{/if}><a href="#tab_services" data-toggle="tab" data-uri="{$base_uri}admin/tab/services/">Services</a></li>
+            <li {if $tab == 'sites'}class="active"{/if}><a href="#tab_sites" data-toggle="tab" data-uri="{$base_uri}admin/tab/sites/">Sites</a></li>
+            <li {if $tab == 'incidents'}class="active"{/if}><a href="#tab_incidents" data-toggle="tab" data-uri="{$base_uri}admin/tab/incidents/">Incidents</a></li>
+            <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users" data-toggle="tab" data-page="{$base_uri}admin/tab/users/">Users</a></li>
+            <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings" data-toggle="tab" data-uri="{$base_uri}admin/tab/settings/">Settings</a></li>
         </ul>
     </div><!-- /span12 -->
 </div><!-- /row -->

@@ -51,6 +51,11 @@ var sb = {
              });
             
             $('input[name="siteservice_mode"]').change(sb.admin.siteservice.modeChanged).trigger('change');
+            
+            // Ajax pushState support for any clickable link
+            $('a[data-uri]').click(function() {
+                window.history.pushState({}, $(this).text(), $(this).data('uri'));
+            });
         },
         
         deleteItem: function(url, csrftoken) {
