@@ -182,7 +182,7 @@
     </div><!--/New Service description-->
     
     <div class="span9">
-        <form class="form-horizontal" method="get" action="{$base_uri}admin/add-incident/service/{$service->id}/site/{$site->id}/">
+        <form class="form-horizontal" method="get" action="{$base_uri}admin/add-incident/site/{$site->id}/">
             <div class="control-group">
                 <div class="controls">
                     <button class="btn btn-primary">
