@@ -6,11 +6,11 @@ $request = $main->request();
 $auth = $main->auth();
 $home_output = null;
 
-$services = StatusBoard_Service::all();
+$services = StatusBoard_Service::all(null, null, null, 'name', StatusBoard_Service::ORDER_ASC);
 $this->smarty->assign('services', $services);
 $this->smarty->assign('site_title', $config->get('site.title', 'Status Board'));
 
-$sites = StatusBoard_Site::all();
+$sites = StatusBoard_Site::all(null, null, null, 'name', StatusBoard_Site::ORDER_ASC);
 $this->smarty->assign('sites', $sites);
 
 $upcoming_maintenance = StatusBoard_Incident::futureMaintenance();

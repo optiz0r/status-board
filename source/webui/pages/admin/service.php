@@ -114,7 +114,7 @@ if ($request->exists('do')) {
 }
     
 
-$sites = $service->sites();
+$sites = $service->sites(null, null, null, 'name', StatusBoard_Site::ORDER_ASC);
 $open_incidents = $service->openIncidents();
 
 $this->smarty->assign('service', $service);

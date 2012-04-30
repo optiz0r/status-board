@@ -26,7 +26,7 @@ class StatusBoard_SiteService extends StatusBoard_DatabaseObject {
      * @param StatusBoard_Site $site
      */
     public static function allForSite(StatusBoard_Site $site) {
-        return static::allFor('site', $site->id);
+        return static::allFor('site', $site->id, 'siteservice_names', null, null, 'service_name', self::ORDER_ASC);
     }
     
     /**
@@ -35,7 +35,7 @@ class StatusBoard_SiteService extends StatusBoard_DatabaseObject {
      * @param StatusBoard_Service $service
      */
     public static function allForService(StatusBoard_Service $service) {
-        return static::allFor('service', $service->id);
+        return static::allFor('service', $service->id, 'siteservice_names', null, null, 'site_name', self::ORDER_ASC);
     }
     
     /**

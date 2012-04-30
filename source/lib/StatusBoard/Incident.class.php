@@ -35,7 +35,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
     }
     
     public static function open() {
-        return static::all('incident_open');
+        return static::all('incident_open', null, null, 'start_time', static::ORDER_ASC);
     }
     
     public static function openDuring($start, $end) {
@@ -44,11 +44,11 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
         array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
     
-        return static::all('incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::all('incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params, null, null, 'start_time', static::ORDER_ASC);
     }
 
     public static function openForSite(StatusBoard_Site $site) {
-        return static::allFor('site', $site->id, 'incident_open_site');
+        return static::allFor('site', $site->id, 'incident_open_site', null, null, 'start_time', static::ORDER_ASC);
     }
     
     public static function openForSiteDuring(StatusBoard_Site $site, $start, $end) {
@@ -57,11 +57,11 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('site', $site->id, 'incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('site', $site->id, 'incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params, null, null, 'start_time', static::ORDER_ASC);
     }
     
     public static function openForService(StatusBoard_Service $service) {
-        return static::allFor('service', $service->id, 'incident_open_service');
+        return static::allFor('service', $service->id, 'incident_open_service', null, null, 'start_time', static::ORDER_ASC);
     }
     
     public static function openForServiceDuring(StatusBoard_Service $service, $start, $end) {
@@ -70,11 +70,11 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('service', $service->id, 'incident_opentimes_service', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('service', $service->id, 'incident_opentimes_service', '`start_time` < :end AND `ctime` > :start', $params, 'start_time', static::ORDER_ASC);
     }
     
     public static function openForSiteService(StatusBoard_SiteService $siteservice) {
-        return static::allFor('siteservice', $siteservice->id, 'incident_open_siteservice');
+        return static::allFor('siteservice', $siteservice->id, 'incident_open_siteservice', null, null, 'start_time', static::ORDER_ASC);
     }
     
     public static function openForSiteServiceDuring(StatusBoard_SiteService $siteservice, $start, $end) {
@@ -83,20 +83,20 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('siteservice', $siteservice->id, 'incident_opentimes_siteservice', '`start_time` < :end AND `ctime` > :start', $params);
+        return static::allFor('siteservice', $siteservice->id, 'incident_opentimes_siteservice', '`start_time` < :end AND `ctime` > :start', $params, 'start_time', static::ORDER_ASC);
     }
     
     public static function allNearDeadline() {
         return static::all('incident_open', "estimated_end_time<=:threshold AND estimated_end_time>=:now", array(
             array('name' => 'threshold', 'value' => time() + StatusBoard_DateTime::HOUR, 'type' => PDO::PARAM_INT),
             array('name' => 'now', 'value' => time(), 'type' => PDO::PARAM_INT),
-        ));
+        ), 'start_time', static::ORDER_ASC);
     }
     
     public static function allPastDeadline() {
         return static::all('incident_open', "estimated_end_time<=:threshold", array(
             array('name' => 'threshold', 'value' => time(), 'type' => PDO::PARAM_INT),
-        ));
+        ), 'start_time', static::ORDER_ASC);
     }
     
     public static function futureMaintenance() {

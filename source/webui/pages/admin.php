@@ -208,10 +208,10 @@ $this->smarty->assign('incidents_near_deadline', $incidents_near_deadline);
 $this->smarty->assign('incidents_past_deadline', $incidents_past_deadline);
 
 // Service, Site and incident
-$services = StatusBoard_Service::all();
+$services = StatusBoard_Service::all(null, null, null, 'name', StatusBoard_Service::ORDER_ASC);
 $this->smarty->assign('services', $services);
 
-$sites = StatusBoard_Site::all();
+$sites = StatusBoard_Site::all(null, null, null, 'name', StatusBoard_Site::ORDER_ASC);
 $this->smarty->assign('sites', $sites);
 
 $open_incidents = StatusBoard_Incident::open();

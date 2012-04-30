@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `service` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
--- Table structure for table `service`
+-- Table structure for table `site`
 --
 DROP TABLE IF EXISTS `site`;
 CREATE TABLE IF NOT EXISTS `site` (
@@ -90,6 +90,33 @@ CREATE TABLE IF NOT EXISTS `site` (
   PRIMARY KEY (`id`),
   KEY `service` (`service`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for table `siteservice`
+--
+DROP TABLE IF EXISTS `siteservice`;
+CREATE TABLE IF NOT EXISTS `siteservice` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `service` int(10) unsigned NOT NULL,
+  `site` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
+-- Table structure for view `siteservice_names`
+--
+
+DROP VIEW IF EXISTS `siteservice_names`;
+CREATE VIEW `siteservice_names` AS (
+  SELECT
+    `ss`.*,
+    `si`.`name` AS `site_name`,
+    `se`.`name` AS `service_name`
+  FROM
+    `siteservice` AS `ss`
+    LEFT JOIN `site` AS `si` ON `ss`.`site` = `si`.`id`
+    LEFT JOIN `service` AS `se` ON `ss`.`service` = `se`.`id`
+);
 
 --
 -- Table structure for view `site_unmatchedservices`

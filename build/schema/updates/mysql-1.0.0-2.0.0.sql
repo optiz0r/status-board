@@ -40,6 +40,22 @@ CREATE TABLE IF NOT EXISTS `siteservice` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
+-- Table structure for view `siteservice_names`
+--
+
+DROP VIEW IF EXISTS `siteservice_names`;
+CREATE VIEW `siteservice_names` AS (
+  SELECT
+    `ss`.*,
+    `si`.`name` AS `site_name`,
+    `se`.`name` AS `service_name`
+  FROM
+    `siteservice` AS `ss`
+    LEFT JOIN `site` AS `si` ON `ss`.`site` = `si`.`id`
+    LEFT JOIN `service` AS `se` ON `ss`.`service` = `se`.`id`
+);
+
+--
 -- Table structure for view `site_unmatchedservices`
 --
 DROP VIEW IF EXISTS `site_unmatchedservices`;

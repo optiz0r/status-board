@@ -29,15 +29,15 @@ class StatusBoard_Site extends StatusBoard_DatabaseObject {
     }
     
     public static function unusedBy(StatusBoard_Service $service) {
-        return static::allFor('service', $service->id, 'site_unmatchedservices');
+        return static::allFor('service', $service->id, 'site_unmatchedservices', null, null, 'name', static::ORDER_ASC);
     }
     
     public static function unusedByIncident(StatusBoard_Incident $incident) {
-        return static::allFor('incident', $incident->id, 'site_unmatchedincidents');
+        return static::allFor('incident', $incident->id, 'site_unmatchedincidents', null, null, 'name', static::ORDER_ASC);
     }
     
     public static function unusedByServiceIncident(StatusBoard_Service $service, StatusBoard_Incident $incident) {
-        return static::allFor(array('service', 'incident'), array($service->id, $incident->id), 'site_unmatchedserviceincidents');
+        return static::allFor(array('service', 'incident'), array($service->id, $incident->id), 'site_unmatchedserviceincidents', null, null, 'name', static::ORDER_ASC);
     }
     
     public static function newFor(array $services, $name, $description) {
