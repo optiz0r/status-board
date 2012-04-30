@@ -6,6 +6,8 @@ $auth = $main->auth();
 $session = $main->session();
 $csrf = new StatusBoard_CSRF();
 
+$messages = array();
+
 if ($request->exists('do')) {
     $activity = $request->get('do');
     
