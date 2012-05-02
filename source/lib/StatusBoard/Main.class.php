@@ -48,6 +48,13 @@ class StatusBoard_Main extends SihnonFramework_Main {
             } break;
         
         }
+        
+        // ensure the selected authentication backend implements the required features
+        $this->auth->checkFeatures(array(
+            'SihnonFramework_Auth_IDetails',
+            'SihnonFramework_Auth_IFinelyPermissionable',
+            'SihnonFramework_Auth_IUpdateable'
+        ));
     }
 
     public function smarty() {
