@@ -73,7 +73,7 @@ var sb = {
                 $('.siteservice_contents').hide();
                 $('#siteservice_' + $('input[name="siteservice_mode"]:checked').val()).show();
             }
-        }
+        },
         
         user:  {
             
