@@ -88,6 +88,9 @@ if ($request->exists('do')) {
                         'content'  => 'The user was not removed as the object requested could not be found.',
                     );
                 }
+                
+                $session->set('messages', $messages);
+                StatusBoard_Page::redirect("admin/tab/users");
             } break;
             
             default: {

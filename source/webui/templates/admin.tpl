@@ -395,7 +395,7 @@
                                         Edit
                                     </button>
                                     {if $user->id() != 1}
-                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/users/do/delete-user/username/{$user->username()|escape:url}/', '{$csrftoken|escape:quotes}');">
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/user/do/delete-user/username/{$user->username()|escape:url}/', '{$csrftoken|escape:quotes}');">
                                             <i class="icon-trash icon-white"></i>
                                             Delete
                                         </button>
