@@ -6,7 +6,7 @@
             <li {if $tab == 'services'}class="active"{/if}><a href="#tab_services" data-toggle="tab" data-uri="{$base_uri}admin/tab/services/">Services</a></li>
             <li {if $tab == 'sites'}class="active"{/if}><a href="#tab_sites" data-toggle="tab" data-uri="{$base_uri}admin/tab/sites/">Sites</a></li>
             <li {if $tab == 'incidents'}class="active"{/if}><a href="#tab_incidents" data-toggle="tab" data-uri="{$base_uri}admin/tab/incidents/">Incidents</a></li>
-            <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users" data-toggle="tab" data-page="{$base_uri}admin/tab/users/">Users</a></li>
+            <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users" data-toggle="tab" data-uri="{$base_uri}admin/tab/users/">Users</a></li>
             <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings" data-toggle="tab" data-uri="{$base_uri}admin/tab/settings/">Settings</a></li>
         </ul>
     </div><!-- /span12 -->
@@ -381,21 +381,21 @@
                         {foreach from=$users item=user}
                             <tr>
                                 <td>
-                                    <a href="{$base_uri}admin/user/id/{$user->id}/" title="Edit User {$user->username|escape:htmll}">{$user->username|escape:html}</a>
+                                    <a href="{$base_uri}admin/user/id/{$user->id()}/" title="Edit User {$user->username()|escape:htmll}">{$user->username()|escape:html}</a>
                                 </td>
                                 <td>
-                                    {$user->fullname|escape:html}
+                                    {$user->realName()|escape:html}
                                 </td>
                                 <td>
-                                    {$user->last_login|fuzzyTime}
+                                    {$user->lastLoginTime()|fuzzyTime}
                                 </td>
                                 <td>
-                                    <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/{$user->id}/';return false;">
+                                    <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/{$user->id()}/';return false;">
                                         <i class="icon-edit icon-white"></i>
                                         Edit
                                     </button>
-                                    {if $user->id != 1}
-                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/users/do/delete-user/id/{$user->id}/', '{$csrftoken|escape:quotes}');">
+                                    {if $user->id() != 1}
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/users/do/delete-user/id/{$user->id()}/', '{$csrftoken|escape:quotes}');">
                                             <i class="icon-trash icon-white"></i>
                                             Delete
                                         </button>
