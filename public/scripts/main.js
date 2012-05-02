@@ -75,6 +75,29 @@ var sb = {
             }
         }
         
+        user:  {
+            
+            init: function() {
+                $('#admin_user_passwd_new,#admin_user_passwd_confirm').bind('keyup', sb.admin.user.checkPassword);
+                
+            },
+            
+            checkPassword: function() {
+                password = $('#admin_user_passwd_new');
+                confirm = $('#admin_user_passwd_confirm');
+                
+                confirm_container = confirm.parent().parent();
+                
+                if (password.val() == confirm.val()) {
+                    confirm_container.removeClass('error').addClass('success');
+                    $('#admin_user_passwd_confirmpassword_help').hide();
+                } else {
+                    confirm_container.addClass('error').removeClass('success');
+                    $('#admin_user_passwd_confirmpassword_help').show();
+                }
+            }
+            
+        },
     },
      
     usercp: {

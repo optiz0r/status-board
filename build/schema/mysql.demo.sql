@@ -110,7 +110,8 @@ INSERT INTO `usergroup` (`id`, `user`, `group`, `added`) VALUES
 INSERT INTO `permission` (`id`, `name`, `description`) VALUES
 (2, 'Update Status Boards', 'Permission to add/edit/delete any service or site.'),
 (3, 'Update Incidents', 'Permission to create and update the status of any incident.'),
-(4, 'View Status Boards', 'Permission to view the status of all services and sites, and details of any incident.');
+(4, 'View Status Boards', 'Permission to view the status of all services and sites, and details of any incident.'),
+(5, 'Manage Users', 'Permission to manage user accounts.');
 
 --
 -- Dumping data for table `grouppermission`

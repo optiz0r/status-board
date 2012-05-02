@@ -381,7 +381,7 @@
                         {foreach from=$users item=user}
                             <tr>
                                 <td>
-                                    <a href="{$base_uri}admin/user/id/{$user->id()}/" title="Edit User {$user->username()|escape:htmll}">{$user->username()|escape:html}</a>
+                                    <a href="{$base_uri}admin/user/username/{$user->username()|escape:url}/" title="Edit User {$user->username()|escape:html}">{$user->username()|escape:html}</a>
                                 </td>
                                 <td>
                                     {$user->realName()|escape:html}
@@ -390,12 +390,12 @@
                                     {$user->lastLoginTime()|fuzzyTime}
                                 </td>
                                 <td>
-                                    <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/{$user->id()}/';return false;">
+                                    <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/username/{$user->username()|escape:url}/';return false;">
                                         <i class="icon-edit icon-white"></i>
                                         Edit
                                     </button>
                                     {if $user->id() != 1}
-                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/users/do/delete-user/id/{$user->id()}/', '{$csrftoken|escape:quotes}');">
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/users/do/delete-user/username/{$user->username()|escape:url}/', '{$csrftoken|escape:quotes}');">
                                             <i class="icon-trash icon-white"></i>
                                             Delete
                                         </button>
