@@ -363,7 +363,7 @@
     </div>
     
     <div class="tab-pane {if $tab == 'users'}active{/if}" id="tab_users">
-        <div class="row">
+        <div class="row space-below">
             <div class="span3">
                 <h3>User List</h3>
                 <p>All users accounts for the system.</p>
@@ -387,7 +387,7 @@
                                     {$user->realName()|escape:html}
                                 </td>
                                 <td>
-                                    {$user->lastLoginTime()|fuzzyTime}
+                                    {$user->lastLoginTime()|fuzzyTime|ucfirst}
                                 </td>
                                 <td>
                                     <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/username/{$user->username()|escape:url}/';return false;">
@@ -407,6 +407,83 @@
                 </table>
             </div>
         </div>
+        <div class="row"><!--Row for New User-->
+            <div class="span3">
+                <h3>New User</h3>
+                <p>Use this form to define a new service</p>
+            </div>
+            <div class="span9">
+                <form class="form-horizontal" id="admin_user_add" method="post" action="{$base_uri}admin/tab/users/do/add-user/">
+                    <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="admin_user_add_username">Username</label>
+                            <div class="controls">
+                                <input id="admin_user_add_username" name="username" type="text" value="" />
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="admin_user_add_fullname">Full name</label>
+                            <div class="controls">
+                                <input id="admin_user_add_fullname" name="fullname" type="text" value="" />
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="admin_user_add_email">Email address</label>
+                            <div class="controls">
+                                <div class="input-append">
+                                    <input id="admin_user_add_email" name="email" type="text" value="" /><span class="add-on"><i class="icon-envelope"></i></span>
+                                </div>
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="admin_user_passwd_new">New Password</label>
+                            <div class="controls">
+                                <input id="admin_user_passwd_new" name="password" type="password" value="" />
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="admin_user_passwd_confirm">Confirm Password</label>
+                            <div class="controls">
+                                <input id="admin_user_passwd_confirm" name="confirm" type="password" value="" />
+                                <span class="help-inline" style="display: none" id="admin_user_passwd_confirmpassword_help">The passwords do not match.</span>
+                            </div>
+                        </div><!-- /control-group -->
+                
+                        <div class="control-group">
+                            <label class="control-label">Groups</label>
+                            <div class="controls">
+                                {foreach from=$auth->listGroups() item=group}
+                                    <label class="checkbox" for="admin_user_add_groups_{$group->name()|escape:html}">
+                                        <input type="checkbox" id="admin_user_add_group_{$group->name()|escape:html}" name="groups[]" value="{$group->name()|escape:html}" />
+                                        {$group->name()|escape:html}
+                                    </label>
+                                {foreachelse}
+                                    <em>You have not yet defined any user groups.</em>
+                                {/foreach}
+                            </div>
+                        </div><!-- /control-group -->
+            
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn btn-primary" name="addservice">
+                                    <i class="icon-plus icon-white"></i>
+                                    Add User
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="icon-refresh"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </div><!-- /control-group -->
+                    </fieldset>
+                </form>
+            </div>
+        </div><!--/Row for New User-->
     </div>
 
     <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">

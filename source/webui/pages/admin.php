@@ -137,6 +137,67 @@ if ($request->exists('do')) {
                     );
                 }
             } break;
+            
+            case 'add-user': {
+                $username = StatusBoard_Main::issetelse($_POST['username'], 'Sihnon_Exception_InvalidParameters');
+                $fullname = StatusBoard_Main::issetelse($_POST['fullname'], 'Sihnon_Exception_InvalidParameters');
+                $email = StatusBoard_Main::issetelse($_POST['email'], 'Sihnon_Exception_InvalidParameters');
+                $password = StatusBoard_Main::issetelse($_POST['password'], 'SihnonFramework_Exception_InvalidParameters');
+                $confirm = StatusBoard_Main::issetelse($_POST['confirm'], 'SihnonFramework_Exception_InvalidParameters');
+                $group_ids = StatusBoard_Main::issetelse($_POST['groups'], array());
+                
+                try {
+                    StatusBoard_Validation_Text::length($username, 1, 255);
+                    StatusBoard_Validation_Text::length($fullname, 1, 255);
+                    StatusBoard_Validation_Text::email($email);
+                    
+                    if ($auth->userExists($username)) {
+                        throw new StatusBoard_Exception_AlreadyInUse();
+                    }
+                    
+                    if ($password != $confirm) {
+                        throw new StatusBoard_Exception_PasswordsDontMatch();
+                    }
+                    
+                    $new_user = $auth->addUser($username, $password);
+                    $new_user->setRealName($fullname);
+                    $new_user->setEmailAddress($email);
+                    $new_user->save();
+                                        
+                    $groups = array();
+                    foreach ($group_ids as $group_id) {
+                        try {
+                            $group = $auth->group($group_id);
+                            $group->addUser($new_user);
+                        } catch (StatusBoard_Exception_ResultCountMismatch $e) {
+                            $messages[] = array(
+                                'severity' => 'warning',
+                                'content'  => 'The user was not added to a group as an object requested could not be found.',
+                            );
+                        }
+                    }
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The site was created succesfully.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The user was not added due to invalid parameters being passed.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The user was not added because the username is already in use.',
+                    );
+                } catch (StatusBoard_Exception_PasswordsDontMatch $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The user was not added because the passwords did not match.',
+                    );
+                }
+            } break;
     
             case 'save-settings': {
                 $supported_settings = array(
@@ -220,6 +281,7 @@ $this->smarty->assign('open_incidents', $open_incidents);
 // User Management
 $users = $auth->listUsers();
 $this->smarty->assign('users', $users);
+$this->smarty->assign('auth', $auth);
 
 // Quick Settings
 $this->smarty->assign('debug_displayexceptions', $config->get('debug.display_exceptions'));
