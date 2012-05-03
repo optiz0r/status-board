@@ -1,5 +1,4 @@
-
-<div class="row">
+<div class="row"><!-- Row for Board title and header -->
     <div class='span10'>
         <h1 class='lead'><strong>{$site_title}</strong></h1>
 
@@ -9,14 +8,14 @@
     <div class="span2 align-right">
         {if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn"> Add Incident</a>{/if}
     </div>
-</div>{if $upcoming_maintenance}
-
-<div class="row">
+</div><!--/Row for Board title and header -->
+{if $upcoming_maintenance}
+<div class="row"> <!--Row for Upcoming maintenance if it exists -->
     <div class="span2">
         <h5>Upcoming maintenance:</h5>
     </div>
 
-    <div class="span10">
+    <div class="span10"> <!-- List all upcoming maintenance -->
         <ul id="maintenance-list">
             <li style="list-style: none">{foreach from=$upcoming_maintenance item=incident}</li>
 
@@ -28,14 +27,16 @@
 
             <li style="list-style: none">{/foreach}</li>
         </ul>
-    </div>
-</div>{/if}
+    </div> <!-- /List all upcoming maintenance -->
+</div> <!--/Row For upcoming maintenance -->
+{/if}
 
-<div class="row">
-    <div class="span12">
+<div class="row"><!--Row for Board status matrix -->
+    <div class="span12"><!--Board status matrix -->
         {switch $home_mode} {case 'site'} {$page->include_template('fragments/home-site')} {/case} {default} {$page->include_template('fragments/home-service')} {/switch}
-    </div>
-</div><!-- row -->
+    </div><!--/Board status matrix -->
+</div><!--/Row for Board status matrix -->
+<!--Load homepage JS at end to speed up page load-->
 <script type="text/javascript">
 sb.home.init();
 </script>
