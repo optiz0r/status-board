@@ -65,7 +65,7 @@
                                 {$permission->description()|escape:html}
                             </td>
                             <td>
-                                <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/group/name/{$group->name|escape:url}/do/delete-permission/id/{$permission->id}/', '{$csrftoken|escape:quotes}');">
+                                <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/group/name/{$group->name()|escape:url}/do/delete-permission/id/{$permission->id()}/', '{$csrftoken|escape:quotes}');">
                                     <i class="icon-minus icon-white"></i>
                                     Remove
                                 </button>
