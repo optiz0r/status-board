@@ -46,15 +46,47 @@ if ($request->exists('do')) {
                         'severity' => 'error',
                         'content'  => 'The group was not modified due to invalid parameters being passed.',
                     );
-                }            
+                }
             } break;
     
             case 'add-permissions': {
-                throw new StatusBoard_Exception_NotImplemented();
+                $permission_ids = StatusBoard_Main::issetelse($_POST['permissions'], 'Sihnon_Exception_InvalidParameters');
+                
+                foreach ($permission_ids as $permission_id) {
+                    try {
+                        $permission = $auth->permission($permission_id);
+                        $group->addPermission($permission);
+                    } catch (StatusBoard_Exception_InvalidContent $e) {
+                        $messages[] = array(
+                            'severity' => 'warning',
+                            'content'  => 'A permission was not added to the group because a requested object was not found.',
+                        );
+                    }
+                }
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The group was updated succesfully.',
+                );
             } break;
             
             case 'delete-permission': {
-                throw new StatusBoard_Exception_NotImplemented();
+                $permission_id = $request->get('id', 'Sihnon_Exception_InvalidParameters');
+                
+                try {
+                    $permission = $auth->permission($permission_id);
+                    $group->removePermission($permission);
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The group was updated succesfully.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The group was not modified due to invalid parameters being passed.',
+                    );
+                }
             } break;
                         
             case 'delete-group': {
