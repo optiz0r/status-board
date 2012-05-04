@@ -73,6 +73,46 @@ if ($request->exists('do')) {
                     );
                 }
             } break;
+            
+            case 'add-groups': {
+                $groupnames = StatusBoard_Main::issetelse($_POST['groups'], 'Sihnon_Exception_InvalidParameters');
+                
+                foreach ($groupnames as $groupname) {
+                    try {
+                        $group = $auth->group($groupname);
+                        $group->addUser($user);
+                    } catch (StatusBoard_Exception_InvalidContent $e) {
+                        $messages[] = array(
+                            'severity' => 'warning',
+                            'content'  => 'The user was not added to a group because a requested object was not found.',
+                        );
+                    }
+                }
+                
+                $messages[] = array(
+                    'severity' => 'success',
+                    'content'  => 'The user was updated succesfully.',
+                );
+            } break;
+            
+            case 'delete-group': {
+                $groupname = $request->get('name', 'Sihnon_Exception_InvalidParameters');
+                
+                try {
+                    $group = $auth->group($groupname);
+                    $group->removeUser($user);
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The user was updated succesfully.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The user was not modified due to invalid parameters being passed.',
+                    );
+                }
+            } break;
 
             case 'delete-user': {
                 try {
@@ -114,6 +154,7 @@ if ($request->exists('do')) {
     
 
 $this->smarty->assign('user', $user);
+$this->smarty->assign('groups', $user->groups());
 $this->smarty->assign('messages', $messages);
 $this->smarty->assign('csrftoken', $csrf->generate());
 

@@ -119,3 +119,97 @@
         </form>
     </div>
 </div>
+
+<div class="row space-below">
+    <div class="span3">
+        <h3>Groups</h3>
+        <p>Groups the user is a member of.</p>
+    </div>
+    <div class="span9">
+        {if $groups}
+            <table class="table table-bordered table-striped" id="group_list_table">
+                <thead>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    {foreach from=$groups item=group}
+                        <tr>
+                            <td>
+                                {$group->name()|escape:html}
+                            </td>
+                            <td>{$group->description()|escape:html}</td>
+                            <td>
+                                <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/user/username/{$user->username()|escape:url}/do/delete-group/name/{$group->name()|escape:url}/', '{$csrftoken|escape:quotes}');">
+                                    <i class="icon-minus icon-white"></i>
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        {else}
+            You haven't added this user to any groups yet. Add some with the button below.
+        {/if}
+    </div>
+</div>
+
+<div class="row space-below">
+    <div class="span3">
+        <h3>Add to Groups</h3>
+        <p>Add this user to additional groups.</p>
+    </div>
+    <div class="span9">
+        <form class="form-horizontal" id="admin_addgroup" method="post" action="{$base_uri}admin/user/username/{$user->username()|escape:url}/do/add-groups/">
+            <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="admin_user_add_group">Groups</label>
+                    <div class="controls">
+                        {foreach from=$user->unusedGroups() item=group}
+                            <label class="checkbox" id="admin_user_add_group_{$group->name()|escape:html}">
+                                <input type="checkbox" id="admin_user_add_group_{$group->name()}" name="groups[]" value="{$group->name()|escape:html}" />
+                                {$group->name()|escape:html}
+                            </label>
+                        {foreachelse}
+                            <em>There are no other groups that this user can be added to.</em>
+                        {/foreach}
+                    </div>
+                </div><!-- /control-group -->
+                
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-primary">
+                            <i class="icon-plus icon-white"></i>
+                            Add to Groups
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="icon-refresh"></i>
+                            Reset
+                        </button>
+                    </div>
+                </div><!-- /control-group -->
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div id="confirm_delete" class="modal hide fade">
+    <div class="modal-header">
+        Confirm deletion
+    </div>
+    <div class="modal-body">
+        Deleting this object is final and cannot be reversed.                
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" id="confirm_delete_do">
+            <i class="icon-trash icon-white"></i>
+            Delete
+        </button>              
+        <button class="btn btn-secondary" id="confirm_delete_cancel">
+            Cancel
+        </button>
+    </div>
+</div>
