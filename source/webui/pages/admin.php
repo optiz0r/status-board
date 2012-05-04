@@ -179,14 +179,14 @@ if ($request->exists('do')) {
                     
                     $messages[] = array(
                         'severity' => 'success',
-                        'content'  => 'The site was created succesfully.',
+                        'content'  => 'The user was created succesfully.',
                     );
                 } catch (StatusBoard_Exception_InvalidContent $e) {
                     $messages[] = array(
                         'severity' => 'error',
                         'content'  => 'The user was not added due to invalid parameters being passed.',
                     );
-                } catch (StatusBoard_Exception_InvalidContent $e) {
+                } catch (StatusBoard_Exception_AlreadyInUse $e) {
                     $messages[] = array(
                         'severity' => 'error',
                         'content'  => 'The user was not added because the username is already in use.',
