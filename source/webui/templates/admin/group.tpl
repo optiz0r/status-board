@@ -19,13 +19,6 @@
             <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
             <fieldset>
                 <div class="control-group">
-                    <label class="control-label" for="admin_group_edit_name">Name</label>
-                    <div class="controls">
-                        <input id="admin_group_edit_name" name="name" type="text" value="{$group->name()|escape:html}" />
-                    </div>
-                </div><!-- /control-group -->
-                
-                <div class="control-group">
                     <label class="control-label" for="admin_group_edit_description">Description</label>
                     <div class="controls">
                         <textarea id="admin_group_edit_description" name="description" rows="3">{$group->description()|escape:html}</textarea>

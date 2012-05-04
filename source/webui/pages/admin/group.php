@@ -29,6 +29,26 @@ if ($request->exists('do')) {
 
         switch ($activity) {
     
+            case 'edit': {
+                $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+                
+                try {
+                    StatusBoard_Validation_Text::length($description, 1, 255);
+                    
+                    $group->setDescription($description);
+                    $group->save();
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The group was updated succesfully.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The group was not modified due to invalid parameters being passed.',
+                    );
+                }            
+            } break;
+    
             case 'add-permissions': {
                 throw new StatusBoard_Exception_NotImplemented();
             } break;
