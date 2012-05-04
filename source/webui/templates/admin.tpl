@@ -26,21 +26,28 @@
             </div>
 
             <div class="span9 column">
-                <p style="padding-top:10px">There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_near_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'incident', 'incidents')} within 1 hour of the current estimated end time.</p>{if $incidents_near_deadline}
-
-                <ol>
-                    <li style="list-style: none">{foreach from=$incidents_near_deadline item=incident}</li>
-
-                    <li><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident">{$incident->reference|escape:html}</a>{/foreach}</li>
-                </ol>{/if}
-
-                <p>There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_past_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_past_deadline), 'incident', 'incidents')} already past the set estimated end time.</p>{if $incidents_past_deadline}
-
-                <ol>
-                    <li style="list-style: none">{foreach from=$incidents_past_deadline item=incident}</li>
-
-                    <li><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident">{$incident->reference|escape:html}</a>{/foreach}</li>
-                </ol>{/if}
+                <p>
+                    There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_near_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'incident', 'incidents')}
+                    within 1 hour of the current estimated end time.
+                </p>
+                {if $incidents_near_deadline}
+                    <ol>
+                        {foreach from=$incidents_near_deadline item=incident}
+                            <li><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident">{$incident->reference|escape:html}</a></li>
+                        {/foreach}
+                    </ol>
+                {/if}
+                <p>
+                    There {StatusBoard_Formatting::pluralise(count($incidents_near_deadline), 'is', 'are')} {$incidents_past_deadline|count} {StatusBoard_Formatting::pluralise(count($incidents_past_deadline), 'incident', 'incidents')}
+                    already past the set estimated end time.
+                </p>
+                {if $incidents_past_deadline}
+                    <ol>
+                        {foreach from=$incidents_past_deadline item=incident}
+                            <li><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident">{$incident->reference|escape:html}</a></li>
+                        {/foreach}
+                    </ol>
+                {/if}
             </div>
         </div>
 
@@ -48,69 +55,49 @@
             <div class="span3">
                 <h3>Statistics</h3>
             </div>
-
             <div class="span9">
                 <table class="table table-bordered table-condensed">
                     <thead>
                         <tr>
                             <th>Statistic</th>
-
                             <th>Count</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         <tr>
                             <td>Services</td>
-
                             <td>{$service_count}</td>
                         </tr>
-
                         <tr>
                             <td>Sites</td>
-
                             <td>{$site_count}</td>
                         </tr>
-
                         <tr>
                             <td>Incidents</td>
-
                             <td>{array_sum(array_values($incident_counts))}</td>
                         </tr>
-
                         <tr>
                             <th>Incident Statistics</th>
-
                             <th>Count</th>
                         </tr>
-
                         <tr>
                             <td>Major</td>
-
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Major]}</td>
                         </tr>
-
                         <tr>
                             <td>Significant</td>
-
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Significant]}</td>
                         </tr>
-
                         <tr>
                             <td>Minor</td>
-
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Minor]}</td>
                         </tr>
-
                         <tr>
                             <td>Planned Maintenance</td>
-
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Maintenance]}</td>
                         </tr>
-
                         <tr>
                             <td>Resolved</td>
-
                             <td>{$incident_counts[StatusBoard_Status::STATUS_Resolved]}</td>
                         </tr>
                     </tbody>
@@ -125,59 +112,45 @@
         <div class="row space-below">
             <div class="span3">
                 <h3>Current Services</h3>
-
                 <p>Click on a Service to edit its properties.</p>
             </div>
-
             <div class="span9 column">
-                {if $services} {foreach from=$services item=service} {/foreach}
-
-                <table class="table table-bordered table-striped">
-                    <!--Services table -->
-
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-
-                            <th>Description</th>
-
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></td>
-
-                            <td>{$service->description|escape:html}</td>
-
-                            <td><button class="btn btn-primary" onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit Service</button> <button class="btn btn-danger" onclick="sb.admin.deleteItem('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/', '{$csrftoken|escape:quotes}');">Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table><!--/Services table -->
-                {else} You haven't created any services yet. Create some with the button below. {/if}
+                {if $services}
+                    <table class="table table-bordered table-striped"><!--Services table -->
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach from=$services item=service}
+                                <tr>
+                                    <td><a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a></td>
+                                    <td>{$service->description|escape:html}</td>
+                                    <td><button class="btn btn-primary" onclick="document.location.href='{$base_uri}admin/service/id/{$service->id}/';return false;">Edit Service</button> <button class="btn btn-danger" onclick="sb.admin.deleteItem('{$base_uri}admin/tab/services/do/delete-service/id/{$service->id}/', '{$csrftoken|escape:quotes}');">Delete</button></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table><!--/Services table -->
+                {else}
+                    You haven't created any services yet. Create some with the button below.
+                {/if}
             </div>
         </div><!--/Row for Existing Service-->
 
-        <div class="row">
-            <!--Row for New Service-->
-
+        <div class="row"><!--Row for New Service-->
             <div class="span3">
                 <h3>New Service</h3>
-
                 <p>Use this form to define a new service</p>
             </div>
-
-            <div class="span9">
-                <!--Add New Service -->
-
+            <div class="span9"><!--Add New Service -->
                 <form class="form-horizontal" id="admin_addservice" method="post" action="{$base_uri}admin/tab/services/do/add-service/">
                     <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}">
-
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="admin_service_add_name">Name</label>
-
                             <div class="controls">
                                 <input id="admin_service_add_name" name="name" type="text" value="">
                             </div>
@@ -185,18 +158,22 @@
 
                         <div class="control-group">
                             <label class="control-label" for="admin_service_add_description">Description</label>
-
                             <div class="controls">
-                                <textarea class="" id="admin_service_add_description" rows="3" name="description">
-</textarea>
+                                <textarea class="" id="admin_service_add_description" rows="3" name="description"></textarea>
                             </div>
                         </div><!-- /control-group -->
 
                         <div class="control-group">
                             <label class="control-label">Add Sites</label>
-
                             <div class="controls">
-                                {foreach from=$sites item=site} <label class="checkbox" for="admin_add_service_site_{$site->id}"><input type="checkbox" id="admin_add_service_site_{$site->id}" name="sites[]" value="{$site->id}"> {$site->name|escape:html}</label> {foreachelse} <em>You have not yet defined any sites.</em> {/foreach}
+                                {foreach from=$sites item=site}
+                                    <label class="checkbox" for="admin_add_service_site_{$site->id}">
+                                        <input type="checkbox" id="admin_add_service_site_{$site->id}" name="sites[]" value="{$site->id}">
+                                        {$site->name|escape:html}
+                                    </label>
+                                {foreachelse}
+                                    <em>You have not yet defined any sites.</em>
+                                {/foreach}
                             </div>
                         </div><!-- /control-group -->
 
@@ -217,53 +194,45 @@
         <div class="row space-below">
             <div class="span3">
                 <h3>Existing Sites</h3>
-
                 <p>Click on a Site to edit its properties</p>
             </div>
-
             <div class="span9">
-                {if $sites} {foreach from=$sites item=site} {/foreach}
-
-                <table class="table table-bordered table-striped" name="sites_list_table">
-                    <thead>
-                        <tr>
-                            <th>Site</th>
-
-                            <th>Description</th>
-
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><a href="{$base_uri}admin/site/id/{$site->id}/" title="Edit site {$site->name|escape:html}">{$site->name|escape:html}</a></td>
-
-                            <td>{$site->description|escape:html}</td>
-
-                            <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/site/id/{$site->id}/';return false;">Edit Site</button> <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/sites/do/delete-site/id/{$site->id}/', '{$csrftoken|escape:quotes}');">Delete Site</button></td>
-                        </tr>
-                    </tbody>
-                </table><!--/name table -->
-                {else} You haven't created any sites yet. Create some with the button below. {/if}
+                {if $sites}
+                    <table class="table table-bordered table-striped" name="sites_list_table">
+                        <thead>
+                            <tr>
+                                <th>Site</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach from=$sites item=site}
+                                <tr>
+                                    <td><a href="{$base_uri}admin/site/id/{$site->id}/" title="Edit site {$site->name|escape:html}">{$site->name|escape:html}</a></td>
+                                    <td>{$site->description|escape:html}</td>
+                                    <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/site/id/{$site->id}/';return false;">Edit Site</button> <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/sites/do/delete-site/id/{$site->id}/', '{$csrftoken|escape:quotes}');">Delete Site</button></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table><!--/name table -->
+                {else}
+                    You haven't created any sites yet. Create some with the button below.
+                {/if}
             </div>
         </div><!--/Row for Existing Service-->
 
         <div class="row">
             <div class="span3">
                 <h3>Add Site</h3>
-
                 <p>Use this form to define a new site.</p>
             </div><!--/New Service description-->
-
             <div class="span9">
                 <form class="form-horizontal" id="admin_addsite" method="post" action="{$base_uri}admin/tab/sites/do/add-site/">
                     <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}">
-
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="admin_site_add_name">Name</label>
-
                             <div class="control">
                                 <input id="admin_site_add_name" name="name" type="text">
                             </div>
@@ -271,18 +240,21 @@
 
                         <div class="control-group">
                             <label class="control-label" for="admin_site_edit_description">Description</label>
-
                             <div class="text">
-                                <textarea id="admin_site_add_description" rows="3" name="description">
-</textarea>
+                                <textarea id="admin_site_add_description" rows="3" name="description"></textarea>
                             </div>
                         </div><!-- /control-group -->
 
                         <div class="control-group">
                             <label class="control-label">Add Services</label>
-
                             <div class="controls">
-                                {foreach from=$services item=service} <label class="checkbox" for="admin_add_site_service_{$service->id}"><input type="checkbox" id="admin_add_site_service_{$service->id}" name="services[]" value="{$service->id}"> {$service->name|escape:html}</label> {foreachelse} <em>You have not yet defined any services.</em> {/foreach}
+                                {foreach from=$services item=service}
+                                    <label class="checkbox" for="admin_add_site_service_{$service->id}">
+                                        <input type="checkbox" id="admin_add_site_service_{$service->id}" name="services[]" value="{$service->id}"> {$service->name|escape:html}
+                                    </label>
+                                {foreachelse}
+                                    <em>You have not yet defined any services.</em>
+                                {/foreach}
                             </div>
                         </div><!-- /control-group -->
 
@@ -302,45 +274,39 @@
             <div class="span3">
                 <h3>Open Incidents</h3>
             </div>
-
             <div class="span9">
-                {if $open_incidents} {foreach from=$open_incidents item=incident} {/foreach}
-
-                <table class="table table-bordered table-striped" name="sites_list_table">
-                    <thead>
-                        <tr>
-                            <th>Reference</th>
-
-                            <th>Description</th>
-
-                            <th>Status</th>
-
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a></td>
-
-                            <td>{$incident->description|escape:html}</td>
-
-                            <td>{include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()} {StatusBoard_Status::name($incident->currentStatus())}</td>
-
-                            <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/';return false;">Edit</button> <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/incidents/do/delete-incident/id/{$incident->id}/', '{$csrftoken|escape:quotes}');">Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table>{else} <em>There are no open incidents for this site.</em> {/if}
+                {if $open_incidents}
+                    <table class="table table-bordered table-striped" name="sites_list_table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach from=$open_incidents item=incident}
+                                <tr>
+                                    <td><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a></td>
+                                    <td>{$incident->description|escape:html}</td>
+                                    <td>{include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()} {StatusBoard_Status::name($incident->currentStatus())}</td>
+                                    <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/';return false;">Edit</button> <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/incidents/do/delete-incident/id/{$incident->id}/', '{$csrftoken|escape:quotes}');">Delete</button></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                {else}
+                    <em>There are no open incidents for this site.</em>
+                {/if}
             </div>
         </div><!--/Row for Existing Service-->
 
         <div class="row">
             <div class="span3">
                 <h3>Add Incident</h3>
-
                 <p>Click the button to open the Add Incident page.</p>
             </div>
-
             <div class="span9">
                 <form class="form-horizontal" method="get" action="{$base_uri}admin/add-incident/">
                     <div class="control-group">
@@ -357,36 +323,27 @@
         <div class="row space-below">
             <div class="span3">
                 <h3>User List</h3>
-
                 <p>All users accounts for the system.</p>
             </div>
-
             <div class="span9">
-                {foreach from=$users item=user} {/foreach}
-
                 <table class="table table-bordered table-striped" name="user_list">
                     <thead>
                         <tr>
                             <th>Username</th>
-
                             <th>Full name</th>
-
                             <th>Last Login</th>
-
                             <th>Action</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        <tr>
-                            <td><a href="{$base_uri}admin/user/username/{$user->username()|escape:url}/" title="Edit User {$user->username()|escape:html}">{$user->username()|escape:html}</a></td>
-
-                            <td>{$user->realName()|escape:html}</td>
-
-                            <td>{$user->lastLoginTime()|fuzzyTime|ucfirst}</td>
-
-                            <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/username/{$user->username()|escape:url}/';return false;">Edit</button> {if $user->id() != 1} <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/user/do/delete-user/username/{$user->username()|escape:url}/', '{$csrftoken|escape:quotes}');">Delete</button> {/if}</td>
-                        </tr>
+                        {foreach from=$users item=user_}
+                            <tr>
+                                <td><a href="{$base_uri}admin/user/username/{$user_->username()|escape:url}/" title="Edit User {$user_->username()|escape:html}">{$user_->username()|escape:html}</a></td>
+                                <td>{$user_->realName()|escape:html}</td>
+                                <td>{$user_->lastLoginTime()|fuzzyTime|ucfirst}</td>
+                                <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/username/{$user_->username()|escape:url}/';return false;">Edit</button> {if $user_->id() != 1} <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/user/do/delete-user/username/{$user_->username()|escape:url}/', '{$csrftoken|escape:quotes}');">Delete</button> {/if}</td>
+                            </tr>
+                        {/foreach}
                     </tbody>
                 </table>
             </div>
@@ -394,21 +351,16 @@
 
         <div class="row">
             <!--Row for New User-->
-
             <div class="span3">
                 <h3>New User</h3>
-
                 <p>Use this form to define a new service</p>
             </div>
-
             <div class="span9">
                 <form class="form-horizontal" id="admin_user_add" method="post" action="{$base_uri}admin/tab/users/do/add-user/">
                     <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}">
-
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="admin_user_add_username">Username</label>
-
                             <div class="controls">
                                 <input id="admin_user_add_username" name="username" type="text" value="">
                             </div>
@@ -416,7 +368,6 @@
 
                         <div class="control-group">
                             <label class="control-label" for="admin_user_add_fullname">Full name</label>
-
                             <div class="controls">
                                 <input id="admin_user_add_fullname" name="fullname" type="text" value="">
                             </div>
@@ -424,7 +375,6 @@
 
                         <div class="control-group">
                             <label class="control-label" for="admin_user_add_email">Email address</label>
-
                             <div class="controls">
                                 <div class="input-append">
                                     <input id="admin_user_add_email" name="email" type="text" value="">
@@ -434,7 +384,6 @@
 
                         <div class="control-group">
                             <label class="control-label" for="admin_user_passwd_new">New Password</label>
-
                             <div class="controls">
                                 <input id="admin_user_passwd_new" name="password" type="password" value="">
                             </div>
@@ -442,7 +391,6 @@
 
                         <div class="control-group">
                             <label class="control-label" for="admin_user_passwd_confirm">Confirm Password</label>
-
                             <div class="controls">
                                 <input id="admin_user_passwd_confirm" name="confirm" type="password" value=""> <span class="help-inline" style="display: none" id="admin_user_passwd_confirmpassword_help">The passwords do not match.</span>
                             </div>
@@ -450,12 +398,17 @@
 
                         <div class="control-group">
                             <label class="control-label">Groups</label>
-
                             <div class="controls">
-                                {foreach from=$auth->listGroups() item=group} <label class="checkbox" for="admin_user_add_groups_{$group->name()|escape:html}"><input type="checkbox" id="admin_user_add_group_{$group->name()|escape:html}" name="groups[]" value="{$group->name()|escape:html}"> {$group->name()|escape:html}</label> {foreachelse} <em>You have not yet defined any user groups.</em> {/foreach}
+                                {foreach from=$auth->listGroups() item=group}
+                                    <label class="checkbox" for="admin_user_add_groups_{$group->name()|escape:html}">
+                                        <input type="checkbox" id="admin_user_add_group_{$group->name()|escape:html}" name="groups[]" value="{$group->name()|escape:html}">
+                                        {$group->name()|escape:html}
+                                    </label>
+                                {foreachelse}
+                                    <em>You have not yet defined any user groups.</em>
+                                {/foreach}
                             </div>
                         </div><!-- /control-group -->
-
                         <div class="control-group">
                             <div class="controls">
                                 <button class="btn btn-primary" name="addservice">Add User</button> <button type="reset" class="btn btn-secondary">Reset</button>
