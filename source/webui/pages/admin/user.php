@@ -80,7 +80,7 @@ if ($request->exists('do')) {
                     
                     $messages[] = array(
                         'severity' => 'success',
-                        'content'  => 'The user was updated succesfully.',
+                        'content'  => 'The user was deleted succesfully.',
                     );
                 } catch (StatusBoard_Exception_ResultCountMismatch $e) {
                     $messages[] = array(
@@ -90,7 +90,7 @@ if ($request->exists('do')) {
                 }
                 
                 $session->set('messages', $messages);
-                StatusBoard_Page::redirect("admin/tab/users");
+                StatusBoard_Page::redirect("admin/tab/users/");
             } break;
             
             default: {
@@ -107,7 +107,7 @@ if ($request->exists('do')) {
     } catch (SihnonFramework_Exception_CSRFVerificationFailure $e) {
         $messages[] = array(
             'severity' => 'error',
-            'content'  => 'The service was not modified due to a problem with your session; please try again.',
+            'content'  => 'The user was not modified due to a problem with your session; please try again.',
         );
     }
 }
