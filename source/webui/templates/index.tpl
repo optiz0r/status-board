@@ -67,12 +67,12 @@
                 {$page_content}
             </article>
 
+			<footer class="footer">
+		        <p>Powered by 
+		            <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}).
+		            Written by Ben Roberts and Nathan Booth.    
+		        </p>      
+	      </footer>
         </div><!-- /container content -->
-        
-        <footer>
-            Powered by 
-            <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}).
-            Written by Ben Roberts and Nathan Booth.          
-        </footer>
     </body>
 </html>
