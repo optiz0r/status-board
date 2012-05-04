@@ -367,6 +367,42 @@ CREATE VIEW `users_by_group` AS (
 );
 
 --
+-- Table structure for view `user_unmatchedgroups`
+--
+DROP VIEW IF EXISTS `user_unmatchedgroups`;
+CREATE VIEW `user_unmatchedgroups` AS (
+  SELECT 
+    `g`.`id` AS `group`,
+    `u`.*
+  FROM
+    `user` AS `u`
+    CROSS JOIN `group` as `g`
+    LEFT JOIN `usergroup` AS `ug` ON
+        `ug`.`group` = `g`.`id`
+        AND `ug`.`user` = `u`.`id`
+    WHERE
+        `ug`.`id` IS NULL
+);
+
+--
+-- Table structure for view `group_unmatchedusers`
+--
+DROP VIEW IF EXISTS `group_unmatchedusers`;
+CREATE VIEW `group_unmatchedusers` AS (
+  SELECT 
+    `u`.`id` AS `user`,
+    `g`.*
+  FROM
+    `group` AS `g`
+    CROSS JOIN `user` as `u`
+    LEFT JOIN `usergroup` AS `ug` ON
+        `ug`.`group` = `g`.`id`
+        AND `ug`.`user` = `u`.`id`
+    WHERE
+        `ug`.`id` IS NULL
+);
+
+--
 -- Table structure for view `permission_unmatchedgroups`
 --
 DROP VIEW IF EXISTS `permission_unmatchedgroups`;
