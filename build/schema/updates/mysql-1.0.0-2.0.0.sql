@@ -353,6 +353,58 @@ CREATE VIEW `incident_opentimes_siteservice` AS (
 );
 
 --
+-- Table structure for view `users_by_group`
+--
+DROP VIEW IF EXISTS `users_by_group`;
+CREATE VIEW `users_by_group` AS (
+  SELECT 
+    `g`.`id` AS `group`,
+    `u`.*
+  FROM
+    `usergroup` as `ug`
+    LEFT JOIN `user` AS `u` ON `ug`.`user`=`u`.`id`
+    LEFT JOIN `group` AS `g` ON `ug`.`group`=`g`.`id`
+);
+
+--
+-- Table structure for view `permission_unmatchedgroups`
+--
+DROP VIEW IF EXISTS `permission_unmatchedgroups`;
+CREATE VIEW `permission_unmatchedgroups` AS (
+  SELECT DISTINCT
+    `p`.*,
+    `g`.`id` AS `group`
+  FROM
+    `permission` AS `p`
+    CROSS JOIN `group` AS `g`
+    LEFT JOIN `grouppermission` AS `gp` ON
+      `gp`.`group` = `g`.`id`
+      AND `gp`.`permission` = `p`.`id`
+  WHERE
+    `gp`.`id` IS NULL
+);
+
+--
+-- Table structure for view `permission_unmatchedusers`
+--
+DROP VIEW IF EXISTS `permission_unmatchedusers`;
+CREATE VIEW `permission_unmatchedusers` AS (
+  SELECT DISTINCT
+    `p`.*,
+    `u`.`id` AS `user`
+  FROM
+    `permission` AS `p`
+    CROSS JOIN `user` AS `u`
+    LEFT JOIN `usergroup` AS `ug` ON `ug`.`user` = `u`.`id`
+    LEFT JOIN `group` AS `g` ON `ug`.`group` = `g`.`id`
+    LEFT JOIN `grouppermission` AS `gp` ON
+      `gp`.`group` = `g`.`id`
+      AND `gp`.`permission` = `p`.`id`
+  WHERE
+    `gp`.`id` IS NULL
+);
+
+--
 -- Constraints for table `siteservice`
 --
 ALTER TABLE `siteservice`
