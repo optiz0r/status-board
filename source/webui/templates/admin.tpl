@@ -7,6 +7,7 @@
             <li {if $tab == 'sites'}class="active"{/if}><a href="#tab_sites" data-toggle="tab" data-uri="{$base_uri}admin/tab/sites/">Sites</a></li>
             <li {if $tab == 'incidents'}class="active"{/if}><a href="#tab_incidents" data-toggle="tab" data-uri="{$base_uri}admin/tab/incidents/">Incidents</a></li>
             <li {if $tab == 'users'}class="active"{/if}><a href="#tab_users" data-toggle="tab" data-uri="{$base_uri}admin/tab/users/">Users</a></li>
+            <li {if $tab == 'groups'}class="active"{/if}><a href="#tab_groups" data-toggle="tab" data-uri="{$base_uri}admin/tab/groups/">Groups</a></li>
             <li {if $tab == 'settings'}class="active"{/if}><a href="#tab_settings" data-toggle="tab" data-uri="{$base_uri}admin/tab/settings/">Settings</a></li>
         </ul>
     </div><!-- /span12 -->
@@ -484,6 +485,104 @@
                 </form>
             </div>
         </div><!--/Row for New User-->
+    </div>
+    
+    <div class="tab-pane {if $tab == 'groups'}active{/if}" id="tab_groups">
+        <div class="row space-below">
+            <div class="span3">
+                <h3>User Groups</h3>
+                <p>All usergroups for the system.</p>
+            </div>
+            
+            <div class="span9">
+                <table class="table table-bordered table-striped" name="group_list">
+                    <thead>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Users</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {foreach from=$groups item=group}
+                            <tr>
+                                <td>
+                                    <a href="{$base_uri}admin/group/name/{$group->name()|escape:url}/" title="Edit Group {$group->name()|escape:html}">{$group->name()|escape:html}</a>
+                                </td>
+                                <td>
+                                    {$group->description|escape:html}
+                                </td>
+                                <td>
+                                    {$group->users()|count}
+                                </td>
+                                <td>
+                                    <button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/group/name/{$group->name()|escape:url}/';return false;">
+                                        <i class="icon-edit icon-white"></i>
+                                        Edit
+                                    </button>
+                                    {if $group->removable()}
+                                        <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/group/do/delete-group/username/{$group->name()|escape:url}/', '{$csrftoken|escape:quotes}');">
+                                            <i class="icon-trash icon-white"></i>
+                                            Delete
+                                        </button>
+                                    {/if}
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row"><!--Row for New Group-->
+            <div class="span3">
+                <h3>New Group</h3>
+                <p>Use this form to define a new group.</p>
+            </div>
+            <div class="span9">
+                <form class="form-horizontal" id="admin_group_add" method="post" action="{$base_uri}admin/tab/groups/do/add-group/">
+                    <input type="hidden" name="csrftoken" value="{$csrftoken|escape:html}" />
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="admin_user_group_name">Name</label>
+                            <div class="controls">
+                                <input id="admin_group_add_name" name="name" type="text" value="" />
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="admin_group_add_description">Description</label>
+                            <div class="controls">
+                                <textarea id="admin_group_add_description" name="description" rows="3"></textarea>
+                            </div>
+                        </div><!-- /control-group -->
+                        
+                        <div class="control-group">
+                            <label class="control-label">Permissions</label>
+                            <div class="controls">
+                                {foreach from=$auth->listPermissions() item=permission}
+                                    <label class="checkbox" for="admin_group_add_permission_{$permission->id()|escape:html}">
+                                        <input type="checkbox" id="admin_group_add_permission_{$permission->id()|escape:html}" name="permissions[]" value="{$permission->id()|escape:html}" />
+                                        {$permission->name()|escape:html}
+                                    </label>
+                                {/foreach}
+                            </div>
+                        </div><!-- /control-group -->
+            
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn btn-primary">
+                                    <i class="icon-plus icon-white"></i>
+                                    Add Group
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="icon-refresh"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </div><!-- /control-group -->
+                    </fieldset>
+                </form>
+            </div>
+        </div><!--/Row for New Group-->
     </div>
 
     <div class="tab-pane {if $tab == 'settings'}active{/if}" id="tab_settings">

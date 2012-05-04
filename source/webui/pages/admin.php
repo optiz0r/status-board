@@ -199,6 +199,50 @@ if ($request->exists('do')) {
                 }
             } break;
     
+            case 'add-group': {
+                $name = StatusBoard_Main::issetelse($_POST['name'], 'Sihnon_Exception_InvalidParameters');
+                $description = StatusBoard_Main::issetelse($_POST['description'], 'Sihnon_Exception_InvalidParameters');
+                $permission_ids = StatusBoard_Main::issetelse($_POST['permissions'], array());
+                
+                try {
+                    StatusBoard_Validation_Text::length($name, 1, 255);
+                    StatusBoard_Validation_Text::length($description, 1, 255);
+                    
+                    if ($auth->groupExists($name)) {
+                        throw new StatusBoard_Exception_AlreadyInUse();
+                    }
+                    
+                    $new_group = $auth->addGroup($name, $description);
+                                        
+                    foreach ($permission_ids as $permission_id) {
+                        try {
+                            $permission = $auth->permission($permission_id);
+                            $new_group->addPermission($permission);
+                        } catch (StatusBoard_Exception_ResultCountMismatch $e) {
+                            $messages[] = array(
+                                'severity' => 'warning',
+                                'content'  => 'A permission was not added to the group as an object requested could not be found.',
+                            );
+                        }
+                    }
+                    
+                    $messages[] = array(
+                        'severity' => 'success',
+                        'content'  => 'The group was created succesfully.',
+                    );
+                } catch (StatusBoard_Exception_InvalidContent $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The group was not added due to invalid parameters being passed.',
+                    );
+                } catch (StatusBoard_Exception_AlreadyInUse $e) {
+                    $messages[] = array(
+                        'severity' => 'error',
+                        'content'  => 'The group was not added because the name is already in use.',
+                    );
+                }
+            } break;
+            
             case 'save-settings': {
                 $supported_settings = array(
                     'site_title' => 'site.title',
@@ -282,6 +326,10 @@ $this->smarty->assign('open_incidents', $open_incidents);
 $users = $auth->listUsers();
 $this->smarty->assign('users', $users);
 $this->smarty->assign('auth', $auth);
+
+// Group Management
+$groups = $auth->listGroups();
+$this->smarty->assign('groups', $groups);
 
 // Quick Settings
 $this->smarty->assign('debug_displayexceptions', $config->get('debug.display_exceptions'));
