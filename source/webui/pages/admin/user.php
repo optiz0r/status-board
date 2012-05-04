@@ -51,7 +51,7 @@ if ($request->exists('do')) {
                 } catch (StatusBoard_Exception_InvalidContent $e) {
                     $messages[] = array(
                         'severity' => 'error',
-                        'content'  => 'The service was not modified due to invalid parameters being passed.',
+                        'content'  => 'The group was not modified due to invalid parameters being passed.',
                     );
                 }            
             } break;
