@@ -19,6 +19,9 @@ var sb = {
           offset: 10,
           html: true,
         });
+        
+        // Allow collapsible divs
+        $(".collapse").collapse();
     },
     
     home: {

@@ -30,20 +30,23 @@
                                 <div class="siteservice_contents" id="siteservice_service">
                                     {foreach from=$services item=service}
                                         <label class="checkbox" for="service_{$service->id}">
-                                            <input type="checkbox" id="service_{$service->id}" class="select-all" />
+                                            <input type="checkbox" id="service_{$service->id}" class="select-all" data-toggle="collapse" data-target="#toggle-{$service->id|escape:html}"/>
                                             {$service->name|escape:html}
                                         </label>
                                         <div class="nested-controls">
+                                        <div id="toggle-{$service->id}" class="collapse in">
                                             {foreach from=$service->siteInstances() item=site_instance}
                                                 {assign var=site value=$site_instance->site()}
-                                                <label class="checkbox" for="siteservice_{$site_instance->id}">
-                                                    <input type="checkbox" id="siteservice_{$site_instance->id}" name="siteservice[]" value="{$site_instance->id}" data-select-all="service_{$service->id}" />
-                                                    {$site->name|escape:html}
-                                                </label>
+	                                                <label class="checkbox" for="siteservice_{$site_instance->id}">
+	                                                    <input type="checkbox" id="siteservice_{$site_instance->id}" name="siteservice[]" value="{$site_instance->id}" data-select-all="service_{$service->id}" />
+	                                                    {$site->name|escape:html}
+	                                                </label>
+                                                
                                             {foreachelse}
                                                 <em>No sites defined for this service.</em>
                                             {/foreach}
                                         </div><!-- /controls -->
+                                        </div>
                                     {foreachelse}
                                         <em>No sites or services defined.</em>
                                     {/foreach}
@@ -51,19 +54,21 @@
                                 <div class="siteservice_contents" id="siteservice_site">
                                     {foreach from=$sites item=site}
                                         <label class="checkbox" for="site_{$site->id}">
-                                            <input type="checkbox" id="site_{$site->id}" class="select-all" />
+                                            <input type="checkbox" id="site_{$site->id}" class="select-all" data-toggle="collapse" data-target="#toggle-{$site->id|escape:html}"/>
                                             {$site->name|escape:html}
                                         </label>
                                         <div class="nested-controls">
-                                            {foreach from=$site->serviceInstances() item=service_instance}
-                                                {assign var=service value=$service_instance->service()}
-                                                <label class="checkbox" for="siteservice_{$service_instance->id}">
-                                                    <input type="checkbox" id="siteservice_{$service_instance->id}" name="siteservice[]" value="{$service_instance->id}" data-select-all="site_{$site->id}" />
-                                                    {$service->name|escape:html}
-                                                </label>
-                                            {foreachelse}
-                                                <em>No services defined for this site.</em>
-                                            {/foreach}
+	                                        <div id="toggle-{$site->id}" class="collapse in">
+	                                            {foreach from=$site->serviceInstances() item=service_instance}
+	                                                {assign var=service value=$service_instance->service()}
+		                                                <label class="checkbox" for="siteservice_{$service_instance->id}">
+		                                                    <input type="checkbox" id="siteservice_{$service_instance->id}" name="siteservice[]" value="{$service_instance->id}" data-select-all="site_{$site->id}" />
+		                                                    {$service->name|escape:html}
+		                                                </label>
+	                                            {foreachelse}
+	                                                <em>No services defined for this site.</em>
+	                                            {/foreach}
+		                                    </div>
                                         </div><!-- /controls -->
                                     {foreachelse}
                                         <em>No sites or services defined.</em>
