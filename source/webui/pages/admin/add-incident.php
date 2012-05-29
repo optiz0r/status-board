@@ -13,6 +13,7 @@ if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission
 
 $messages = array();
 
+try{
 if ($request->exists('do')) {
     
     $siteservice_ids = StatusBoard_Main::issetelse($_POST['siteservice'], 'Sihnon_Exception_InvalidParameters');
@@ -69,6 +70,14 @@ if ($request->exists('do')) {
     $session->set('messages', $messages);
     StatusBoard_Page::redirect("admin/add-incident/");
 }
+}
+   catch (Sihnon_Exception_InvalidParameters $e) {
+        $messages[] = array(
+            'severity' => 'error',
+            'content'  => 'The incident was not created because no Services or Sites are defined.',
+        );
+    }
+    
 
 $service_id = $request->get('service');
 $site_id = $request->get('site'); 
