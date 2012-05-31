@@ -64,6 +64,15 @@ footer {
     margin-bottom: 2.0em;
 }
 
+.collapseable-controls {
+    margin-left: 0.8em;
+}
+
+.collapseable-controls i[class^="icon-"] {
+    float: left;
+    margin-right: 2em;
+}
+
 /**
  * Page specific content
  */
