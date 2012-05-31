@@ -81,6 +81,14 @@ footer {
     margin-right: 2em;
 }
 
+tr.collapse {
+    display: none;
+}
+
+tr.collapse.in {
+    display: table-row;
+}
+
 /**
  * Page specific content
  */

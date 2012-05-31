@@ -28,13 +28,16 @@
         {foreach from=$services item=service}
             <tr>
                 <th colspan="9" class="service">
+                    <a id="toggle_service_{$service->id}" class="image" data-toggle="collapse" data-target="tr.service_{$service->id}">
+                        <i class="icon-chevron-right"></i>
+                    </a>
                     <a href="{$base_uri}status/service/{$service->id}/" title="View Status for Service {$service->name}">{$service->name}</a>
                 </th>
             </tr>
             {foreach from=$service->siteInstances() item=site_instance}
                 {$site=$site_instance->site()}
                 {$incidents=$site_instance->openIncidents()}
-                <tr class="site">
+                <tr class="collapse site service_{$service->id}">
                     <td>
                         <a href="{$base_uri}status/site/{$site->id}/" title="View Status for Site {$site->name|escape:html}">{$site->name|escape:html}</a>
                     </td>
@@ -54,6 +57,6 @@
                     {/foreach}
                 </tr>
             {/foreach}
-            {/foreach}
+        {/foreach}
     </tbody>
 </table>
