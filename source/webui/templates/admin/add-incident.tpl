@@ -30,7 +30,7 @@
                                 <div class="collapseable-controls">
                                     <div class="siteservice_contents" id="siteservice_service">
                                         {foreach from=$services item=service}
-                                            <a id="toggle_service_{$service->id}" data-toggle="collapse" data-target="#toggle_service_{$service->id}_group">
+                                            <a id="toggle_service_{$service->id}" class="image" data-toggle="collapse" data-target="#toggle_service_{$service->id}_group">
                                                 <i class="icon-chevron-right"></i>
                                             </a>
                                             <label class="checkbox" for="service_{$service->id}">
@@ -55,7 +55,7 @@
                                     </div><!-- /siteservice_service -->
                                     <div class="siteservice_contents" id="siteservice_site">
                                         {foreach from=$sites item=site}
-                                            <a id="toggle_site_{$site->id}" data-toggle="collapse" data-target="#toggle_site_{$site->id}_group">
+                                            <a id="toggle_site_{$site->id}" class="image" data-toggle="collapse" data-target="#toggle_site_{$site->id}_group">
                                                 <i class="icon-chevron-right"></i>
                                             </a>
                                             <label class="checkbox" for="site_{$site->id}">

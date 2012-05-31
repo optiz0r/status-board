@@ -24,6 +24,14 @@ a {
     color: gray;
 }
 
+a.image {
+    text-decoration: none;
+}
+
+a[data-toggle="collapse"] {
+    cursor: pointer;
+}
+
 label {
     margin-left: 1em;
     margin-right: 1em;
