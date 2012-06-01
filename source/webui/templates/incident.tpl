@@ -124,7 +124,7 @@
         {/if}
     </div>
 </div><!-- /Row for Affected site/service-->
-<div class="row space-below">><!-- Row for Status Changes-->
+<div class="row space-below"><!-- Row for Status Changes-->
     <div class="span3"><!-- side heading-->
         <h3>Status Changes</h3>
         <p>The table display an audit log of changes to this incident</p>
