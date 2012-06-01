@@ -56,9 +56,43 @@ var sb = {
             $('input[name="siteservice_mode"]').change(sb.admin.siteservice.modeChanged).trigger('change');
             
             // Ajax pushState support for any clickable link
-            $('a[data-uri]').click(function() {
-                window.history.pushState({}, $(this).text(), $(this).data('uri'));
-            });
+            $('a[data-uri]').click(sb.admin.saveState);
+            
+            // Trigger an initial state push for the default tab
+            sb.admin.setInitialState($('li.active a[data-uri]').attr('href').replace(/#tab_/, ''));
+            
+            $(window).bind('popstate', sb.admin.stateChanged);
+        },
+        
+        saveState: function(e) {
+            state = {
+                tab: $(this).attr('href').replace(/#tab_/, ''),
+            };
+            window.history.pushState(state, $(this).text(), $(this).data('uri'));
+            
+            e.preventDefault();
+        },
+        
+        setInitialState: function(tab) {
+            state = {
+                tab: tab,
+            };
+            window.history.replaceState(state, "Admin", base_uri + 'admin/tab/' + tab + '/');
+        },
+        
+        stateChanged: function(e) {
+            state = null
+            if (e.state) {
+                state = e.state;
+            } else if (e.originalEvent.state) {
+                state = e.originalEvent.state;
+            }
+            
+            if (state && state.tab) {
+                $('#admin_tabs li a[href="#tab_' + state.tab + '"]').tab('show');
+            }
+            
+            e.preventDefault();
         },
         
         deleteItem: function(url, csrftoken) {
