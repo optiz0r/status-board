@@ -63,6 +63,13 @@
                 </div>
             </div>
         {/if}
+    </div>
+</div>
+<div class="row space-below">
+    <div class="span3">
+        <h3>Site Details</h3>
+    </div>
+    <div class="span9">
         {if $site}
             <div class="row">
                 <div class="span2">
