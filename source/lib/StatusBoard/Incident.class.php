@@ -57,7 +57,7 @@ class StatusBoard_Incident extends StatusBoard_DatabaseObject {
             array('name' => 'end',   'value' => $end,   'type' => PDO::PARAM_INT),
         );
         
-        return static::allFor('site', $site->id, 'incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params, null, null, 'start_time', static::ORDER_ASC);
+        return static::allFor('site', $site->id, 'incident_opentimes_site', '`start_time` < :end AND `ctime` > :start', $params, 'start_time', static::ORDER_ASC);
     }
     
     public static function openForService(StatusBoard_Service $service) {

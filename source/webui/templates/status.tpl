@@ -34,68 +34,68 @@
     </div>
 </div>
 
+{if $service}
 <div class="row space-below">
     <div class="span3">
         <h3>Service Details</h3>
     </div>
     <div class="span9">
-        {if $service}
-            <div class="row">
-                <div class="span2">
-                    <div class="block_info">
-                        <div class="block_info_title">
-                            <h4>Service Name</h4>
-                        </div>
-                        <div class="block_info_content">
-                            {$service->name|ucwords|escape:html}
-                        </div>
+        <div class="row">
+            <div class="span2">
+                <div class="block_info">
+                    <div class="block_info_title">
+                        <h4>Service Name</h4>
                     </div>
-                </div>
-                <div class="span7">
-                    <div class="block_info">
-                        <div class="block_info_title">
-                            <h4>Service Description</h4>
-                        </div>
-                        <div class="block_info_content">
-                            {$service->description|ucfirst|escape:html}
-                        </div>
+                    <div class="block_info_content">
+                        {$service->name|ucwords|escape:html}
                     </div>
                 </div>
             </div>
-        {/if}
+            <div class="span7">
+                <div class="block_info">
+                    <div class="block_info_title">
+                        <h4>Service Description</h4>
+                    </div>
+                    <div class="block_info_content">
+                        {$service->description|ucfirst|escape:html}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+ {/if}
+{if $site}
 <div class="row space-below">
     <div class="span3">
         <h3>Site Details</h3>
     </div>
     <div class="span9">
-        {if $site}
-            <div class="row">
-                <div class="span2">
-                    <div class="block_info">
-                        <div class="block_info_title">
-                            <h4>Site Name</h4>
-                        </div>
-                        <div class="block_info_content">
-                            {$site->name|ucwords|escape:html}
-                        </div>
+        <div class="row">
+            <div class="span2">
+                <div class="block_info">
+                    <div class="block_info_title">
+                        <h4>Site Name</h4>
                     </div>
-                </div>
-                <div class="span7">
-                    <div class="block_info">
-                        <div class="block_info_title">
-                            <h4>Site Description</h4>
-                        </div>
-                        <div class="block_info_content">
-                            {$site->description|ucfirst|escape:html}
-                        </div>
+                    <div class="block_info_content">
+                        {$site->name|ucwords|escape:html}
                     </div>
                 </div>
             </div>
-        {/if}
+            <div class="span7">
+                <div class="block_info">
+                    <div class="block_info_title">
+                        <h4>Site Description</h4>
+                    </div>
+                    <div class="block_info_content">
+                        {$site->description|ucfirst|escape:html}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+{/if}
 
 {if $start && $end}
         {if $siteservice}
