@@ -33,7 +33,6 @@ if ($request->exists('do')) {
             $siteservices[] = StatusBoard_SiteService::fromId($siteservice_id);
         }
         
-        StatusBoard_Validation_Text::content(array($service_id, $site_id), StatusBoard_Validation_Text::Digit);
         StatusBoard_Validation_Text::length($reference, 1, 32);
         StatusBoard_Validation_Enum::validate($status, 'StatusBoard_Status', 'STATUS_');
                 
