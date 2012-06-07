@@ -17,15 +17,12 @@
 
     <div class="span10"> <!-- List all upcoming maintenance -->
         <ul id="maintenance-list">
-            <li style="list-style: none">{foreach from=$upcoming_maintenance item=incident}</li>
-
+            {foreach from=$upcoming_maintenance item=incident}</li>
             <li>
-                <a href="{$base_uri}incident/id/{$incident-id}/" title="View Maintenance">{$incident->reference|escape:html}</a>
-
+                <a href="{$base_uri}incident/id/{$incident->id}/" title="View Maintenance">{$incident->reference|escape:html}</a>
                 <p>{$incident->description|escape:html}</p>
             </li>
-
-            <li style="list-style: none">{/foreach}</li>
+			{/foreach}
         </ul>
     </div> <!-- /List all upcoming maintenance -->
 </div> <!--/Row For upcoming maintenance -->
