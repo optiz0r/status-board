@@ -44,7 +44,15 @@ if ($request->exists('do')) {
                         if ($estimated_end_time) {
                             $incident->reference = $reference;
                             $incident->description = $description;
-                            $incident->start_time = $start_time;
+                            
+                            if ($incident->start_time != $start_time) {
+                                $incident->start_time = $start_time;
+                                
+                                // Also update the timestamp of the first status change (in reverse chronological order)
+                                $statuses = array_reverse($incident->statusChanges());
+                                $statuses[0]->resetCreationTime($start_time);
+                            }
+                            
                             $incident->estimated_end_time = $estimated_end_time;
                             $incident->save();
                             $messages[] = array(

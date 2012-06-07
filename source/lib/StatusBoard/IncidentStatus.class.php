@@ -29,6 +29,20 @@ class StatusBoard_IncidentStatus extends StatusBoard_DatabaseObject {
         
         return $new_status;
     }
+    
+    /**
+     * Resets the ctime to the given value or the current time if not specified
+     *
+     * @param int $ctime Timestamp to be set. if null, the current time is used.
+     */
+    public function resetCreationTime($ctime=null) {
+        if (! $ctime) {
+            $ctime = time();
+        }
+        
+        $this->ctime = $ctime;
+        $this->save();
+    }
 }
 
 ?>
