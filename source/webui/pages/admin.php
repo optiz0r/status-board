@@ -321,6 +321,7 @@ $this->smarty->assign('sites', $sites);
 
 $open_incidents = StatusBoard_Incident::open();
 $this->smarty->assign('open_incidents', $open_incidents);
+$this->smarty->assign('future_maintenance', StatusBoard_Incident::futureMaintenance());
 
 // User Management
 $users = $auth->listUsers();

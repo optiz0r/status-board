@@ -300,7 +300,39 @@
                     <em>There are no open incidents at this time.</em>
                 {/if}
             </div>
-        </div><!--/Row for Existing Service-->
+        </div><!--/Row for Open Incidents -->
+
+        <div class="row space-below">
+            <div class="span3">
+                <h3>Upcoming Maintenance</h3>
+            </div>
+            <div class="span9">
+                {if $future_maintenance}
+                    <table class="table table-bordered table-striped" name="sites_list_table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach from=$future_maintenance item=incident}
+                                <tr>
+                                    <td><a href="{$base_uri}admin/incident/id/{$incident->id}/" title="Edit Incident {$incident->reference|escape:htmll}">{$incident->reference|escape:html}</a></td>
+                                    <td>{$incident->description|escape:html}</td>
+                                    <td>{include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()} {StatusBoard_Status::name($incident->currentStatus())}</td>
+                                    <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/incident/service/{$service->id}/site/{$site->id}/id/{$incident->id}/';return false;">Edit</button> <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/tab/incidents/do/delete-incident/id/{$incident->id}/', '{$csrftoken|escape:quotes}');">Delete</button></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                {else}
+                    <em>There is no upcoming maintenance planned at this time.</em>
+                {/if}
+            </div>
+        </div><!--/Row for Future Maintenance-->
 
         <div class="row">
             <div class="span3">
