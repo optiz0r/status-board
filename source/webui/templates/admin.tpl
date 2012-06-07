@@ -297,7 +297,7 @@
                         </tbody>
                     </table>
                 {else}
-                    <em>There are no open incidents for this site.</em>
+                    <em>There are no open incidents at this time.</em>
                 {/if}
             </div>
         </div><!--/Row for Existing Service-->
