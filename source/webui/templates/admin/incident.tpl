@@ -84,7 +84,7 @@
 		                    <em>{$status->ctime|date_format:'y-m-d H:i:s'}</em>
 		                </td>
 		                <td>
-                            {include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()}
+                            {include file="fragments/image-status-icon.tpl" status=$status->status}
                             {StatusBoard_Status::name($status->status)}
 	                    </td>
 		                <td>
