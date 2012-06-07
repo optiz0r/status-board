@@ -372,7 +372,7 @@
                             <tr>
                                 <td><a href="{$base_uri}admin/user/username/{$user_->username()|escape:url}/" title="Edit User {$user_->username()|escape:html}">{$user_->username()|escape:html}</a></td>
                                 <td>{$user_->realName()|escape:html}</td>
-                                <td>{$user_->lastLoginTime()|fuzzyTime|ucfirst}</td>
+                                <td>{$user_->lastLoginTime()|timeago}</td>
                                 <td><button class='btn btn-primary' onclick="document.location.href='{$base_uri}admin/user/username/{$user_->username()|escape:url}/';return false;">Edit</button> {if $user_->id() != 1} <button class='btn btn-danger' onclick="sb.admin.deleteItem('{$base_uri}admin/user/do/delete-user/username/{$user_->username()|escape:url}/', '{$csrftoken|escape:quotes}');">Delete</button> {/if}</td>
                             </tr>
                         {/foreach}

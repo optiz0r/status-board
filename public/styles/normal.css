@@ -89,6 +89,12 @@ tr.collapse.in {
     display: table-row;
 }
 
+time.timeago {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: #333333;
+}
+
 /**
  * Page specific content
  */

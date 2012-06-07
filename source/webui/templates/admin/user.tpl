@@ -21,7 +21,7 @@
                         <h4>Last Login</h4>
                     </div>
                     <div class="block_info_content">
-                        {$user->lastLoginTime()|fuzzyTime|ucfirst}
+                        {$user->lastLoginTime()|timeago}
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <h4>Last Password Change</h4>
                     </div>
                     <div class="block_info_content">
-                        {$user->lastPasswordChangeTime()|fuzzyTime|ucfirst}
+                        {$user->lastPasswordChangeTime()|timeago}
                     </div>
                 </div>
             </div>

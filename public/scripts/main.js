@@ -22,6 +22,10 @@ var sb = {
         
         // Allow collapsible divs
         $(".collapse").collapse();
+        
+        // jQuery timeago plugin
+        $.timeago.settings.allowFuture = true;
+        $("time.timeago").timeago();
     },
     
     home: {

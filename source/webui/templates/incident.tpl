@@ -24,7 +24,7 @@
                         <h4>Reference</h4>
                     </div>
                     <div class="block_info_content">
-                        {$incident->reference|ucwords|escape:html}
+                        {$incident->reference|escape:html}
                     </div>
                 </div>
             </div><!-- /Reference -->
@@ -46,8 +46,7 @@
                         <h4>Opened</h4>
                     </div>
                     <div class="block_info_content">
-                        {StatusBoard_DateTime::fuzzyTime($incident->start_time)|ucwords|escape:html}<br />
-                        <em>{$incident->start_time|date_format:'d-M-y H:i'}</em>
+                        {$incident->start_time|timeago}<br />
                     </div>
                 </div>
             </div><!-- /Opened -->
@@ -57,8 +56,7 @@
                         <h4>Estimated End</h4>
                     </div>
                     <div class="block_info_content">
-                        {StatusBoard_DateTime::fuzzyTime($incident->estimated_end_time)|ucfirst|escape:html}<br />
-                        <em>{$incident->estimated_end_time|date_format:'d-M-y H:i'}</em>
+                        {$incident->estimated_end_time|timeago}<br />
                     </div>
                 </div>
             </div><!-- /Estimated End -->
@@ -69,8 +67,7 @@
                     </div>
                     <div class="block_info_content">
                         {if ($incident->actual_end_time!=null)}
-                            {StatusBoard_DateTime::fuzzyTime($incident->actual_end_time)|ucwords|escape:html}<br />
-                            <em>{$incident->actual_end_time|date_format:'d-M-y H:i'}</em>
+                            {$incident->actual_end_time|timeago}<br />
                         {else}
                             Incident is still open
                         {/if}
@@ -101,8 +98,7 @@
                     {$service=$siteservice->service()}
                     <tr>
                         <td>
-                            {$siteserviceincident->ctime|fuzzyTime|ucfirst}<br />
-                            <em>{$siteserviceincident->ctime|date_format:'d-M-y H:i'}</em>
+                            {$siteserviceincident->ctime|timeago}<br />
                         </td>
                         <td>
                             <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a>
@@ -140,8 +136,7 @@
                 {foreach from=$statuses item=status}
                     <tr>
                         <td>
-                            {$status->ctime|fuzzyTime|ucfirst}<br />
-                            <em>{$status->ctime|date_format:'y-m-d H:i:s'}</em>
+                            {$status->ctime|timeago}<br />
                         </td>
                         <td>
                             {include file="fragments/image-status-icon.tpl" status=$incident->currentStatus()}

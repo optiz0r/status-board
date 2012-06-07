@@ -80,8 +80,7 @@
 		        {foreach from=$statuses item=status}
 		            <tr>
 		                <td>
-		                    {$status->ctime|fuzzyTime|ucfirst}<br />
-		                    <em>{$status->ctime|date_format:'y-m-d H:i:s'}</em>
+		                    {$status->ctime|timeago}<br />
 		                </td>
 		                <td>
                             {include file="fragments/image-status-icon.tpl" status=$status->status}
@@ -165,8 +164,7 @@
                         {$service=$siteservice->service()}
                         <tr>
                             <td>
-                                {$siteserviceincident->ctime|fuzzyTime|ucfirst}<br />
-                                <em>{$siteserviceincident->ctime|date_format:'y-m-d H:i:s'}</em>
+                                {$siteserviceincident->ctime|timeago}<br />
                             </td>
                             <td>
                                 <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit site {$service->name|escape:html}">{$service->name|escape:html}</a>
