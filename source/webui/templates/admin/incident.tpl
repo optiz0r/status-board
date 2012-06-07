@@ -221,48 +221,56 @@
                 <div class="control-group">
                     <label class="control-label">Sites &amp; Services Affected</label>
                     <div class="controls">
-                        <div class="siteservice_contents" id="siteservice_service">
-                            {foreach from=$incident->unusedServices() item=service}
-                                <label class="checkbox" for="service_{$service->id}">
-                                    <input type="checkbox" id="service_{$service->id}" class="select-all" />
-                                    {$service->name|escape:html}
-                                </label>
-                                <div class="nested-controls">
-                                    {foreach from=$incident->unusedSites($service) item=site}
-                                        {assign var=siteservice value=StatusBoard_SiteService::fromSiteService($service, $site)}
-                                        <label class="checkbox" for="siteservice_{$siteservice->id}">
-                                            <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-select-all="service_{$service->id}" />
-                                            {$site->name|escape:html}
-                                        </label>
-                                    {foreachelse}
-                                        <em>No sites defined for this service.</em>
-                                    {/foreach}
-                                </div><!-- /controls -->
-                            {foreachelse}
-                                <em>No sites or services defined.</em>
-                            {/foreach}
-                        </div><!-- /siteservice_service -->
-                        <div class="siteservice_contents" id="siteservice_site">
-                            {foreach from=$incident->unusedSites() item=site}
-                                <label class="checkbox" for="site_{$site->id}">
-                                    <input type="checkbox" id="site_{$site->id}" class="select-all" />
-                                    {$site->name|escape:html}
-                                </label>
-                                <div class="nested-controls">
-                                    {foreach from=$incident->unusedServices($site) item=service}
-                                        {assign var=siteservice value=StatusBoard_SiteService::fromSiteService($service, $site)}
-                                        <label class="checkbox" for="siteservice_{$siteservice->id}">
-                                            <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-select-all="site_{$site->id}" />
-                                            {$service->name|escape:html}
-                                        </label>
-                                    {foreachelse}
-                                        <em>No services defined for this site.</em>
-                                    {/foreach}
-                                </div><!-- /controls -->
-                            {foreachelse}
-                                <em>No sites or services defined.</em>
-                            {/foreach}
-                        </div><!-- /siteservice_site -->          
+                        <div class="collapseable-controls">
+                            <div class="siteservice_contents" id="siteservice_service">
+                                {foreach from=$incident->unusedServices() item=service}
+                                    <a id="toggle_service_{$service->id}" class="image" data-toggle="collapse" data-target="#toggle_service_{$service->id}_group">
+                                        <i class="icon-chevron-right"></i>
+                                    </a>
+                                    <label class="checkbox" for="service_{$service->id}">
+                                        <input type="checkbox" id="service_{$service->id}" class="select-all" />
+                                        {$service->name|escape:html}
+                                    </label>
+                                    <div class="nested-controls collapse in" id="toggle_service_{$service->id}_group">
+                                        {foreach from=$incident->unusedSites($service) item=site}
+                                            {assign var=siteservice value=StatusBoard_SiteService::fromSiteService($service, $site)}
+                                            <label class="checkbox" for="siteservice_{$siteservice->id}">
+                                                <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-select-all="service_{$service->id}" />
+                                                {$site->name|escape:html}
+                                            </label>
+                                        {foreachelse}
+                                            <em>No sites defined for this service.</em>
+                                        {/foreach}
+                                    </div><!-- /controls -->
+                                {foreachelse}
+                                    <em>No sites or services defined.</em>
+                                {/foreach}
+                            </div><!-- /siteservice_service -->
+                            <div class="siteservice_contents" id="siteservice_site">
+                                {foreach from=$incident->unusedSites() item=site}
+                                    <a id="toggle_site_{$site->id}" class="image" data-toggle="collapse" data-target="#toggle_site_{$site->id}_group">
+                                        <i class="icon-chevron-right"></i>
+                                    </a>
+                                    <label class="checkbox" for="site_{$site->id}">
+                                        <input type="checkbox" id="site_{$site->id}" class="select-all" />
+                                        {$site->name|escape:html}
+                                    </label>
+                                    <div class="nested-controls collapse in" id="toggle_site_{$site->id}_group">
+                                        {foreach from=$incident->unusedServices($site) item=service}
+                                            {assign var=siteservice value=StatusBoard_SiteService::fromSiteService($service, $site)}
+                                            <label class="checkbox" for="siteservice_{$siteservice->id}">
+                                                <input type="checkbox" id="siteservice_{$siteservice->id}" name="siteservices[]" value="{$siteservice->id}" data-select-all="site_{$site->id}" />
+                                                {$service->name|escape:html}
+                                            </label>
+                                        {foreachelse}
+                                            <em>No services defined for this site.</em>
+                                        {/foreach}
+                                    </div><!-- /controls -->
+                                {foreachelse}
+                                    <em>No sites or services defined.</em>
+                                {/foreach}
+                            </div><!-- /siteservice_site -->
+                        </div><!-- /collapseable-controls -->
                     </div><!-- /controls -->
                 </div><!-- /control-group -->
 
