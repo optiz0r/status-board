@@ -59,7 +59,9 @@ var sb = {
             $('a[data-uri]').click(sb.admin.saveState);
             
             // Trigger an initial state push for the default tab
-            sb.admin.setInitialState($('li.active a[data-uri]').attr('href').replace(/#tab_/, ''));
+            if ($('li.active a[data-uri]').size()) {
+                sb.admin.setInitialState($('li.active a[data-uri]').attr('href').replace(/#tab_/, ''));
+            }
             
             $(window).bind('popstate', sb.admin.stateChanged);
         },
