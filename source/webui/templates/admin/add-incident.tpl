@@ -40,11 +40,10 @@
                                             <div class="nested-controls collapse in" id="toggle_service_{$service->id}_group">
                                                 {foreach from=$service->siteInstances() item=site_instance}
                                                     {assign var=site value=$site_instance->site()}
-                                                        <label class="checkbox" for="siteservice_{$site_instance->id}">
-                                                            <input type="checkbox" id="siteservice_{$site_instance->id}" name="siteservice[]" value="{$site_instance->id}" data-select-all="service_{$service->id}" />
-                                                            {$site->name|escape:html}
-                                                        </label>
-                                                    
+                                                    <label class="checkbox" for="siteservice_{$site_instance->id}">
+                                                        <input type="checkbox" id="siteservice_{$site_instance->id}" name="siteservice[]" value="{$site_instance->id}" data-select-all="service_{$service->id}" />
+                                                        {$site->name|escape:html}
+                                                    </label>
                                                 {foreachelse}
                                                     <em>No sites defined for this service.</em>
                                                 {/foreach}
@@ -65,10 +64,10 @@
                                             <div class="nested-controls collapse in" id="toggle_site_{$site->id}_group">
                                                 {foreach from=$site->serviceInstances() item=service_instance}
                                                     {assign var=service value=$service_instance->service()}
-                                                        <label class="checkbox" for="siteservice_{$service_instance->id}">
-                                                            <input type="checkbox" id="siteservice_{$service_instance->id}" name="siteservice[]" value="{$service_instance->id}" data-select-all="site_{$site->id}" />
-                                                            {$service->name|escape:html}
-                                                        </label>
+                                                    <label class="checkbox" for="siteservice_{$service_instance->id}">
+                                                        <input type="checkbox" id="siteservice_{$service_instance->id}" name="siteservice[]" value="{$service_instance->id}" data-select-all="site_{$site->id}" />
+                                                        {$service->name|escape:html}
+                                                    </label>
                                                 {foreachelse}
                                                     <em>No services defined for this site.</em>
                                                 {/foreach}
