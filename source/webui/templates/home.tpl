@@ -12,7 +12,7 @@
 {if $upcoming_maintenance}
 <div class="row"> <!--Row for Upcoming maintenance if it exists -->
     <div class="span12"><!-- List all upcoming maintenance -->
-        <p style="float: left;">Upcoming maintenance:</p> 
+        <p style="float: left;">Scheduled Maintenance:</p> 
         <ul id="maintenance-list">
             {foreach from=$upcoming_maintenance item=incident}</li>
             <li>
