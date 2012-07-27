@@ -4,7 +4,9 @@
     <li {if $requested_page == home}class="active"{/if}>
         <a href="{$base_uri}home/" title="Home">Home</a>
     </li>
-    
+    <li {if $requested_page == maintenance}class="active"{/if}>
+        <a href="{$base_uri}maintenance/" title="Scheduled Maintenance">Scheduled Maintenance</a>
+    </li>
     {if $authenticated}
         {if $auth->isAdministrator()}
 			<li class="dropdown {if $requested_page == admin}active{/if}" data-dropdown="dropdown">

@@ -11,17 +11,14 @@
 </div><!--/Row for Board title and header -->
 {if $upcoming_maintenance}
 <div class="row"> <!--Row for Upcoming maintenance if it exists -->
-    <div class="span2">
-        <h5>Upcoming maintenance:</h5>
-    </div>
-
-    <div class="span10"> <!-- List all upcoming maintenance -->
+    <div class="span12"><!-- List all upcoming maintenance -->
+        <p style="float: left;">Scheduled Maintenance:</p> 
         <ul id="maintenance-list">
             {foreach from=$upcoming_maintenance item=incident}</li>
             <li>
                 <a href="{$base_uri}incident/id/{$incident->id}/" title="View Maintenance">{$incident->reference|escape:html}</a>
                 <p>{$incident->description|escape:html}</p>
-            </li>
+			</li>
 			{/foreach}
         </ul>
     </div> <!-- /List all upcoming maintenance -->

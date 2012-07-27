@@ -169,6 +169,7 @@ dl.help dd {
 #maintenance-list {
     height: 20px;
     overflow: hidden;
+    padding-left: 5px; 
 }
  
 #maintenance-list  li {
