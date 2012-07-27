@@ -159,7 +159,6 @@ CREATE VIEW `service_unmatchedsites` AS (
 DROP TABLE IF EXISTS `incident`;
 CREATE TABLE IF NOT EXISTS `incident` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `site` int(10) unsigned NOT NULL,
   `reference` varchar(32) NOT NULL,
   `description` text NOT NULL,
   `start_time` int(10) NOT NULL,
@@ -730,22 +729,10 @@ ALTER TABLE `grouppermission`
   ADD CONSTRAINT `grouppermission_ibfk_1` FOREIGN KEY (`group`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `incident`
---
-ALTER TABLE `incident`
-  ADD CONSTRAINT `incident_ibfk_1` FOREIGN KEY (`site`) REFERENCES `site` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `incidentstatus`
 --
 ALTER TABLE `incidentstatus`
   ADD CONSTRAINT `incidentstatus_ibfk_1` FOREIGN KEY (`incident`) REFERENCES `incident` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `site`
---
-ALTER TABLE `site`
-  ADD CONSTRAINT `site_ibfk_1` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `usergroup`
