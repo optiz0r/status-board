@@ -46,7 +46,7 @@ INSERT INTO `settings` (`name`, `value`, `type`) VALUES
 ('templates.tmp_path', '/var/tmp/status-board/', 'string'),
 ('site.title', 'Status Board', 'string'),
 ('sessions', 1, 'bool'),
-('sessions.path', '/', 'string');
+('sessions.path', '/', 'string'),
 ('overview.display_mode', 'service', 'string'),
 ('incident.reference_default', 'I', 'string');
 
@@ -87,8 +87,7 @@ CREATE TABLE IF NOT EXISTS `site` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `service` (`service`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
@@ -155,86 +154,6 @@ CREATE VIEW `service_unmatchedsites` AS (
 );
 
 --
--- Table structure for view `site_unmatchedincidents`
---
-DROP VIEW IF EXISTS `site_unmatchedincidents`;
-CREATE VIEW `site_unmatchedincidents` AS (
-  SELECT DISTINCT
-    `si`.*,
-    `i`.`id` AS `incident`
-  FROM
-    `site` AS `si`
-    CROSS JOIN `incident` AS `i`
-    LEFT JOIN `siteservice` AS `ss` ON `ss`.`site` =  `si`.`id`
-    LEFT JOIN `siteserviceincident` AS `ssi` ON
-      `ssi`.`siteservice` = `ss`.`id`
-      AND `ssi`.`incident` = `i`.`id`
-  WHERE
-    `ssi`.`id` IS NULL
-);
-
---
--- Table structure for view `site_unmatchedincidents`
---
-DROP VIEW IF EXISTS `service_unmatchedincidents`;
-CREATE VIEW `service_unmatchedincidents` AS (
-  SELECT DISTINCT
-    `se`.*,
-    `i`.`id` AS `incident`
-  FROM
-    `service` AS `se`
-    CROSS JOIN `incident` AS `i`
-    LEFT JOIN `siteservice` AS `ss` ON `ss`.`service` =  `se`.`id`
-    LEFT JOIN `siteserviceincident` AS `ssi` ON
-      `ssi`.`siteservice` = `ss`.`id`
-      AND `ssi`.`incident` = `i`.`id`
-  WHERE
-    `ssi`.`id` IS NULL
-);
-
---
--- Table structure for view `site_unmatchedserviceincidents`
---
-DROP VIEW IF EXISTS `site_unmatchedserviceincidents`;
-CREATE VIEW `site_unmatchedserviceincidents` AS (
-  SELECT DISTINCT
-    `si`.*,
-    `se`.`id` AS `service`,
-    `i`.`id` AS `incident`
-  FROM
-    `site` AS `si`
-    CROSS JOIN `incident` AS `i`
-    LEFT JOIN `siteservice` AS `ss` ON `ss`.`site` =  `si`.`id`
-    LEFT JOIN `service` AS `se` ON `ss`.`service` = `se`.`id`
-    LEFT JOIN `siteserviceincident` AS `ssi` ON
-      `ssi`.`siteservice` = `ss`.`id`
-      AND `ssi`.`incident` = `i`.`id`
-  WHERE
-    `ssi`.`id` IS NULL
-);
-
---
--- Table structure for view `service_unmatchedsiteincidents`
---
-DROP VIEW IF EXISTS `service_unmatchedsiteincidents`;
-CREATE VIEW `service_unmatchedsiteincidents` AS (
-  SELECT DISTINCT
-    `se`.*,
-    `si`.`id` AS `site`,
-    `i`.`id` AS `incident`
-  FROM
-    `service` AS `se`
-    CROSS JOIN `incident` AS `i`
-    LEFT JOIN `siteservice` AS `ss` ON `ss`.`service` =  `se`.`id`
-    LEFT JOIN `site` AS `si` ON `ss`.`site` = `si`.`id`
-    LEFT JOIN `siteserviceincident` AS `ssi` ON
-      `ssi`.`siteservice` = `ss`.`id`
-      AND `ssi`.`incident` = `i`.`id`
-  WHERE
-    `ssi`.`id` IS NULL
-);
-
---
 -- Table structure for table `incident`
 --
 DROP TABLE IF EXISTS `incident`;
@@ -256,14 +175,12 @@ CREATE TABLE IF NOT EXISTS `incident` (
 DROP TABLE IF EXISTS `siteserviceincident`;
 CREATE TABLE IF NOT EXISTS `siteserviceincident` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `service` int(10) unsigned NOT NULL,
-  `site` int(10) unsigned NOT NULL,
+  `siteservice` int(10) unsigned NOT NULL,
   `incident` int(10) unsigned NOT NULL,
   `description` text NOT NULL,
   `ctime` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `site` (`site`),
-  KEY `service` (`service`),
+  KEY `siteservice` (`siteservice`),
   KEY `incident` (`incident`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
@@ -400,7 +317,7 @@ CREATE VIEW `incident_open_site` AS (
 );
 
 --
--- Table structure for view incident_open_site
+-- Table structure for view incident_open_siteservice
 --
 DROP VIEW IF EXISTS `incident_open_siteservice`;
 CREATE VIEW `incident_open_siteservice` AS (
@@ -479,6 +396,86 @@ CREATE VIEW `incident_opentimes_siteservice` AS (
     LEFT JOIN `incident_closedtime` AS `t` ON `i`.`id`=`t`.`incident` 
     JOIN `siteserviceincident` AS `ssi` ON `i`.`id` = `ssi`.`incident`      
     JOIN `siteservice` AS `ss` ON `ssi`.`siteservice` = `ss`.`id`
+);
+
+--
+-- Table structure for view `site_unmatchedincidents`
+--
+DROP VIEW IF EXISTS `site_unmatchedincidents`;
+CREATE VIEW `site_unmatchedincidents` AS (
+  SELECT DISTINCT
+    `si`.*,
+    `i`.`id` AS `incident`
+  FROM
+    `site` AS `si`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`site` =  `si`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
+-- Table structure for view `site_unmatchedincidents`
+--
+DROP VIEW IF EXISTS `service_unmatchedincidents`;
+CREATE VIEW `service_unmatchedincidents` AS (
+  SELECT DISTINCT
+    `se`.*,
+    `i`.`id` AS `incident`
+  FROM
+    `service` AS `se`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`service` =  `se`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
+-- Table structure for view `site_unmatchedserviceincidents`
+--
+DROP VIEW IF EXISTS `site_unmatchedserviceincidents`;
+CREATE VIEW `site_unmatchedserviceincidents` AS (
+  SELECT DISTINCT
+    `si`.*,
+    `se`.`id` AS `service`,
+    `i`.`id` AS `incident`
+  FROM
+    `site` AS `si`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`site` =  `si`.`id`
+    LEFT JOIN `service` AS `se` ON `ss`.`service` = `se`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
+);
+
+--
+-- Table structure for view `service_unmatchedsiteincidents`
+--
+DROP VIEW IF EXISTS `service_unmatchedsiteincidents`;
+CREATE VIEW `service_unmatchedsiteincidents` AS (
+  SELECT DISTINCT
+    `se`.*,
+    `si`.`id` AS `site`,
+    `i`.`id` AS `incident`
+  FROM
+    `service` AS `se`
+    CROSS JOIN `incident` AS `i`
+    LEFT JOIN `siteservice` AS `ss` ON `ss`.`service` =  `se`.`id`
+    LEFT JOIN `site` AS `si` ON `ss`.`site` = `si`.`id`
+    LEFT JOIN `siteserviceincident` AS `ssi` ON
+      `ssi`.`siteservice` = `ss`.`id`
+      AND `ssi`.`incident` = `i`.`id`
+  WHERE
+    `ssi`.`id` IS NULL
 );
 
 --
