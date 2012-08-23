@@ -26,6 +26,7 @@
     </thead>
     <tbody>
         {foreach from=$sites item=site}
+            {$incidents=$site->openIncidents()}
             <tr>
                 <th class="service">
                     <a id="toggle_site_{$site->id}" class="image" data-toggle="collapse" data-target="tr.site_{$site->id}">
