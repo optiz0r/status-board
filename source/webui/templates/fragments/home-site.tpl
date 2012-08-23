@@ -27,11 +27,25 @@
     <tbody>
         {foreach from=$sites item=site}
             <tr>
-                <th colspan="9" class="service">
+                <th class="service">
                     <a id="toggle_site_{$site->id}" class="image" data-toggle="collapse" data-target="tr.site_{$site->id}">
                         <i class="icon-chevron-right"></i>
                     </a>
                     <a href="{$base_uri}status/site/{$site->id}/" title="View Status for Site {$site->name}">{$site->name}</a>
+					{$status=$site->status()}
+					<td class="status header">
+						{include file="fragments/site-status.tpl" nocache date=null start=null end=null}
+					</td>
+					{foreach from=array(0,1,2,3,4,5,6) item=day}
+                        {$start=mktime(0,0,0,date("n"),date("j")-$day)}
+                        {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
+                        {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
+                        {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
+                        {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
+                        <td class="status header">
+                            {include file="fragments/site-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
+                        </td>
+                    {/foreach}
                 </th>
             </tr>
             {foreach from=$site->serviceInstances() item=service_instance}

@@ -125,6 +125,11 @@ th.status, td.status {
     width: 70px;
     text-align: center;
 }
+td.status.header {
+    width: 70px;
+    text-align: center;
+	background: #DDD ;
+}
 
 th.service {
     text-align: left;
