@@ -32,11 +32,11 @@
                         <i class="icon-chevron-right"></i>
                     </a>
                     <a href="{$base_uri}status/service/{$service->id}/" title="View Status for Service {$service->name}">{$service->name}</a>
-					{$status=$service->status()}
-					<td class="status header">
-						{include file="fragments/site-status.tpl" nocache date=null start=null end=null}
-					</td>
-					{foreach from=array(0,1,2,3,4,5,6) item=day}
+                    {$status=$service->status()}
+                    <td class="status header">
+                        {include file="fragments/site-status.tpl" nocache date=null start=null end=null}
+                    </td>
+                    {foreach from=array(0,1,2,3,4,5,6) item=day}
                         {$start=mktime(0,0,0,date("n"),date("j")-$day)}
                         {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
                         {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
@@ -54,7 +54,6 @@
                 <tr class="collapse site service_{$service->id}">
                     <td>
                         <a href="{$base_uri}status/site/{$site->id}/" title="View Status for Site {$site->name|escape:html}">{$site->name|escape:html}</a>
-						 
                     </td>
                     <td class="status">
                         {$status=$site_instance->status()}
