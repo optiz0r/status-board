@@ -57,7 +57,7 @@ INSERT INTO `siteservice` (`id`,`service`,`site`) VALUES
 -- Dumping data for table `incident`
 --
 
-INSERT INTO `incident` (`id`, `site`, `reference`, `description`, `start_time`, `estimated_end_time`, `actual_end_time`) VALUES
+INSERT INTO `incident` (`id`, `reference`, `description`, `start_time`, `estimated_end_time`, `actual_end_time`) VALUES
 (1, 'UK:0001', 'Intermittent packetloss on primary internet connection', 1324079805, 1324079805, NULL),
 (2, 'UK:0002', 'Full outage', 1324079805, 1324079805, NULL),
 (3, 'UK:0003', 'DNS zone maintenance', 1324082411, 1324082411, NULL);
@@ -79,8 +79,8 @@ INSERT INTO `siteserviceincident` (`id`, `siteservice`, `incident`, `description
 INSERT INTO `incidentstatus` (`id`, `incident`, `status`, `description`, `ctime`) VALUES
 (1, 1, 2, 'Initial classification', 1324079864),
 (2, 2, 4, 'Initial classification', 1324079864),
-(4, 3, 1, 'Initial classification', 1324082426);
-(3, 1, 3, 'Status upgraded due to increasing impact from the ongoing issue.', 1324080307),
+(4, 3, 1, 'Initial classification', 1324082426),
+(3, 1, 3, 'Status upgraded due to increasing impact from the ongoing issue.', 1324080307);
 
 --
 -- Dumping data for table `user`

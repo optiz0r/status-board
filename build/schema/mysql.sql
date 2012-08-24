@@ -164,8 +164,7 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `start_time` int(10) NOT NULL,
   `estimated_end_time` int(10) NULL,
   `actual_end_time` int(10) NULL,
-  PRIMARY KEY (`id`),
-  KEY `site` (`site`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
