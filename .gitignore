@@ -4,6 +4,8 @@
 .settings
 *.kdev4
 
+# Placeholder to put local copies of system libraries
+lib/*
 
 # Temporary files
 tmp/*
