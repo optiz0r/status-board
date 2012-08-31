@@ -5,6 +5,7 @@ $auth = $main->auth();
 $config = $main->config();
 $request = $main->request();
 $session = $main->session();
+$cache = $main->cache();
 $csrf = new StatusBoard_CSRF();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_Administrator)) {
@@ -37,6 +38,7 @@ if ($request->exists('do')) {
                     }
                     
                     $service = StatusBoard_Service::newFor($sites, $name, $description);
+                    $cache->invalidate('dashboard');
                     
                     $messages[] = array(
                         'severity' => 'success',
@@ -57,6 +59,7 @@ if ($request->exists('do')) {
                 try {
                     $service = StatusBoard_Service::fromId($service_id);
                     $service->delete();
+                    $cache->invalidate('dashboard');
                     
                     $messages[] = array(
                         'severity' => 'success',
@@ -85,6 +88,7 @@ if ($request->exists('do')) {
                     }
                     
                     $site = StatusBoard_Site::newFor($services, $name, $description);
+                    $cache->invalidate('dashboard');
                     
                     $messages[] = array(
                         'severity' => 'success',
@@ -105,6 +109,7 @@ if ($request->exists('do')) {
                 try {
                     $site = StatusBoard_Site::fromId($site_id);
                     $site->delete();
+                    $cache->invalidate('dashboard');
                     
                     $messages[] = array(
                         'severity' => 'success',
@@ -125,6 +130,7 @@ if ($request->exists('do')) {
                 try {
                     $incident = StatusBoard_Incident::fromId($incident_id);
                     $incident->delete();
+                    $cache->invalidate('dashboard');
                     
                     $messages[] = array(
                         'severity' => 'success',

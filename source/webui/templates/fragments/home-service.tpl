@@ -15,59 +15,45 @@
                 </div>
             </th>
             <th class="status">Now</th>
-            {foreach from=array(0,1,2,3,4,5,6) item=day}
-                {if $day == 0}
-                    <th class="status">Today</th>
-                {else}
-                    <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
-                {/if}
+            <th class="status">Today</th>
+            {foreach from=array(1,2,3,4,5,6) item=day}
+                <th class="status">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
             {/foreach}
         </tr>
     </thead>
     <tbody>
-        {foreach from=$services item=service}
-            {$incidents=$service->openIncidents()}
+        {foreach $incidents["service"] as $service_id=>$service_details}
+            {$service=$incidents["services"][$service_id]}
             <tr>
                 <th class="service">
                     <a id="toggle_service_{$service->id}" class="image" data-toggle="collapse" data-target="tr.service_{$service->id}">
                         <i class="icon-chevron-right"></i>
                     </a>
                     <a href="{$base_uri}status/service/{$service->id}/" title="View Status for Service {$service->name}">{$service->name}</a>
-                    {$status=$service->status()}
                     <td class="status header">
-                        {include file="fragments/service-status.tpl" nocache date=null start=null end=null}
+                        {include file="fragments/service-status.tpl" nocache date=null start=null end=null incidents=$service_details["now"] status=$service->status()}
                     </td>
-                    {foreach from=array(0,1,2,3,4,5,6) item=day}
-                        {$start=mktime(0,0,0,date("n"),date("j")-$day)}
-                        {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
-                        {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
-                        {$incidentsDuring=$service->openIncidentsDuring($start, $end)}
-                        {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
+                    {foreach $service_details['open'] as $day}
                         <td class="status header">
-                            {include file="fragments/service-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
+                            {include file="fragments/service-status.tpl" nocache start=$day["start"] end=$day["end"] incidents=$day["incidents"] status=StatusBoard_Incident::highestSeverityStatusBetween($day["incidents"], $day["start"], $day["end"])}
                         </td>
                     {/foreach}
                 </th>
             </tr>
-            {foreach from=$service->siteInstances() item=site_instance}
-                {$site=$site_instance->site()}
-                {$incidents=$site_instance->openIncidents()}
+            {foreach $service_details['site'] as $siteservice_id=>$siteservice_details}
+                {$siteservice=$incidents['siteservices'][$siteservice_id]}
+                {$site=$incidents['sites'][$siteservice->site]}
                 <tr class="collapse site service_{$service->id}">
                     <td>
                         <a href="{$base_uri}status/site/{$site->id}/" title="View Status for Site {$site->name|escape:html}">{$site->name|escape:html}</a>
                     </td>
                     <td class="status">
-                        {$status=$site_instance->status()}
-                        {include file="fragments/site-status.tpl" nocache date=null start=null end=null}
+                        {$status=$siteservice->status()}
+                        {include file="fragments/site-status.tpl" nocache date=null start=null end=null incidents=$siteservice_details['now']}
                     </td>
-                    {foreach from=array(0,1,2,3,4,5,6) item=day}
-                        {$start=mktime(0,0,0,date("n"),date("j")-$day)}
-                        {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
-                        {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
-                        {$incidentsDuring=$site_instance->openIncidentsDuring($start, $end)}
-                        {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
+                    {foreach $siteservice_details['open'] as $day}
                         <td class="status">
-                            {include file="fragments/site-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
+                            {include file="fragments/site-status.tpl" nocache start=$day["start"] end=$day["end"] incidents=$day["incidents"] status=StatusBoard_Incident::highestSeverityStatusBetween($day["incidents"], $day["start"], $day["end"])}
                         </td>
                     {/foreach}
                 </tr>

@@ -38,6 +38,8 @@ class StatusBoard_Main extends SihnonFramework_Main {
                 $this->smarty->registerPlugin('modifier', 'formatFilesize', array('StatusBoard_Main', 'formatFilesize'));
                 $this->smarty->registerPlugin('modifier', 'fuzzyTime', array('StatusBoard_DateTime', 'fuzzyTime'));
                 $this->smarty->registerPlugin('modifier', 'timeago', array('StatusBoard_DateTime', 'timeAgo'));
+
+                //$this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
                 
                 $this->smarty->assign('version', '2.0.0');
                 $this->smarty->assign('version_codename', 'Bilberry');

@@ -4,6 +4,7 @@ $main = StatusBoard_Main::instance();
 $request = $main->request();
 $auth = $main->auth();
 $session = $main->session();
+$cache = $main->cache();
 $csrf = new StatusBoard_CSRF();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_UpdateIncidents)) {
@@ -55,6 +56,8 @@ if ($request->exists('do')) {
                             
                             $incident->estimated_end_time = $estimated_end_time;
                             $incident->save();
+                            $cache->invalidate('dashboard');
+
                             $messages[] = array(
                                 'severity' => 'success',
                                 'content'  => 'The incident was updated succesfully.',
@@ -94,6 +97,8 @@ if ($request->exists('do')) {
                         $incident->save();
                     }
 
+                    $cache->invalidate('dashboard');
+
                     $messages[] = array(
                         'severity' => 'success',
                         'content'  => 'The incident status was changed successfully.',
@@ -121,6 +126,9 @@ if ($request->exists('do')) {
                         );
                     }
                 }
+
+                $cache->invalidate('dashboard');
+
                 $messages[] = array(
                     'severity' => 'success',
                     'content'  => 'The service was updated succesfully.',
@@ -133,6 +141,7 @@ if ($request->exists('do')) {
                 try {
                     $ssi = StatusBoard_SiteServiceIncident::fromId($ssi_id);
                     $ssi->delete();
+                    $cache->invalidate('dashboard');
 
                     $messages[] = array(
                         'severity' => 'success',

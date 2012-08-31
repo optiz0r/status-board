@@ -4,6 +4,7 @@ $main = StatusBoard_Main::instance();
 $request = $main->request();
 $auth = $main->auth();
 $session = $main->session();
+$cache = $main->cache();
 $csrf = new StatusBoard_CSRF();
 
 if ( ! $auth->isAuthenticated() || ! $auth->hasPermission(StatusBoard_Permission::PERM_UpdateStatusBoards)) {
@@ -39,6 +40,8 @@ if ($request->exists('do')) {
                     $service->name = $name;
                     $service->description = $description;
                     $service->save();
+                    $cache->invalidate('dashboard');
+
                     $messages[] = array(
                         'severity' => 'success',
                         'content'  => 'The service was updated succesfully.',
@@ -66,6 +69,8 @@ if ($request->exists('do')) {
                         );
                     }
                 }
+
+                $cache->invalidate('dashboard');
                 
                 $messages[] = array(
                     'severity' => 'success',
@@ -81,10 +86,11 @@ if ($request->exists('do')) {
                     $ss = StatusBoard_SiteService::fromSiteService($service, $site);
 
                     $ss->delete();
+                    $cache->invalidate('dashboard');
                     
                     $messages[] = array(
-                                            'severity' => 'success',
-                                            'content'  => 'The service was updated succesfully.',
+                        'severity' => 'success',
+                        'content'  => 'The service was updated succesfully.',
                     );
                 } catch (StatusBoard_Exception_ResultCountMismatch $e) {
                     $messages[] = array(
