@@ -82,7 +82,7 @@ if ($cache->exists('dashboard')) {
                 'start'     => $start,
                 'end'       => $end,
                 'date'      => $date,
-                'incidents' => $site->openIncidentsDuring($start, $end)
+                'incidents' => $service->openIncidentsDuring($start, $end)
             );
         }
 
