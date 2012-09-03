@@ -39,7 +39,12 @@ if ($cache->exists('dashboard')) {
             $start = mktime(0, 0, 0, date("n"), date("j") - $day);
             $end   = mktime(0, 0, 0, date("n"), date("j") - $day + 1);
             $date  = date('jM', mktime(0, 0, 0, date("n"), date("j") - $day));
-            $incidents['site'][$site->id]['open'][$date] = $site->openIncidentsDuring($start, $end);
+            $incidents['site'][$site->id]['open'][] = array(
+                'start'     => $start,
+                'end'       => $end,
+                'date'      => $date,
+                'incidents' => $site->openIncidentsDuring($start, $end)
+            );
         }
 
         $incidents['site'][$site->id]['service'] = array();
@@ -73,7 +78,12 @@ if ($cache->exists('dashboard')) {
             $start = mktime(0, 0, 0, date("n"), date("j") - $day);
             $end   = mktime(0, 0, 0, date("n"), date("j") - $day + 1);
             $date  = date('jM', mktime(0, 0, 0, date("n"), date("j") - $day));
-            $incidents['service'][$service->id]['open'][$date] = $service->openIncidentsDuring($start, $end);
+            $incidents['service'][$service->id]['open'][] = array(
+                'start'     => $start,
+                'end'       => $end,
+                'date'      => $date,
+                'incidents' => $site->openIncidentsDuring($start, $end)
+            );
         }
 
         $incidents['service'][$service->id]['site'] = array();

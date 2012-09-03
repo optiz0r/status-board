@@ -35,7 +35,7 @@
                     </td>
                     {foreach $site_details['open'] as $day}
                         <td class="status header">
-                            {include file="fragments/site-status.tpl" nocache start=$day["start"] end=$day["end"] incidents=$day["incidents"] status=StatusBoard_Incident::highestSeverityStatusBetween($day["incidents"], $day["start"], $day["end"])}
+                            {include file="fragments/site-status.tpl" nocache start=$day["start"] end=$day["end"] date=$day["date"] incidents=$day["incidents"] status=StatusBoard_Incident::highestSeverityStatusBetween($day["incidents"], $day["start"], $day["end"])}
                         </td>
                     {/foreach}
                 </th>
@@ -53,7 +53,7 @@
                     </td>
                     {foreach $siteservice_details['open'] as $day}
                         <td class="status">
-                            {include file="fragments/service-status.tpl" nocache start=$day["start"] end=$day["end"] incidents=$day["incidents"] status=StatusBoard_Incident::highestSeverityStatusBetween($day["incidents"], $day["start"], $day["end"])}
+                            {include file="fragments/service-status.tpl" nocache start=$day["start"] end=$day["end"] date=$day["date"] incidents=$day["incidents"] status=StatusBoard_Incident::highestSeverityStatusBetween($day["incidents"], $day["start"], $day["end"])}
                         </td>
                     {/foreach}
                 </tr>
