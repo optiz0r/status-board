@@ -353,7 +353,7 @@ CREATE VIEW `incident_closedtime` AS (
 --
 DROP VIEW IF EXISTS `incident_opentimes_site`;
 CREATE VIEW `incident_opentimes_site` AS (
-  SELECT
+  SELECT DISTINCT
     `i`.*,
     `ss`.`site` as `site`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
@@ -369,7 +369,7 @@ CREATE VIEW `incident_opentimes_site` AS (
 --
 DROP VIEW IF EXISTS `incident_opentimes_service`;
 CREATE VIEW `incident_opentimes_service` AS (
-  SELECT
+  SELECT DISTINCT
     `i`.*,
     `ss`.`service` as `service`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
@@ -385,7 +385,7 @@ CREATE VIEW `incident_opentimes_service` AS (
 --
 DROP VIEW IF EXISTS `incident_opentimes_siteservice`;
 CREATE VIEW `incident_opentimes_siteservice` AS (
-  SELECT
+  SELECT DISTINCT
     `i`.*,
     `ss`.`id` as `siteservice`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
