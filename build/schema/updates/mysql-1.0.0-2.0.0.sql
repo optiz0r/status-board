@@ -40,6 +40,21 @@ CREATE TABLE IF NOT EXISTS `siteservice` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
+-- Table structure for table `siteserviceincident`
+--
+DROP TABLE IF EXISTS `siteserviceincident`;
+CREATE TABLE IF NOT EXISTS `siteserviceincident` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `siteservice` int(10) unsigned NOT NULL,
+  `incident` int(10) unsigned NOT NULL,
+  `description` text NOT NULL,
+  `ctime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `siteservice` (`siteservice`),
+  KEY `incident` (`incident`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+--
 -- Table structure for view `siteservice_names`
 --
 
@@ -172,21 +187,6 @@ CREATE VIEW `service_unmatchedsiteincidents` AS (
 );
 
 --
--- Table structure for table `siteserviceincident`
---
-DROP TABLE IF EXISTS `siteserviceincident`;
-CREATE TABLE IF NOT EXISTS `siteserviceincident` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `siteservice` int(10) unsigned NOT NULL,
-  `incident` int(10) unsigned NOT NULL,
-  `description` text NOT NULL,
-  `ctime` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `siteservice` (`siteservice`),
-  KEY `incident` (`incident`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
-
---
 -- Table structure for view `siteservice_incident`
 --
 DROP VIEW IF EXISTS `siteservice_incident`;
@@ -309,7 +309,7 @@ CREATE VIEW `incident_closedtime` AS (
 --
 DROP VIEW IF EXISTS `incident_opentimes_site`;
 CREATE VIEW `incident_opentimes_site` AS (
-  SELECT
+  SELECT DISTINCT
     `i`.*,
     `ss`.`site` as `site`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
@@ -325,7 +325,7 @@ CREATE VIEW `incident_opentimes_site` AS (
 --
 DROP VIEW IF EXISTS `incident_opentimes_service`;
 CREATE VIEW `incident_opentimes_service` AS (
-  SELECT
+  SELECT DISTINCT
     `i`.*,
     `ss`.`service` as `service`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
@@ -341,7 +341,7 @@ CREATE VIEW `incident_opentimes_service` AS (
 --
 DROP VIEW IF EXISTS `incident_opentimes_siteservice`;
 CREATE VIEW `incident_opentimes_siteservice` AS (
-  SELECT
+  SELECT DISTINCT
     `i`.*,
     `ss`.`id` as `siteservice`,
     IFNULL(`t`.`ctime`, 0xffffffff+0) AS `ctime`
