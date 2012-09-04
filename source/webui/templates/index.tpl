@@ -2,75 +2,78 @@
 <html>
     <head>
         <title>Status Board</title>
-        <script lang="javascript">
-        </script>
-        <link rel="stylesheet" type="text/css" href="{$base_uri}styles/normal.css" />
-        	<link rel="shortcut icon" href="{$base_uri}images/favicon.ico" />
+        <link rel="shortcut icon" href="{$base_uri}images/favicon.ico" />
         
         <script type="text/javascript">
             var base_uri = "{$base_uri|escape:'quote'}";
             var base_url = "{$base_url|escape:'quote'}";
         </script>
         
+        <!-- JQuery -->
         <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/smoothness/jquery-ui.css" rel="Stylesheet" />
-        <link type="text/css" href="{$base_uri}styles/3rdparty/jquery.asmselect.css" rel="Stylesheet" />	
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="{$base_uri}scripts/3rdparty/jquery.chained.js"></script>
-		<script type="text/javascript" src="{$base_uri}scripts/main.js"></script>
-        <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://raw.github.com/rmm5t/jquery-timeago/v0.11.3/jquery.timeago.js"></script>
+
+        <!-- Bootstrap -->
         <script type="text/javascript" src="{$base_uri}scripts/3rdparty/less-1.1.5.min.js"></script>
-        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-alerts.js"></script>
-        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-twipsy.js"></script>
-        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-popover.js"></script>
-        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-dropdown.js"></script>
-        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-tabs.js"></script>
-        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap-modal.js"></script>
+        <link rel="stylesheet/less" href="{$base_uri}less/bootstrap.less" media="all" />
+        <link type="text/css" rel="stylesheet" href="{$base_uri}styles/bootstrap.min.css" />
+        <script type="text/javascript" src="{$base_uri}scripts/3rdparty/bootstrap.min.js"></script>
+        
+        <!-- Local -->
+        <link rel="stylesheet" type="text/css" href="{$base_uri}styles/normal.css" />
+        <script type="text/javascript" src="{$base_uri}scripts/sihnon-js-lib/sihnon-framework.js"></script>
+        <script type="text/javascript" src="{$base_uri}scripts/main.js"></script>
     </head>
     <body>
 
-        <div class="topbar">
-            <div class="topbar-inner">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
                 <div class="container-fluid">
                     {$page->include_template('navigation')}
-                </div><!-- /tobar-inner -->
-            </div><!-- /container-fliud -->
-        </div><!-- /topbar -->
-        
+                </div>
+            </div>
+        </div><!-- /navbar -->
 
-        <div class="container">
-            <div class="content">
+        <div class="container content">
 
-                {if ! $messages}
-                    {$session = StatusBoard_Main::instance()->session()}
-                    {$messages = $session->get('messages')}
-                    {$session->delete('messages')}
-                {/if}
-                {if $messages}
-                    <div id="messages">
+            {if ! $messages}
+                {$session = StatusBoard_Main::instance()->session()}
+                {$messages = $session->get('messages')}
+                {$session->delete('messages')}
+            {/if}
+            {if $messages}
+                <div class="row">
+                    <div class="span12" id="messages">
                         {foreach from=$messages item=message}
                             {if is_array($message)}
                                 {$severity=$message['severity']}
-                                <div class="alert-message {$severity}">
+                                <div class="alert alert-{$severity}">
+                                    <a class="close" data-dismiss="alert">&times;</a>
                                     {$message['content']|escape:html}
                                 </div>
                             {else}
-                                <div class="alert-message info">
+                                <div class="alert alert-info">
+                                    <a class="close" data-dismiss="alert">&times;</a>
                                     {$message|escape:html}
                                 </div>
                             {/if}
                         {/foreach}
                     </div><!-- /messages -->
-                {/if}
+                </div>
+            {/if}
 
+            <article id="content">
                 {$page_content}
+            </article>
 
-            </div><!-- /content -->
-
-            <footer>
-              <p> Powered by <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}). Written by Ben Roberts and Nathan Booth.</p>          
-            </footer>
-
-        </div><!-- /container -->
+			<footer class="footer">
+		        <p>Powered by 
+		            <a href="https://github.com/optiz0r/status-board/wiki" title="StatusBoard Wiki">StatusBoard</a> {$version} ({$version_codename}).
+		            Written by Ben Roberts and Nathan Booth.    
+		        </p>      
+	      </footer>
+        </div><!-- /container content -->
     </body>
 </html>

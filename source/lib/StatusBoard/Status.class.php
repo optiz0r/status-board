@@ -17,11 +17,11 @@ abstract class StatusBoard_Status {
     );
     
     protected static $descriptions = array(
-        self::STATUS_Resolved    => 'The service is operating normally.',
-        self::STATUS_Maintenance => 'The service is undergoing scheduled maintenance.',
-        self::STATUS_Minor       => 'The service is exeriencing minor issues affecting some customers.',
-        self::STATUS_Significant => 'The service is exeriencing significant issues affecting many customers.',
-        self::STATUS_Major       => 'The service is exeriencing a major outage affecting all customers.',
+        self::STATUS_Resolved    => 'The service/site is operating normally.',
+        self::STATUS_Maintenance => 'The service/site is undergoing scheduled maintenance.',
+        self::STATUS_Minor       => 'The service/site is experiencing minor issues affecting some customers.',
+        self::STATUS_Significant => 'The service/site is experiencing significant issues affecting many customers.',
+        self::STATUS_Major       => 'The service/site is experiencing a major outage affecting all customers.',
     );
     
     public static function available() {

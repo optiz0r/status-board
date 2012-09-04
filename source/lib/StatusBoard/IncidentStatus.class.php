@@ -11,7 +11,7 @@ class StatusBoard_IncidentStatus extends StatusBoard_DatabaseObject {
     protected $_db_ctime;
         
     public function allForIncident(StatusBoard_Incident $incident) {
-        return static::all_for('incident', $incident->id);
+        return static::allFor('incident', $incident->id);
     }
     
     public function newForIncident(StatusBoard_Incident $incident, $status, $description, $ctime = null) {
@@ -28,6 +28,20 @@ class StatusBoard_IncidentStatus extends StatusBoard_DatabaseObject {
         $new_status->create();
         
         return $new_status;
+    }
+    
+    /**
+     * Resets the ctime to the given value or the current time if not specified
+     *
+     * @param int $ctime Timestamp to be set. if null, the current time is used.
+     */
+    public function resetCreationTime($ctime=null) {
+        if (! $ctime) {
+            $ctime = time();
+        }
+        
+        $this->ctime = $ctime;
+        $this->save();
     }
 }
 

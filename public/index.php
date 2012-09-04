@@ -11,7 +11,7 @@ try {
     
     $page = new StatusBoard_Page($smarty, $main->request());
     if ($page->evaluate()) {
-        $smarty->display('index.tpl');
+        $smarty->display('index.tpl', sha1($main->request()->request_string()));
     }
     
 } catch (StatusBoard_Exception $e) {

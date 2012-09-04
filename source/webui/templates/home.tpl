@@ -1,66 +1,37 @@
-<div id="statusboard">
-<div class="row">
-<div class="span14">
-<h2>{$site_title}</h2>
-</div>
-<div class="span2">
-{if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn small">Add Incident</a>{/if}
-</div>
-</div>
-    <table class="bordered-table">
-        <thead>
-            <tr>
-                <th width="200px">Service / Site</th>
-                <th class="status" width="50px">Now</th>
-                {foreach from=array(0,1,2,3,4,5,6) item=day}
-                    {if $day == 0}
-                        <th class="status" width="50px">Today</th>
-  				    {else}
-                        <th class="status" width="50px">{mktime(0,0,0,date("n"),date("j")-$day)|date_format:"M j"}</th>
-  				    {/if}
-				{/foreach}
-            </tr>
-        </thead>
-        <tbody>
-            {foreach from=$services item=service}
-                <tr>
-                    <th colspan="9" class="service">
-                        {if $display_admin_links}
-                            <a href="{$base_uri}admin/service/id/{$service->id}/" title="Edit {$service->name}">{$service->name}</a>
-                        {else}
-                            {$service->name}
-                        {/if}
-                    </th>
-                </tr>
-                {foreach from=$service->sites() item=site}
-                {$incidents=$site->openIncidents()}
-                    <tr class="site">
-                        <td>
-                            {if $display_admin_links}
-                                <a href="{$base_uri}admin/site/service/{$service->id}/id/{$site->id}/" title="Edit {$site->name|escape:html}">{$site->name|escape:html}</a>
-                            {else}
-                                {$site->name}
-                            {/if}
-                        </td>
-                        <td>
-                            {$status=$site->status()}
-                            {include file="fragments/site-status.tpl" nocache date=null start=null end=null}
-                        </td>
-                        {foreach from=array(0,1,2,3,4,5,6) item=day}
-                            {$start=mktime(0,0,0,date("n"),date("j")-$day)}
-                            {$end=mktime(0,0,0,date("n"),date("j")-$day+1)}
-                            {$date=mktime(0,0,0,date("n"),date("j")-$day)|date_format:"jM"}
-                            {$incidentsDuring=$site->openIncidentsDuring($start, $end)}
-                            {$statusDuring=StatusBoard_Incident::highestSeverityStatusBetween($incidentsDuring, $start, $end)}
-                            <td>
-                                {include file="fragments/site-status.tpl" nocache start=$start end=$end status=$statusDuring incidents=$incidentsDuring}
-                            </td>
-                        {/foreach}
-                    </tr>
-                {/foreach}
-            {/foreach}
-        </tbody>
-    </table>
-</div>
+<div class="row"><!-- Row for Board title and header -->
+    <div class='span10'>
+        <h1 class='lead'><strong>{$site_title}</strong></h1>
 
+        <p>Service Status Dashboard, detailing your current,past and future service status</p>
+    </div>
+
+    <div class="span2 align-right">
+        {if $display_admin_links}<a href="{$base_uri}admin/add-incident/" class="btn"> Add Incident</a>{/if}
+    </div>
+</div><!--/Row for Board title and header -->
+{if $upcoming_maintenance}
+<div class="row"> <!--Row for Upcoming maintenance if it exists -->
+    <div class="span12"><!-- List all upcoming maintenance -->
+        <p style="float: left;">Scheduled Maintenance:</p> 
+        <ul id="maintenance-list">
+            {foreach from=$upcoming_maintenance item=incident}</li>
+            <li>
+                <a href="{$base_uri}incident/id/{$incident->id}/" title="View Maintenance">{$incident->reference|escape:html}</a>
+                <p>{$incident->description|escape:html}</p>
+			</li>
+			{/foreach}
+        </ul>
+    </div> <!-- /List all upcoming maintenance -->
+</div> <!--/Row For upcoming maintenance -->
+{/if}
+
+<div class="row"><!--Row for Board status matrix -->
+    <div class="span12"><!--Board status matrix -->
+        {switch $home_mode} {case 'site'} {$page->include_template('fragments/home-site')} {/case} {default} {$page->include_template('fragments/home-service')} {/switch}
+    </div><!--/Board status matrix -->
+</div><!--/Row for Board status matrix -->
+<!--Load homepage JS at end to speed up page load-->
+<script type="text/javascript">
+sb.home.init();
+</script>
 
