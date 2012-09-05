@@ -7,7 +7,7 @@
  
 var sb = {
      
-    init: function() {
+    init: function( {
         // Properly format any alert boxes
         $('.alert-data').alert();
         
@@ -17,7 +17,7 @@ var sb = {
         // Display popovers on all configured items
         $("a[rel=popover]").popover({
           offset: 10,
-          html: true,
+          html: true
         });
         
         // Allow collapsible divs
@@ -42,7 +42,7 @@ var sb = {
                 
                 setTimeout(sb.home.maintenanceListTicker, 5000);
             }
-        },
+        }
     },
     
     admin: {
@@ -51,7 +51,7 @@ var sb = {
             $('#confirm_delete').modal({
                 backdrop: true,
                 keyboard: true,
-                show:     false,
+                show:     false
             });
             $('#confirm_delete_cancel').click(function() {
                 $('#confirm_delete').modal('hide'); 
@@ -72,7 +72,7 @@ var sb = {
         
         saveState: function(e) {
             state = {
-                tab: $(this).attr('href').replace(/#tab_/, ''),
+                tab: $(this).attr('href').replace(/#tab_/, '')
             };
             window.history.pushState(state, $(this).text(), $(this).data('uri'));
             
@@ -81,7 +81,7 @@ var sb = {
         
         setInitialState: function(tab) {
             state = {
-                tab: tab,
+                tab: tab
             };
             window.history.replaceState(state, "Admin", base_uri + 'admin/tab/' + tab + '/');
         },
@@ -104,7 +104,7 @@ var sb = {
         deleteItem: function(url, csrftoken) {
             $('#confirm_delete_do').click(function() {
                 sb.request.post(url, {
-                    csrftoken: csrftoken,
+                    csrftoken: csrftoken
                 });
             });
             
@@ -140,7 +140,7 @@ var sb = {
                 }
             }
             
-        },
+        }
     },
      
     usercp: {
