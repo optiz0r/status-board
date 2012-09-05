@@ -178,7 +178,7 @@ var sb = {
             form.submit();
         }
         
-    },
+    }
     
 };
  
