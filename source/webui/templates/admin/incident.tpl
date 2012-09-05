@@ -49,7 +49,7 @@
                 
                 <div class="control-group">
                     <div class="controls">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" type="submit">
                             <i class="icon-edit icon-white"></i>
                             Edit Incident
                         </button>
@@ -126,7 +126,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" type="submit">
                             <i class="icon-edit icon-white"></i>
                             Update Status
                         </button>
@@ -281,7 +281,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" type="submit">
                             <i class="icon-plus icon-white"></i>
                             Update Incident
                         </button>

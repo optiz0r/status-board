@@ -34,7 +34,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" type="submit">
                             <i class="icon-edit icon-white"></i>
                             Save Changes
                         </button>
@@ -116,7 +116,7 @@
                 
                 <div class="control-group">
                     <div class="controls">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" type="submit">
                             <i class="icon-plus icon-white"></i>
                             Associate Services
                         </button>
@@ -185,7 +185,7 @@
         <form class="form-horizontal" method="get" action="{$base_uri}admin/add-incident/site/{$site->id}/">
             <div class="control-group">
                 <div class="controls">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" type="submit">
                         <i class="icon-plus icon-white"></i>
                         Add Incident
                     </button>

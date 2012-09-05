@@ -123,7 +123,7 @@
                                     
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-primary" name="addincident"><i class="icon-plus icon-white"></i> Add Incident</button>
+                                <button class="btn btn-primary" name="addincident" type="submit"><i class="icon-plus icon-white"></i> Add Incident</button>
                             </div>
                         </div><!-- /control-group -->
                     </fieldset>

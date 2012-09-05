@@ -179,7 +179,7 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-primary" name="addservice">Add Service</button> <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button class="btn btn-primary" name="addservice" type="submit">Add Service</button> <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div><!-- /control-group -->
                     </fieldset>
@@ -260,7 +260,7 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-primary">Add Site</button> <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button class="btn btn-primary" type="submit">Add Site</button> <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div><!-- /control-group -->
                     </fieldset>
@@ -343,7 +343,7 @@
                 <form class="form-horizontal" method="get" action="{$base_uri}admin/add-incident/">
                     <div class="control-group">
                         <div class="controls">
-                            <button class="btn btn-primary">Add Incident</button>
+                            <button class="btn btn-primary" type="submit">Add Incident</button>
                         </div>
                     </div>
                 </form>
@@ -443,7 +443,7 @@
                         </div><!-- /control-group -->
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-primary" name="addservice">Add User</button> <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button class="btn btn-primary" name="addservice" type="submit">Add User</button> <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div><!-- /control-group -->
                     </fieldset>
@@ -534,7 +534,7 @@
             
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary" type="submit">
                                     <i class="icon-plus icon-white"></i>
                                     Add Group
                                 </button>
@@ -617,7 +617,7 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-primary">Save</button> <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button class="btn btn-primary" type="submit">Save</button> <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div><!-- /control-group -->
                     </fieldset>
