@@ -7,7 +7,7 @@
  
 var sb = {
      
-    init: function( {
+    init: function() {
         // Properly format any alert boxes
         $('.alert-data').alert();
         
