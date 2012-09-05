@@ -24,7 +24,7 @@
                     </div><!-- /control-group -->
 
                     <div class="controls">
-                        <button class="btn btn-primary" value="Submit">Login</button> <button class="btn btn-secondary" type="reset">Reset</button>
+                        <button class="btn btn-primary" type="submit" value="Submit">Login</button> <button class="btn btn-secondary" type="reset">Reset</button>
                     </div>
                 </fieldset>
             </form>
